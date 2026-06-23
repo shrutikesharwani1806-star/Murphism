@@ -1,0 +1,296 @@
+@import "tailwindcss";
+
+/* ─── Premium Design System — Luxury Gold × Black × Cinematic ─── */
+:root {
+  --gold-primary:   #c9a227;
+  --gold-light:     #e8bf5a;
+  --gold-highlight: #f5d97a;
+  --gold-deep:      #8B6914;
+  --purple-primary: #7c3aed;
+  --purple-deep:    #4c1d95;
+  --purple-glow:    rgba(124, 58, 237, 0.12);
+  --black-deep:     #050505;
+  --black-rich:     #0a0907;
+  --black-card:     #0f0e0b;
+  --black-raised:   #161410;
+  --white-warm:     #f0ece0;
+  --white-muted:    #b8b099;
+  --white-subtle:   #6b6459;
+  --border-warm:    rgba(201, 162, 39, 0.15);
+  --border-subtle:  rgba(201, 162, 39, 0.07);
+}
+
+/* ─── Base ─── */
+html { scroll-behavior: smooth; }
+body {
+  background: var(--black-deep);
+  color: var(--white-warm);
+  overflow-x: hidden;
+  font-family: var(--font-outfit), sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+* { box-sizing: border-box; }
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--black-deep); }
+::-webkit-scrollbar-thumb { background: var(--gold-primary); border-radius: 2px; }
+
+/* ─── Keyframes ─── */
+@keyframes float-gentle {
+  0%, 100% { transform: translateY(0px) rotate(-2deg); }
+  50%       { transform: translateY(-12px) rotate(1deg); }
+}
+@keyframes scroll-left {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  10%       { transform: translate(-2%, -3%); }
+  30%       { transform: translate(3%, 2%); }
+  50%       { transform: translate(-1%, 4%); }
+  70%       { transform: translate(2%, -1%); }
+  90%       { transform: translate(-3%, 1%); }
+}
+@keyframes shimmer-gold {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+/* ─── Tailwind Component Layer ─── */
+@layer components {
+
+  /* Warm card — no neon, subtle warm border with purple-tinged hover */
+  .card-warm {
+    background: var(--black-card);
+    border: 1px solid var(--border-warm);
+    border-radius: 1rem;
+  }
+  .card-warm:hover {
+    border-color: rgba(124, 58, 237, 0.25);
+    background: var(--black-raised);
+    box-shadow: 0 12px 40px -15px rgba(124, 58, 237, 0.12);
+  }
+
+  /* Glass — editorial frosted */
+  .glass-warm {
+    background: rgba(15, 14, 11, 0.8);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--border-warm);
+  }
+
+  /* Gold gradient text */
+  .text-gold {
+    background: linear-gradient(135deg, #e8bf5a 0%, #c9a227 50%, #f5d97a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Gold to Purple premium gradient text */
+  .text-gold-purple {
+    background: linear-gradient(135deg, #e8bf5a 0%, #c9a227 45%, #a855f7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Shimmer gold text — for hero */
+  .text-gold-shimmer {
+    background: linear-gradient(90deg, #8B6914 0%, #c9a227 30%, #f5d97a 50%, #c9a227 70%, #8B6914 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer-gold 4s linear infinite;
+  }
+
+  /* Warm muted text */
+  .text-warm-muted { color: var(--white-muted); }
+  .text-warm-subtle { color: var(--white-subtle); }
+
+  /* Section spacing */
+  .section-pad { padding: 7rem 0; }
+
+  /* Editorial heading */
+  .heading-display {
+    font-family: 'Clash Display', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+  }
+
+  .heading-xl {
+    font-family: 'Clash Display', sans-serif;
+    font-weight: 700;
+    font-size: clamp(2rem, 4.5vw, 3.75rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+
+  /* Section label — small uppercase */
+  .label-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-primary);
+    margin-bottom: 1.25rem;
+  }
+  .label-tag::before, .label-tag::after {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 1px;
+    background: var(--gold-primary);
+    opacity: 0.6;
+  }
+
+  /* Gold divider line */
+  .divider-gold {
+    width: 48px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold-primary), transparent);
+    margin: 1.5rem 0;
+  }
+
+  /* Warm grid bg — very subtle */
+  .grid-warm {
+    background-image:
+      linear-gradient(rgba(201,162,39,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,162,39,0.025) 1px, transparent 1px);
+    background-size: 80px 80px;
+  }
+
+  /* Stat number */
+  .stat-number {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 800;
+    font-size: 3rem;
+    color: var(--gold-light);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  /* ── Buttons ── */
+  .btn-gold {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.9rem 2.25rem;
+    border-radius: 4px;
+    background: var(--gold-primary);
+    color: #050505;
+    font-weight: 700;
+    font-size: 0.875rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-gold::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--gold-highlight), var(--gold-light));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .btn-gold:hover::before { opacity: 1; }
+  .btn-gold:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(201,162,39,0.25); }
+  .btn-gold span, .btn-gold svg { position: relative; z-index: 1; }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 2.25rem;
+    border-radius: 4px;
+    background: transparent;
+    color: var(--gold-light);
+    font-weight: 600;
+    font-size: 0.875rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: 1px solid rgba(201,162,39,0.4);
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+    transition: all 0.3s ease;
+  }
+  .btn-ghost:hover {
+    background: rgba(201,162,39,0.08);
+    border-color: var(--gold-primary);
+    transform: translateY(-1px);
+  }
+
+  /* Legacy aliases (keep components working) */
+  .btn-primary { /* redirect to gold */ }
+  .btn-outline  { /* redirect to ghost */ }
+
+  /* ── Grain overlay ── */
+  .grain-overlay {
+    position: relative;
+  }
+  .grain-overlay::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    animation: grain 0.8s steps(1) infinite;
+    border-radius: inherit;
+  }
+
+  /* ── Scroll animations ── */
+  .animate-scroll-left { animation: scroll-left 30s linear infinite; }
+  .animate-scroll-left:hover { animation-play-state: paused; }
+  .animate-scroll-left-slow { animation: scroll-left 40s linear infinite reverse; }
+  .animate-scroll-left-slow:hover { animation-play-state: paused; }
+  .float-gentle { animation: float-gentle 5s ease-in-out infinite; }
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .section-pad { padding: 4.5rem 0; }
+  .stat-number { font-size: 2.5rem; }
+}
+
+/* ─── Lenis Smooth Scroll ─── */
+html.lenis, html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* Custom Cursor Hide */
+@media (pointer: fine) {
+  body, a, button, select, input, textarea, [role="button"], .btn-gold, .btn-ghost {
+    cursor: none !important;
+  }
+}
