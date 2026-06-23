@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+murphism-academy/node_modules/
+
+# Local env files
+.env.local
+.env
+.env.*
+murphism-academy/.env.local
+murphism-academy/.env
+murphism-academy/.env.*
+
+# Build outputs
+.next/
+murphism-academy/.next/
+out/
+murphism-academy/out/
+build/
+murphism-academy/build/
+
+# Debug and Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS-specific
+.DS_Store
+Thumbs.db
