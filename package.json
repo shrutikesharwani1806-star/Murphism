@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "postinstall": "npm install --prefix murphism-academy",
     "dev": "npm run dev --prefix murphism-academy",
     "build": "npm run build --prefix murphism-academy",
     "start": "npm run start --prefix murphism-academy"
