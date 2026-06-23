@@ -1,4 +1,6 @@
 {
-  "buildCommand": "npm run build",
-  "outputDirectory": "murphism-academy/.next"
+  "installCommand": "npm install && npm install --prefix murphism-academy",
+  "buildCommand": "npm run build --prefix murphism-academy",
+  "outputDirectory": "murphism-academy/.next",
+  "framework": "nextjs"
 }
