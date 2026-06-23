@@ -180,7 +180,7 @@ function AICourseCard({ mod, idx, scrollYProgress }) {
       {/* Card Header */}
       <div className="flex justify-between items-center z-10">
         <span className="font-mono text-[9px] font-bold tracking-widest text-[#c9a227]">
-          // MODULE {mod.num}
+          {"// MODULE "}{mod.num}
         </span>
         <span className="text-[8px] font-black tracking-widest uppercase px-2 py-0.5 rounded bg-[#c9a227]/10 text-[#c9a227] border border-[#c9a227]/20">
           {mod.badge}

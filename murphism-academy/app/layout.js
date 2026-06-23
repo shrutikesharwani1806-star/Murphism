@@ -67,6 +67,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`scroll-smooth ${outfit.variable} ${spaceGrotesk.variable} ${playfairDisplay.variable}`} suppressHydrationWarning>
       <head>
+        <link rel="preconnect" href="https://api.fontshare.com" crossOrigin="anonymous" />
         <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&display=swap" rel="stylesheet" />
       </head>
       <body className="antialiased overflow-x-hidden font-sans" suppressHydrationWarning>

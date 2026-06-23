@@ -43,9 +43,12 @@ export default function HeroSection() {
           }}
           transition={{ type: 'spring', damping: 30, stiffness: 60 }}
         >
-          <img
+          <Image
             src="/3d-computer.png"
             alt="Futuristic Workstation"
+            width={1200}
+            height={800}
+            priority
             className="w-[80vw] h-auto max-w-[70vw] md:max-w-[50vw] object-contain opacity-[0.16]"
             style={{
               filter: 'blur(1.8vh)',

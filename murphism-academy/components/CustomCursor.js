@@ -70,6 +70,17 @@ export default function CustomCursor() {
     };
   }, [mouseX, mouseY, hidden]);
 
+  useEffect(() => {
+    if (isMobile || hidden) {
+      document.body.classList.remove('custom-cursor-active');
+    } else {
+      document.body.classList.add('custom-cursor-active');
+    }
+    return () => {
+      document.body.classList.remove('custom-cursor-active');
+    };
+  }, [isMobile, hidden]);
+
   if (isMobile || hidden) return null;
 
   return (

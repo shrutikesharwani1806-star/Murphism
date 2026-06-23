@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Search, Trash2, Clock, CheckCircle, User, Mail, Phone, 
-  BookOpen, MessageSquare, Lock, LogOut, RefreshCw
+  BookOpen, MessageSquare, Lock, LogOut, RefreshCw, Home
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -52,7 +52,7 @@ export default function AdminDashboard() {
     router.push('/');
   };
 
-  const fetchData = async () => {
+  async function fetchData() {
     setLoading(true);
     try {
       const res = await fetch('/api/admin/enquiries');
@@ -71,7 +71,7 @@ export default function AdminDashboard() {
     } finally {
       setLoading(false);
     }
-  };
+  }
 
   const handleStatusChange = async (id, type, newStatus) => {
     try {
@@ -216,6 +216,13 @@ export default function AdminDashboard() {
             </Link>
           </div>
           <div className="flex items-center gap-4">
+            <Link 
+              href="/" 
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-gray-900/50 hover:bg-gray-900 text-gray-300 hover:text-white text-xs border border-gray-800 transition-all font-medium"
+            >
+              <Home className="w-3.5 h-3.5" />
+              Home Page
+            </Link>
             <button 
               onClick={fetchData} 
               className="p-2 rounded hover:bg-gray-900 text-gray-400 hover:text-white transition-all"

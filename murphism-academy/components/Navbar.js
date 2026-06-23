@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Menu, X, LogOut, LayoutDashboard } from 'lucide-react';
 
 const navLinks = [
@@ -29,7 +30,8 @@ export default function Navbar() {
     const cachedUser = localStorage.getItem('murphism_user');
     if (cachedUser) {
       try {
-        setUser(JSON.parse(cachedUser));
+        const parsed = JSON.parse(cachedUser);
+        setTimeout(() => setUser(parsed), 0);
       } catch (e) {}
     }
 
@@ -87,16 +89,22 @@ export default function Navbar() {
                 background: 'radial-gradient(circle, rgba(124,58,237,0.3) 0%, rgba(201,162,39,0.2) 50%, transparent 100%)'
               }}
             />
-            <img
+            <Image
               src="/logo.png"
               alt="MURPHISM Logo"
+              width={48}
+              height={48}
+              priority
               className="h-8 md:h-12 w-auto object-contain transition-all duration-300 relative z-10"
               style={{ filter: 'brightness(1.55) contrast(1.15) drop-shadow(0 0 8px rgba(201, 162, 39, 0.45))' }}
             />
             <div className="h-6 md:h-8 w-px bg-white/20 self-center relative z-10" />
-            <img
+            <Image
               src="/name.png"
               alt="MURPHISM"
+              width={140}
+              height={36}
+              priority
               className="h-6 md:h-9 w-auto object-contain transition-all duration-300 relative z-10"
               style={{ filter: 'brightness(1.55) contrast(1.15) drop-shadow(0 0 8px rgba(201, 162, 39, 0.45))' }}
             />

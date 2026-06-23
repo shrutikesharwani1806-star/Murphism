@@ -101,7 +101,7 @@ export default function ContactPage() {
               <div className="rounded-[2.5vh] p-[3.5vh] border border-[rgba(201,162,39,0.12)]" style={{ background: 'rgba(15, 14, 18, 0.65)' }}>
                 <MessageSquare className="w-[3.5vh] h-[3.5vh] text-[#c9a227] mb-[2vh]" />
                 <p className="text-white text-[2.2vw] md:text-[2vh] font-semibold leading-relaxed mb-[1.5vh] font-serif italic">
-                  "We Morph You to Become Industry Ready Creators/Innovators"
+                  &ldquo;We Morph You to Become Industry Ready Creators/Innovators&rdquo;
                 </p>
                 <p className="text-[#9999bb] text-[1.3vh] font-mono tracking-widest uppercase">— The Murphism Promise</p>
                 <div className="mt-[2vh] pt-[2vh] border-t border-white/5 flex flex-wrap gap-[1vw] md:gap-[0.5vh]">

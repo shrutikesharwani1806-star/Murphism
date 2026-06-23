@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Sparkles, GraduationCap, Rocket } from 'lucide-react';
+import Link from 'next/link';
 
 export default function WelcomePopup() {
   const [isOpen, setIsOpen] = useState(false);
@@ -159,7 +160,7 @@ export default function WelcomePopup() {
                 transition={{ delay: 0.7 }}
                 className="flex flex-col sm:flex-row gap-3"
               >
-                <a
+                <Link
                   href="/#courses"
                   onClick={handleClose}
                   className="flex-1 py-3.5 rounded-xl font-bold text-sm tracking-wider uppercase transition-all duration-300 text-center"
@@ -172,7 +173,7 @@ export default function WelcomePopup() {
                   onMouseLeave={(e) => { e.target.style.transform = 'translateY(0)'; }}
                 >
                   Enroll Now ✦
-                </a>
+                </Link>
                 <button
                   onClick={handleClose}
                   className="flex-1 py-3.5 rounded-xl font-bold text-sm tracking-wider uppercase transition-all duration-300"

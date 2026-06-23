@@ -1,8 +1,28 @@
 'use client';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, PartyPopper, Phone, Mail, CheckCircle2 } from 'lucide-react';
 
 export default function EnrollmentSuccessPopup({ isOpen, onClose, studentName, courseName }) {
+  const [particles, setParticles] = useState([]);
+
+  useEffect(() => {
+    if (isOpen) {
+      const generated = [...Array(12)].map((_, i) => ({
+        initialX: Math.random() * 300,
+        yOffset: 400 + Math.random() * 200,
+        xOffset: Math.random() * 400 - 50,
+        rotateOffset: Math.random() * 720 - 360,
+        duration: 2 + Math.random() * 2,
+        delay: Math.random() * 0.5,
+        left: Math.random() * 100,
+      }));
+      setTimeout(() => setParticles(generated), 0);
+    } else {
+      setTimeout(() => setParticles([]), 0);
+    }
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   return (
@@ -37,21 +57,21 @@ export default function EnrollmentSuccessPopup({ isOpen, onClose, studentName, c
 
             {/* Confetti Particles (CSS animated) */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              {[...Array(12)].map((_, i) => (
+              {particles.map((p, i) => (
                 <motion.div
                   key={i}
-                  initial={{ y: -20, x: Math.random() * 300, opacity: 1, rotate: 0 }}
+                  initial={{ y: -20, x: p.initialX, opacity: 1, rotate: 0 }}
                   animate={{
-                    y: [null, 400 + Math.random() * 200],
-                    x: [null, Math.random() * 400 - 50],
+                    y: [null, p.yOffset],
+                    x: [null, p.xOffset],
                     opacity: [1, 0],
-                    rotate: [0, Math.random() * 720 - 360],
+                    rotate: [0, p.rotateOffset],
                   }}
-                  transition={{ duration: 2 + Math.random() * 2, delay: Math.random() * 0.5, ease: 'easeOut' }}
+                  transition={{ duration: p.duration, delay: p.delay, ease: 'easeOut' }}
                   className="absolute w-2 h-2 rounded-sm"
                   style={{
                     background: ['#c9a227', '#e8bf5a', '#f5d97a', '#a855f7', '#7c3aed', '#10b981'][i % 6],
-                    left: `${Math.random() * 100}%`,
+                    left: `${p.left}%`,
                   }}
                 />
               ))}

@@ -290,7 +290,12 @@ html.lenis, html.lenis body {
 
 /* Custom Cursor Hide */
 @media (pointer: fine) {
-  body, a, button, select, input, textarea, [role="button"], .btn-gold, .btn-ghost {
+  body.custom-cursor-active,
+  body.custom-cursor-active a,
+  body.custom-cursor-active button,
+  body.custom-cursor-active [role="button"],
+  body.custom-cursor-active .btn-gold,
+  body.custom-cursor-active .btn-ghost {
     cursor: none !important;
   }
 }
