@@ -87,7 +87,7 @@ export default function AICoursesSection() {
   // - Mobile: Scrolls through the cards horizontally.
   // - Desktop: Slides the whole grouped track from right to left (pushed 280px right initially) to center it.
   const xMobile = useTransform(scrollYProgress, [0, 1], ['0%', translation]);
-  const xDesktop = useTransform(scrollYProgress, [0, 0.55], ['280px', '0px']);
+  const xDesktop = useTransform(scrollYProgress, [0, 1], ['280px', '0px']);
   const x = isMobile ? xMobile : xDesktop;
 
   // Card-specific convergence transforms (only active on mobile)
