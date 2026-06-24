@@ -23,7 +23,7 @@ export default function ComparisonSection() {
       } else {
         clearInterval(interval);
       }
-    }, 1500); // Automatically trigger next row and arrow flow down every 1.5 seconds
+    }, 600); // Automatically trigger next row and arrow flow down every 0.6 seconds
 
     return () => clearInterval(interval);
   }, [isInView]);
@@ -77,13 +77,19 @@ export default function ComparisonSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="mb-16 flex flex-col items-center text-center"
+          className="mb-12 flex flex-col items-center text-center"
         >
           <div className="label-tag" style={{ margin: '0 auto 1.5rem auto' }}>Comparison</div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-wide text-[#f0ece0] mx-auto max-w-3xl" style={{ lineHeight: '1.25' }}>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-wide text-[#f0ece0] mx-auto max-w-3xl mb-4" style={{ lineHeight: '1.25' }}>
             What Sets Murphism Apart From Others
           </h2>
-          <div className="divider-gold" style={{ margin: '1.5rem auto', width: '48px' }} />
+          <p className="text-lg md:text-xl font-bold italic tracking-wide text-gold font-serif">
+            “They came, we shaped, they got placed.”
+          </p>
+          <p className="text-[10px] md:text-xs tracking-widest text-[#8e8a7d] uppercase font-mono mt-2 mb-4">
+            — The Murphism Promise
+          </p>
+          <div className="divider-gold" style={{ margin: '0.5rem auto 1.5rem auto', width: '48px' }} />
         </motion.div>
 
         {/* Outer comparison box */}
@@ -202,13 +208,13 @@ export default function ComparisonSection() {
               
               {/* Glowing active path line */}
               <div 
-                className="absolute top-0 w-full bg-gradient-to-b from-[#22c55e]/60 to-[#c9a227] rounded-full transition-all duration-[1500ms] cubic-bezier(0.25, 1, 0.5, 1)"
+                className="absolute top-0 w-full bg-gradient-to-b from-[#22c55e]/60 to-[#c9a227] rounded-full transition-all duration-[700ms] cubic-bezier(0.25, 1, 0.5, 1)"
                 style={{ height: `${progressPercent}%` }}
               />
               
               {/* Arrow Down Indicator */}
               <div 
-                className="absolute left-1/2 -translate-x-1/2 transition-all duration-[1500ms] cubic-bezier(0.25, 1, 0.5, 1) flex items-center justify-center"
+                className="absolute left-1/2 -translate-x-1/2 transition-all duration-[700ms] cubic-bezier(0.25, 1, 0.5, 1) flex items-center justify-center"
                 style={{
                   top: `${progressPercent}%`,
                   transform: 'translate(-50%, -50%)',
@@ -231,21 +237,7 @@ export default function ComparisonSection() {
           </div>
         </div>
 
-        {/* The Murphism Promise Quote */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="mt-16 text-center max-w-2xl mx-auto px-4"
-        >
-          <p className="text-xl md:text-2xl font-bold italic tracking-wide text-gold font-serif">
-            “They came, we shaped, they got placed.”
-          </p>
-          <p className="text-xs md:text-sm tracking-widest text-[#8e8a7d] uppercase font-mono mt-3">
-            — The Murphism Promise
-          </p>
-        </motion.div>
+
 
       </div>
     </section>
