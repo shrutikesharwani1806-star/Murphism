@@ -1,6 +1,6 @@
 'use client';
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import ComboBuilderSection from './ComboBuilderSection';
@@ -101,7 +101,7 @@ export const courses = [
     duration: '3 Years',
     level: 'Degree Program',
     highlights: ['Animation Principles', '3D Modelling & Rigging', 'VFX & Compositing', 'Game Design', 'AI in Animation', 'Industry Internships'],
-    description: 'Earn a full B.Sc. Degree in Animations & Multimedia. A comprehensive 3-year degree combining theory, practice, and real-world industry exposure.',
+    description: 'Earn a recognized B.Sc. Degree in Animations & Multimedia. A comprehensive 3-year degree combining theory, practice, and real-world industry exposure.',
     isDegree: true,
     image: '/courses/bsc-animation.png',
   },
@@ -131,7 +131,7 @@ const getCardStyles = (course, idx) => {
     'linear-gradient(135deg, #0a0c0e 0%, #111518 100%)', // 2: Deep Navy/Slate
     'linear-gradient(135deg, #120916 0%, #1c1022 100%)', // 3: Deep Plum/Purple
     'linear-gradient(135deg, #091510 0%, #112219 100%)', // 4: Deep Forest
-    'linear-gradient(135deg, #0d0c0a 0%, #171510 100%)', // 5: AI - Rich Obsidian Gold (replaced Vibrant Terracotta Orange)
+    'linear-gradient(135deg, #0d0c0a 0%, #171510 100%)', // 5: AI - Rich Obsidian Gold
     'linear-gradient(135deg, #1e1910 0%, #2a2215 100%)', // 6: Deep Amber
     'linear-gradient(135deg, #0d0d0f 0%, #16161a 100%)', // 7: Onyx Black
     'linear-gradient(135deg, #160f0f 0%, #241818 100%)', // 8: Crimson Black
@@ -145,7 +145,7 @@ const getCardStyles = (course, idx) => {
       border: 'border-[rgba(201,162,39,0.25)]', // Brighter luxury gold border for AI card
       titleText: 'text-white',
       taglineText: 'text-[#c9a227]',
-      descText: 'text-[#b8b099]',
+      descText: 'text-warm-muted',
       highlightBullet: 'text-[#c9a227]',
       highlightText: 'text-[#9c9380]',
       badgeText: 'text-[#9c9380]',
@@ -160,7 +160,7 @@ const getCardStyles = (course, idx) => {
     border: 'border-[rgba(201,162,39,0.12)]',
     titleText: 'text-white',
     taglineText: 'text-[#c9a227]',
-    descText: 'text-[#b8b099]',
+    descText: 'text-warm-muted',
     highlightBullet: 'text-[#c9a227]',
     highlightText: 'text-[#9c9380]',
     badgeText: 'text-[#9c9380]',
@@ -170,12 +170,280 @@ const getCardStyles = (course, idx) => {
   };
 };
 
+function CourseCard({ course, idx, total, isMobile, parentScrollYProgress }) {
+  const containerRef = useRef(null);
+  const styles = getCardStyles(course, idx);
+
+  // Scale only — NO opacity animation to prevent transparent card text bleed-through
+  const scale = parentScrollYProgress
+    ? useTransform(
+        parentScrollYProgress,
+        [0, idx / total, (idx + 1) / total, 1],
+        [1, 1, 0.97, 0.94]
+      )
+    : 1;
+
+  // On Mobile/Tablet: Render as a standard flowing list to guarantee buttery-smooth touch scrolling
+  if (isMobile) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-5% 0px" }}
+        transition={{ duration: 0.5, ease: 'easeOut' }}
+        className={`w-full rounded-3xl ${styles.border} p-6 flex flex-col gap-6 items-center relative overflow-hidden`}
+        style={{
+          background: styles.bg,
+          boxShadow: '0 15px 35px rgba(0, 0, 0, 0.7), inset 0 1px 2px rgba(255, 255, 255, 0.05)',
+        }}
+      >
+        {/* Accent blur gradient glow */}
+        <div 
+          className="absolute bottom-[-10%] right-[-10%] w-[200px] h-[200px] rounded-full blur-[60px] opacity-10 pointer-events-none"
+          style={{
+            background: `radial-gradient(circle, ${course.accentColor} 0%, transparent 80%)`,
+          }}
+        />
+
+        {/* Left Column: Details */}
+        <div className="flex-1 flex flex-col justify-between w-full relative z-10">
+          <div>
+            <div className="flex flex-wrap items-center gap-2.5 mb-4">
+              <span className="text-2xl">{course.emoji}</span>
+              <span className={`text-[10px] font-black tracking-widest uppercase px-2.5 py-1 rounded border ${styles.durationBadge}`}>
+                {course.duration}
+              </span>
+              {course.isNew && (
+                <span className="text-[10px] font-black tracking-widest uppercase px-2.5 py-1 rounded bg-red-950/40 text-red-400 border border-red-900/30">
+                  New
+                </span>
+              )}
+              {course.isCombo && (
+                <span className="text-[10px] font-black tracking-widest uppercase px-2.5 py-1 rounded bg-blue-950/40 text-blue-400 border border-blue-900/30">
+                  Combo
+                </span>
+              )}
+              {course.isDegree && (
+                <span className="text-[10px] font-black tracking-widest uppercase px-2.5 py-1 rounded bg-purple-950/40 text-purple-400 border border-purple-900/30">
+                  Diploma
+                </span>
+              )}
+            </div>
+            
+            <h3 className={`text-2xl font-extrabold tracking-tight mb-2 ${styles.titleText}`}>
+              {course.title}
+            </h3>
+            
+            <p className={`text-xs font-bold uppercase tracking-wider mb-4 ${styles.taglineText}`}>
+              {course.tagline}
+            </p>
+            
+            <p className={`text-sm leading-relaxed mb-6 ${styles.descText}`}>
+              {course.description}
+            </p>
+
+            {/* Highlights Grid */}
+            <div className="grid grid-cols-2 gap-x-4 gap-y-2 mb-8">
+              {course.highlights.slice(0, 4).map((h) => (
+                <div key={h} className={`text-xs flex items-center gap-2 ${styles.highlightText}`}>
+                  <span className={`text-[10px] ${styles.highlightBullet}`}>✦</span>
+                  {h}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Bottom Row inside card */}
+          <div className="flex flex-wrap items-center justify-between gap-4 border-t border-white/5 pt-6 mt-auto">
+            {/* Badges */}
+            <div className="flex flex-wrap gap-3">
+              <div className={`flex items-center gap-1.5 text-xs ${styles.badgeText}`}>
+                <svg className={`w-3.5 h-3.5 ${styles.badgeIcon}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                {course.duration}
+              </div>
+              <div className={`flex items-center gap-1.5 text-xs ${styles.badgeText}`}>
+                <svg className={`w-3.5 h-3.5 ${styles.badgeIcon}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+                </svg>
+                Certified
+              </div>
+            </div>
+
+            {/* View Course Button */}
+            <Link href={`/courses/${course.slug}`}>
+              <button
+                className={`px-5 py-2 rounded-full text-xs font-bold tracking-widest uppercase flex items-center gap-2 transition-all duration-300 ${styles.btnBg}`}
+              >
+                View Course <ArrowRight size={13} />
+              </button>
+            </Link>
+          </div>
+        </div>
+
+        {/* Right Column: Image */}
+        <div className="w-full flex justify-center relative z-10">
+          <div 
+            className="relative rounded-xl overflow-hidden border border-white/5 shadow-2xl w-full aspect-[4/3] group"
+            style={{
+              background: 'rgba(0,0,0,0.4)',
+            }}
+          >
+            <img
+              src={course.image}
+              alt={course.title}
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none" />
+          </div>
+        </div>
+      </motion.div>
+    );
+  }
+
+  // Desktop: simple sticky stacking — each card sticks and next one peeks from below
+  return (
+    <motion.div
+      ref={containerRef}
+      style={{
+        position: 'sticky',
+        top: `calc(10vh + ${idx * 5}vh)`,
+        scale,
+        transformOrigin: 'top center',
+        background: styles.bg,
+        boxShadow: '0 40px 100px -15px rgba(0, 0, 0, 0.95), inset 0 1px 2px rgba(255, 255, 255, 0.05)',
+        minHeight: '55vh',
+        marginBottom: '2vh',
+        isolation: 'isolate',
+      }}
+      className={`w-full rounded-3xl ${styles.border} p-10 flex flex-row gap-8 items-center relative overflow-hidden`}
+    >
+      {/* Accent blur gradient glow */}
+      <div 
+        className="absolute bottom-[-10%] right-[-10%] w-[300px] h-[300px] rounded-full blur-[80px] opacity-15 pointer-events-none"
+        style={{
+          background: `radial-gradient(circle, ${course.accentColor} 0%, transparent 80%)`,
+        }}
+      />
+
+      {/* Left Column: Details */}
+      <div className="flex-1 flex flex-col justify-between h-full z-10 w-full">
+        <div>
+          <div className="flex flex-wrap items-center gap-2.5 mb-4">
+            <span className="text-2xl">{course.emoji}</span>
+            <span className={`text-[10px] font-black tracking-widest uppercase px-2.5 py-1 rounded border ${styles.durationBadge}`}>
+              {course.duration}
+            </span>
+            {course.isNew && (
+              <span className="text-[10px] font-black tracking-widest uppercase px-2.5 py-1 rounded bg-red-950/40 text-red-400 border border-red-900/30">
+                New
+              </span>
+            )}
+            {course.isCombo && (
+              <span className="text-[10px] font-black tracking-widest uppercase px-2.5 py-1 rounded bg-blue-950/40 text-blue-400 border border-blue-900/30">
+                Combo
+              </span>
+            )}
+            {course.isDegree && (
+              <span className="text-[10px] font-black tracking-widest uppercase px-2.5 py-1 rounded bg-purple-950/40 text-purple-400 border border-purple-900/30">
+                Diploma
+              </span>
+            )}
+          </div>
+          
+          <h3 className={`text-3xl font-extrabold tracking-tight mb-2 ${styles.titleText}`}>
+            {course.title}
+          </h3>
+          
+          <p className={`text-xs font-bold uppercase tracking-wider mb-4 ${styles.taglineText}`}>
+            {course.tagline}
+          </p>
+          
+          <p className={`text-base leading-relaxed mb-6 ${styles.descText}`}>
+            {course.description}
+          </p>
+
+          {/* Highlights Grid */}
+          <div className="grid grid-cols-2 gap-x-4 gap-y-2 mb-8">
+            {course.highlights.slice(0, 4).map((h) => (
+              <div key={h} className={`text-xs flex items-center gap-2 ${styles.highlightText}`}>
+                <span className={`text-[10px] ${styles.highlightBullet}`}>✦</span>
+                {h}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Bottom Row inside card */}
+        <div className="flex flex-wrap items-center justify-between gap-4 border-t border-white/5 pt-6 mt-auto">
+          {/* Badges */}
+          <div className="flex gap-4">
+            <div className={`flex items-center gap-1.5 text-xs ${styles.badgeText}`}>
+              <svg className={`w-4 h-4 ${styles.badgeIcon}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              {course.duration}
+            </div>
+            <div className={`flex items-center gap-1.5 text-xs ${styles.badgeText}`}>
+              <svg className={`w-4 h-4 ${styles.badgeIcon}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+              </svg>
+              Certified
+            </div>
+            <div className={`flex items-center gap-1.5 text-xs ${styles.badgeText}`}>
+              <svg className={`w-4 h-4 ${styles.badgeIcon}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+              </svg>
+              24/7 Support
+            </div>
+          </div>
+
+          {/* View Course Button */}
+          <Link href={`/courses/${course.slug}`}>
+            <button
+              className={`px-6 py-2 rounded-full text-xs font-bold tracking-widest uppercase flex items-center gap-2 transition-all duration-300 ${styles.btnBg}`}
+            >
+              View Course <ArrowRight size={13} />
+            </button>
+          </Link>
+        </div>
+      </div>
+
+      {/* Right Column: Image */}
+      <div className="w-[42%] flex justify-center z-10">
+        <div 
+          className="relative rounded-2xl overflow-hidden border border-white/5 shadow-2xl w-full aspect-[4/3] group"
+          style={{
+            background: 'rgba(0,0,0,0.4)',
+            boxShadow: '0 20px 45px -10px rgba(0,0,0,0.9)',
+          }}
+        >
+          <img
+            src={course.image}
+            alt={course.title}
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none" />
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 export default function CoursesSection() {
   const [isMobile, setIsMobile] = useState(false);
   const [activeTab, setActiveTab] = useState('individual');
+  const parentRef = useRef(null);
+
+  // Capture parent scroll progress
+  const { scrollYProgress } = useScroll({
+    target: parentRef,
+    offset: ["start start", "end end"]
+  });
 
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    const handleResize = () => setIsMobile(window.innerWidth < 1024);
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -202,7 +470,7 @@ export default function CoursesSection() {
             <span className="text-gold">Transform Careers</span>
           </h2>
           <div className="divider-gold" style={{ margin: '1.5rem auto', width: '48px' }} />
-          <p className="text-[#b8b099] text-sm md:text-base max-w-xl mx-auto leading-relaxed">
+          <p className="text-warm-muted text-sm md:text-base max-w-xl mx-auto leading-relaxed">
             Industry-aligned programs designed by working professionals. Experience our immersive learning.
           </p>
 
@@ -213,7 +481,7 @@ export default function CoursesSection() {
               className={`px-6 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase transition-all duration-300 ${
                 activeTab === 'individual'
                   ? 'bg-[#c9a227] text-black shadow-lg shadow-[#c9a227]/10'
-                  : 'text-[#b8b099] hover:text-white'
+                  : 'text-warm-muted hover:text-white'
               }`}
             >
               All Courses
@@ -223,7 +491,7 @@ export default function CoursesSection() {
               className={`px-6 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase transition-all duration-300 ${
                 activeTab === 'combo'
                   ? 'bg-[#c9a227] text-black shadow-lg shadow-[#c9a227]/10'
-                  : 'text-[#b8b099] hover:text-white'
+                  : 'text-warm-muted hover:text-white'
               }`}
             >
               Custom Career Builder
@@ -234,142 +502,21 @@ export default function CoursesSection() {
 
       {activeTab === 'individual' ? (
         /* Cards Stacking Container */
-        <div className="max-w-5xl mx-auto px-6 flex flex-col gap-12 relative" style={{ overflow: 'visible' }}>
-          {courses.map((course, idx) => {
-            const styles = getCardStyles(course, idx);
-            // Tiered stack calculation (increasing top values to ensure cards stack correctly)
-            const stickyTop = isMobile ? (70 + idx * 20) : (100 + idx * 48); 
-            const cardScale = isMobile ? (0.95 + idx * 0.006) : (0.92 + idx * 0.01);
-            
-            return (
-              <motion.div
-                key={course.slug}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-10% 0px" }}
-                transition={{ duration: 0.7, delay: idx * 0.05 }}
-                className={`sticky w-full rounded-3xl ${styles.border} p-6 md:p-10 flex flex-col md:flex-row gap-6 md:gap-8 items-center transition-all duration-300`}
-                style={{
-                  top: `${stickyTop}px`,
-                  transform: `scale(${cardScale})`,
-                  transformOrigin: 'top center',
-                  background: styles.bg,
-                  boxShadow: '0 30px 70px rgba(0, 0, 0, 0.85), inset 0 1px 2px rgba(255, 255, 255, 0.05)',
-                  minHeight: isMobile ? 'auto' : '400px',
-                }}
-              >
-                {/* Accent blur gradient glow */}
-                <div 
-                  className="absolute bottom-[-10%] right-[-10%] w-[300px] h-[300px] rounded-full blur-[80px] opacity-15 pointer-events-none"
-                  style={{
-                    background: `radial-gradient(circle, ${course.accentColor} 0%, transparent 80%)`,
-                  }}
-                />
-
-                {/* Left Column: Details */}
-                <div className="flex-1 flex flex-col justify-between h-full z-10 w-full">
-                  <div>
-                    <div className="flex flex-wrap items-center gap-2.5 mb-4">
-                      <span className="text-2xl">{course.emoji}</span>
-                      <span className={`text-[10px] font-black tracking-widest uppercase px-2.5 py-1 rounded border ${styles.durationBadge}`}>
-                        {course.duration}
-                      </span>
-                      {course.isNew && (
-                        <span className="text-[10px] font-black tracking-widest uppercase px-2.5 py-1 rounded bg-red-950/40 text-red-400 border border-red-900/30">
-                          New
-                        </span>
-                      )}
-                      {course.isCombo && (
-                        <span className="text-[10px] font-black tracking-widest uppercase px-2.5 py-1 rounded bg-blue-950/40 text-blue-400 border border-blue-900/30">
-                          Combo
-                        </span>
-                      )}
-                      {course.isDegree && (
-                        <span className="text-[10px] font-black tracking-widest uppercase px-2.5 py-1 rounded bg-purple-950/40 text-purple-400 border border-purple-900/30">
-                          Diploma
-                        </span>
-                      )}
-                    </div>
-                    
-                    <h3 className={`text-2xl md:text-3xl font-extrabold tracking-tight mb-2 ${styles.titleText}`}>
-                      {course.title}
-                    </h3>
-                    
-                    <p className={`text-xs font-bold uppercase tracking-wider mb-4 ${styles.taglineText}`}>
-                      {course.tagline}
-                    </p>
-                    
-                    <p className={`text-sm md:text-base leading-relaxed mb-6 ${styles.descText}`}>
-                      {course.description}
-                    </p>
-
-                    {/* Highlights Grid */}
-                    <div className="grid grid-cols-2 gap-x-4 gap-y-2 mb-8">
-                      {course.highlights.slice(0, 4).map((h) => (
-                        <div key={h} className={`text-xs flex items-center gap-2 ${styles.highlightText}`}>
-                          <span className={`text-[10px] ${styles.highlightBullet}`}>✦</span>
-                          {h}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Bottom Row inside card */}
-                  <div className="flex flex-wrap items-center justify-between gap-4 border-t border-white/5 pt-6 mt-auto">
-                    {/* Badges */}
-                    <div className="flex gap-4">
-                      <div className={`flex items-center gap-1.5 text-xs ${styles.badgeText}`}>
-                        <svg className={`w-4 h-4 ${styles.badgeIcon}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                        {course.duration}
-                      </div>
-                      <div className={`flex items-center gap-1.5 text-xs ${styles.badgeText}`}>
-                        <svg className={`w-4 h-4 ${styles.badgeIcon}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
-                        </svg>
-                        Certified
-                      </div>
-                      <div className={`flex items-center gap-1.5 text-xs ${styles.badgeText}`}>
-                        <svg className={`w-4 h-4 ${styles.badgeIcon}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
-                        </svg>
-                        24/7 Support
-                      </div>
-                    </div>
-
-                    {/* View Course Button */}
-                    <Link href={`/courses/${course.slug}`}>
-                      <button
-                        className={`px-6 py-2 rounded-full text-xs font-bold tracking-widest uppercase flex items-center gap-2 transition-all duration-300 ${styles.btnBg}`}
-                      >
-                        View Course <ArrowRight size={13} />
-                      </button>
-                    </Link>
-                  </div>
-                </div>
-
-                {/* Right Column: AI Showcase Image */}
-                <div className="w-full md:w-[42%] flex justify-center z-10">
-                  <div 
-                    className="relative rounded-2xl overflow-hidden border border-white/5 shadow-2xl w-full aspect-[4/3] group"
-                    style={{
-                      background: 'rgba(0,0,0,0.4)',
-                      boxShadow: '0 20px 45px -10px rgba(0,0,0,0.9)',
-                    }}
-                  >
-                    <img
-                      src={course.image}
-                      alt={course.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                    {/* Subtle luxury light overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none" />
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
+        <div 
+          ref={parentRef}
+          className="max-w-5xl mx-auto px-6 flex flex-col relative" 
+          style={{ overflow: 'visible' }}
+        >
+          {courses.map((course, idx) => (
+            <CourseCard
+              key={course.slug}
+              course={course}
+              idx={idx}
+              total={courses.length}
+              isMobile={isMobile}
+              parentScrollYProgress={scrollYProgress}
+            />
+          ))}
         </div>
       ) : (
         <div className="max-w-7xl mx-auto px-6 relative">

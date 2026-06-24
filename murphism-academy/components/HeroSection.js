@@ -255,15 +255,15 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-          className="text-white font-medium tracking-tight mb-6 leading-[1.25] text-xl sm:text-2xl md:text-3xl lg:text-4xl max-w-3xl"
+          className="text-white font-semibold tracking-tight mb-6 leading-[1.3] text-2xl sm:text-3xl md:text-4xl lg:text-5xl max-w-3xl"
           style={{ 
             fontFamily: "var(--font-outfit), sans-serif"
           }}
         >
           Join The Growing Community Of Students <br className="hidden sm:inline" />
-          Building Real-World Creative & Tech Careers With{' '}
+          Building Real-World <span className="text-[#e8bf5a] font-bold">Creative &amp; Tech Careers</span> With{' '}
           <span 
-            className="px-3 py-1 mx-1 inline-block border border-[rgba(201,162,39,0.3)] bg-[rgba(201,162,39,0.05)] rounded-md text-white font-normal relative"
+            className="px-3 py-1 mx-1 inline-block border border-[rgba(201,162,39,0.35)] bg-[rgba(201,162,39,0.08)] rounded-md text-white font-normal relative"
             style={{ 
               fontFamily: 'Playfair Display, serif',
               fontStyle: 'italic'
@@ -280,7 +280,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="text-[#b8b099] text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-8"
+          className="text-[#d4cebe] text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-8"
         >
           We morph you into industry-ready creators and innovators. Get mentored by professionals, build production-grade portfolios, and secure placements at leading brands.
         </motion.p>
@@ -309,7 +309,7 @@ export default function HeroSection() {
             ))}
           </div>
           {/* Text */}
-          <p className="text-sm md:text-base text-[#b8b099] tracking-wide">
+          <p className="text-sm md:text-base text-[#d4cebe] tracking-wide">
             <span className="text-[#c9a227] font-semibold">500+ Students</span> learning in our industry-ready programs
           </p>
         </motion.div>

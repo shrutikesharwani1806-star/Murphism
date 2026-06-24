@@ -78,40 +78,42 @@ export default function Navbar() {
       }
     >
       <div className="max-w-7xl mx-auto px-4 md:px-6">
-        {/* ── 3-column grid ── */}
-        <div className="grid grid-cols-3 items-center">
+        {/* ── Flex container for responsive spacing ── */}
+        <div className="flex items-center justify-between w-full">
 
           {/* ── LEFT: Logo ── */}
-          <Link href="/" className="flex items-center gap-2 md:gap-3 group w-fit relative py-1 px-2">
-            <div
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[130%] h-[130%] rounded-full opacity-70 blur-2xl pointer-events-none transition-all duration-500 group-hover:opacity-100 group-hover:scale-110"
-              style={{
-                background: 'radial-gradient(circle, rgba(124,58,237,0.3) 0%, rgba(201,162,39,0.2) 50%, transparent 100%)'
-              }}
-            />
-            <Image
-              src="/logo.png"
-              alt="MURPHISM Logo"
-              width={54}
-              height={54}
-              priority
-              className="h-9 md:h-13 w-auto object-contain transition-all duration-300 relative z-10"
-              style={{ filter: 'brightness(1.55) contrast(1.15) drop-shadow(0 0 8px rgba(201, 162, 39, 0.45))' }}
-            />
-            <div className="h-7 md:h-9 w-px bg-white/20 self-center relative z-10" />
-            <Image
-              src="/name.png"
-              alt="MURPHISM"
-              width={180}
-              height={46}
-              priority
-              className="h-8 md:h-11 w-auto object-contain transition-all duration-300 relative z-10"
-              style={{ filter: 'brightness(1.55) contrast(1.15) drop-shadow(0 0 8px rgba(201, 162, 39, 0.45))' }}
-            />
-          </Link>
+          <div className="flex-1 flex justify-start min-w-max">
+            <Link href="/" className="flex items-center gap-1.5 md:gap-2.5 group w-fit relative py-1 px-1">
+              <div
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[130%] h-[130%] rounded-full opacity-60 blur-xl pointer-events-none transition-all duration-500 group-hover:opacity-90 group-hover:scale-110"
+                style={{
+                  background: 'radial-gradient(circle, rgba(124,58,237,0.2) 0%, rgba(201,162,39,0.15) 50%, transparent 100%)'
+                }}
+              />
+              <Image
+                src="/logo.png"
+                alt="MURPHISM Logo"
+                width={48}
+                height={48}
+                priority
+                className="h-8 md:h-11 w-auto object-contain transition-all duration-300 relative z-10"
+                style={{ filter: 'brightness(1.6) contrast(1.2) drop-shadow(0 0 10px rgba(201, 162, 39, 0.5))' }}
+              />
+              <div className="h-6 md:h-8 w-px bg-gradient-to-b from-[#c9a227]/30 via-[#c9a227]/60 to-[#c9a227]/30 self-center relative z-10 mx-1 md:mx-2" />
+              <Image
+                src="/name.png"
+                alt="MURPHISM"
+                width={140}
+                height={36}
+                priority
+                className="h-6 md:h-8 w-auto object-contain transition-all duration-300 relative z-10"
+                style={{ filter: 'brightness(1.6) contrast(1.2) drop-shadow(0 0 10px rgba(201, 162, 39, 0.5))' }}
+              />
+            </Link>
+          </div>
 
           {/* ── CENTER: Nav links ── */}
-          <div className="hidden md:flex justify-center">
+          <div className="hidden md:flex flex-1 justify-center">
             <div
               className="flex items-center gap-2 px-2 py-1 rounded-md"
               style={{
@@ -136,87 +138,89 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* ── RIGHT: Auth buttons ── */}
-          <div className="hidden md:flex justify-end items-center gap-3">
-            {user === null ? null : user ? (
-              // Logged in
-              <div className="flex items-center gap-4">
-                {user.isAdmin ? (
-                  <>
-                    <Link
-                      href="/admin"
-                      className="flex items-center gap-1.5 text-xs font-semibold tracking-widest uppercase transition-all duration-300 px-3 py-1.5 rounded-lg"
-                      style={{ color: '#c9a227', border: '1px solid rgba(201,162,39,0.2)', background: 'rgba(201,162,39,0.06)' }}
-                      onMouseEnter={e => (e.currentTarget.style.background = 'rgba(201,162,39,0.12)')}
-                      onMouseLeave={e => (e.currentTarget.style.background = 'rgba(201,162,39,0.06)')}
-                    >
-                      <LayoutDashboard size={13} /> Admin Dashboard
-                    </Link>
-                    <Link
-                      href="/admin"
-                      title="Go to Admin Dashboard"
-                      className="w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm border transition-all duration-300 hover:scale-110"
+          {/* ── RIGHT: Auth / Hamburger ── */}
+          <div className="flex-1 flex justify-end items-center gap-3">
+            <div className="hidden md:flex items-center gap-3">
+              {user === null ? null : user ? (
+                // Logged in
+                <div className="flex items-center gap-4">
+                  {user.isAdmin ? (
+                    <>
+                      <Link
+                        href="/admin"
+                        className="flex items-center gap-1.5 text-xs font-semibold tracking-widest uppercase transition-all duration-300 px-3 py-1.5 rounded-lg"
+                        style={{ color: '#c9a227', border: '1px solid rgba(201,162,39,0.2)', background: 'rgba(201,162,39,0.06)' }}
+                        onMouseEnter={e => (e.currentTarget.style.background = 'rgba(201,162,39,0.12)')}
+                        onMouseLeave={e => (e.currentTarget.style.background = 'rgba(201,162,39,0.06)')}
+                      >
+                        <LayoutDashboard size={13} /> Admin Dashboard
+                      </Link>
+                      <Link
+                        href="/admin"
+                        title="Go to Admin Dashboard"
+                        className="w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm border transition-all duration-300 hover:scale-110"
+                        style={{
+                          background: 'linear-gradient(135deg, #c9a227 0%, #e8bf5a 100%)',
+                          borderColor: '#c9a227',
+                          color: '#050508',
+                          boxShadow: '0 0 10px rgba(201,162,39,0.3)',
+                        }}
+                      >
+                        {displayLetter}
+                      </Link>
+                    </>
+                  ) : (
+                    <div
+                      title={user.name || user.email}
+                      className="w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm border"
                       style={{
-                        background: 'linear-gradient(135deg, #c9a227 0%, #e8bf5a 100%)',
-                        borderColor: '#c9a227',
-                        color: '#050508',
-                        boxShadow: '0 0 10px rgba(201,162,39,0.3)',
+                        background: 'rgba(255,255,255,0.06)',
+                        borderColor: 'rgba(255,255,255,0.15)',
+                        color: '#b8b099',
                       }}
                     >
                       {displayLetter}
-                    </Link>
-                  </>
-                ) : (
-                  <div
-                    title={user.name || user.email}
-                    className="w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm border"
-                    style={{
-                      background: 'rgba(255,255,255,0.06)',
-                      borderColor: 'rgba(255,255,255,0.15)',
-                      color: '#b8b099',
-                    }}
+                    </div>
+                  )}
+                  <button
+                    onClick={handleLogout}
+                    className="flex items-center gap-1.5 text-xs font-semibold tracking-widest uppercase transition-all duration-300 px-3 py-1.5 rounded-lg"
+                    style={{ color: '#9a6060', border: '1px solid rgba(180,60,60,0.2)', background: 'rgba(180,60,60,0.05)' }}
+                    onMouseEnter={e => (e.currentTarget.style.background = 'rgba(180,60,60,0.12)')}
+                    onMouseLeave={e => (e.currentTarget.style.background = 'rgba(180,60,60,0.05)')}
                   >
-                    {displayLetter}
-                  </div>
-                )}
-                <button
-                  onClick={handleLogout}
-                  className="flex items-center gap-1.5 text-xs font-semibold tracking-widest uppercase transition-all duration-300 px-3 py-1.5 rounded-lg"
-                  style={{ color: '#9a6060', border: '1px solid rgba(180,60,60,0.2)', background: 'rgba(180,60,60,0.05)' }}
-                  onMouseEnter={e => (e.currentTarget.style.background = 'rgba(180,60,60,0.12)')}
-                  onMouseLeave={e => (e.currentTarget.style.background = 'rgba(180,60,60,0.05)')}
+                    <LogOut size={13} /> Logout
+                  </button>
+                </div>
+              ) : (
+                // Guest
+                <Link
+                  href="/auth/login"
+                  className="text-sm font-semibold tracking-widest uppercase transition-all duration-300 relative group"
+                  style={{ color: '#b8b099' }}
+                  onMouseEnter={e => (e.currentTarget.style.color = '#e8bf5a')}
+                  onMouseLeave={e => (e.currentTarget.style.color = '#b8b099')}
                 >
-                  <LogOut size={13} /> Logout
-                </button>
-              </div>
-            ) : (
-              // Guest
-              <Link
-                href="/auth/login"
-                className="text-sm font-semibold tracking-widest uppercase transition-all duration-300 relative group"
-                style={{ color: '#b8b099' }}
-                onMouseEnter={e => (e.currentTarget.style.color = '#e8bf5a')}
-                onMouseLeave={e => (e.currentTarget.style.color = '#b8b099')}
-              >
-                Sign In
-                <span
-                  className="absolute -bottom-0.5 left-0 h-[2px] w-0 transition-all duration-300 group-hover:w-full"
-                  style={{ background: 'linear-gradient(90deg, #c9a227, #a855f7)' }}
-                />
-              </Link>
-            )}
-          </div>
+                  Sign In
+                  <span
+                    className="absolute -bottom-0.5 left-0 h-[2px] w-0 transition-all duration-300 group-hover:w-full"
+                    style={{ background: 'linear-gradient(90deg, #c9a227, #a855f7)' }}
+                  />
+                </Link>
+              )}
+            </div>
 
-          {/* ── Mobile: hamburger ── */}
-          <div className="md:hidden flex justify-end col-start-3">
-            <button
-              onClick={() => setOpen(!open)}
-              aria-label="Toggle menu"
-              className="transition-colors duration-300"
-              style={{ color: '#b8b099' }}
-            >
-              {open ? <X size={22} /> : <Menu size={22} />}
-            </button>
+            {/* Mobile: hamburger */}
+            <div className="md:hidden flex items-center">
+              <button
+                onClick={() => setOpen(!open)}
+                aria-label="Toggle menu"
+                className="transition-colors duration-300"
+                style={{ color: '#b8b099' }}
+              >
+                {open ? <X size={22} /> : <Menu size={22} />}
+              </button>
+            </div>
           </div>
         </div>
 

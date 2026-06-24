@@ -10,6 +10,10 @@ import ComparisonSection from '@/components/ComparisonSection';
 import WhyMurphism from '@/components/WhyMurphism';
 import FAQSection from '@/components/FAQSection';
 import Footer from '@/components/Footer';
+import CTASection from '@/components/CTASection';
+import HomeClientWrapper from '@/components/HomeClientWrapper';
+
+
 
 export const metadata = {
   title: 'MURPHISM Academy | We Morph You Into Industry-Ready Creators',
@@ -30,18 +34,21 @@ export const viewport = {
 export default function Home() {
   return (
     <main>
-      <Navbar />
-      <HeroSection />
-      <StatsSection />
-      <CoursesSection />
-      <AICoursesSection />
-      <DegreeSection />
-      <ForeignExposure />
-      <CertificateSection />
-      <ComparisonSection />
-      <WhyMurphism />
-      <FAQSection />
-      <Footer />
+      <HomeClientWrapper>
+        <Navbar />
+        <HeroSection />
+        <StatsSection />
+        <CoursesSection />
+        <AICoursesSection />
+        <DegreeSection />
+        <ForeignExposure />
+        <CertificateSection />
+        <ComparisonSection />
+        <WhyMurphism />
+        <FAQSection />
+        <CTASection />
+        <Footer />
+      </HomeClientWrapper>
     </main>
   );
 }
