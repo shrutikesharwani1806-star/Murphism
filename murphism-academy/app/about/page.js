@@ -9,7 +9,7 @@ export default function AboutPage() {
   const [showJourney, setShowJourney] = useState(false);
 
   return (
-    <main className="bg-[#050508] min-h-screen relative overflow-hidden">
+    <main className="bg-[#050505] min-h-screen relative overflow-hidden">
       <Navbar />
 
       {/* Background glow layers */}

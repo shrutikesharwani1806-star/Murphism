@@ -183,7 +183,7 @@ function CourseCard({ course, idx, total, isMobile, parentScrollYProgress }) {
       )
     : 1;
 
-  // On Mobile/Tablet: Render as a standard flowing list to guarantee buttery-smooth touch scrolling
+  // On Mobile/Tablet: Render as a sticky stacking list that works beautifully on small screens
   if (isMobile) {
     return (
       <motion.div
@@ -193,8 +193,18 @@ function CourseCard({ course, idx, total, isMobile, parentScrollYProgress }) {
         transition={{ duration: 0.5, ease: 'easeOut' }}
         className={`w-full rounded-3xl ${styles.border} p-6 flex flex-col gap-6 items-center relative overflow-hidden`}
         style={{
+          position: 'sticky',
+          top: `calc(8vh + ${idx * 32}px)`,
+          willChange: 'transform',
+          transformOrigin: 'top center',
           background: styles.bg,
           boxShadow: '0 15px 35px rgba(0, 0, 0, 0.7), inset 0 1px 2px rgba(255, 255, 255, 0.05)',
+          marginBottom: '3vh',
+          isolation: 'isolate',
+          backfaceVisibility: 'hidden',
+          WebkitBackfaceVisibility: 'hidden',
+          backgroundClip: 'padding-box',
+          outline: '1px solid transparent',
         }}
       >
         {/* Accent blur gradient glow */}
@@ -306,16 +316,24 @@ function CourseCard({ course, idx, total, isMobile, parentScrollYProgress }) {
   return (
     <motion.div
       ref={containerRef}
+      initial={{ opacity: 0, y: 60 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-10% 0px" }}
+      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       style={{
         position: 'sticky',
-        top: `calc(10vh + ${idx * 5}vh)`,
-        scale,
+        top: `calc(8vh + ${idx * 48}px)`,
+        willChange: 'transform',
         transformOrigin: 'top center',
         background: styles.bg,
         boxShadow: '0 40px 100px -15px rgba(0, 0, 0, 0.95), inset 0 1px 2px rgba(255, 255, 255, 0.05)',
         minHeight: '55vh',
         marginBottom: '2vh',
         isolation: 'isolate',
+        backfaceVisibility: 'hidden',
+        WebkitBackfaceVisibility: 'hidden',
+        backgroundClip: 'padding-box',
+        outline: '1px solid transparent',
       }}
       className={`w-full rounded-3xl ${styles.border} p-10 flex flex-row gap-8 items-center relative overflow-hidden`}
     >
@@ -450,7 +468,7 @@ export default function CoursesSection() {
   }, []);
 
   return (
-    <section id="courses" className="py-24 relative" style={{ background: '#050508', overflow: 'visible' }}>
+    <section id="courses" className="py-24 relative" style={{ background: '#050505', overflow: 'visible' }}>
       {/* Top rule separator */}
       <div className="w-full h-px mb-16" style={{ background: 'linear-gradient(90deg, transparent, rgba(201,162,39,0.15), transparent)' }} />
 

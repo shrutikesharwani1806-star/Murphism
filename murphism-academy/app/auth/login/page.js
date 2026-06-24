@@ -42,7 +42,7 @@ export default function LoginPage() {
   return (
     <main
       className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden"
-      style={{ background: '#050508' }}
+      style={{ background: '#050505' }}
     >
       {/* Back to Home Button */}
       <Link
@@ -150,7 +150,7 @@ export default function LoginPage() {
               type="submit"
               disabled={loading}
               className="w-full py-3 rounded-xl font-bold text-sm tracking-wider flex items-center justify-center gap-2 transition-all duration-300 disabled:opacity-60"
-              style={{ background: 'linear-gradient(135deg, #c9a227 0%, #e8bf5a 100%)', color: '#050508' }}
+              style={{ background: 'linear-gradient(135deg, #c9a227 0%, #e8bf5a 100%)', color: '#050505' }}
             >
               {loading ? <><Loader size={16} className="animate-spin" /><span>Signing In...</span></> : <><span>Sign In</span><ArrowRight size={16} /></>}
             </button>

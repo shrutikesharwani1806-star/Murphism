@@ -22,7 +22,7 @@ const reasons = [
   },
   {
     num: '03',
-    title: 'Foreign Work Exposure',
+    title: 'Foreign Work Exposures Provided',
     desc: 'Gain real international client project experience. Master global creative standards and build a resume that commands premium global value.',
     stat: 'Global Network',
     icon: Globe,

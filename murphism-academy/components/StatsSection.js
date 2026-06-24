@@ -53,7 +53,7 @@ export default function StatsSection() {
       ref={containerRef}
       className="relative py-16 md:py-24 border-y overflow-hidden"
       style={{
-        background: '#050508',
+        background: '#050505',
         borderColor: 'rgba(201,162,39,0.08)',
       }}
     >

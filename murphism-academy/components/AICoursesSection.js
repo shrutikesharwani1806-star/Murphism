@@ -49,7 +49,9 @@ const aiModules = [
 
 export default function AICoursesSection() {
   const sectionRef = useRef(null);
+  const scrollContainerRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [autoScrollPaused, setAutoScrollPaused] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -60,6 +62,59 @@ export default function AICoursesSection() {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // Auto scroll effect on mobile
+  useEffect(() => {
+    if (!isMobile || autoScrollPaused) return;
+
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    let animationFrameId;
+    const speed = 0.55; // Pixels per frame - smooth slow glide
+
+    const step = () => {
+      if (container) {
+        container.scrollLeft += speed;
+        // Loop back seamlessly if we scroll past first set of modules
+        const singleSetWidth = container.scrollWidth / 2;
+        if (container.scrollLeft >= singleSetWidth) {
+          container.scrollLeft -= singleSetWidth;
+        }
+      }
+      animationFrameId = requestAnimationFrame(step);
+    };
+
+    animationFrameId = requestAnimationFrame(step);
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, [isMobile, autoScrollPaused]);
+
+  // Pause auto-scroll on click / touch interaction
+  useEffect(() => {
+    if (!isMobile) return;
+
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const handleInteraction = () => {
+      setAutoScrollPaused(true);
+    };
+
+    container.addEventListener('pointerdown', handleInteraction, { passive: true });
+    container.addEventListener('touchstart', handleInteraction, { passive: true });
+    container.addEventListener('mousedown', handleInteraction);
+
+    return () => {
+      if (container) {
+        container.removeEventListener('pointerdown', handleInteraction);
+        container.removeEventListener('touchstart', handleInteraction);
+        container.removeEventListener('mousedown', handleInteraction);
+      }
+    };
+  }, [isMobile]);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -86,7 +141,7 @@ export default function AICoursesSection() {
           {/* Glow backdrop */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full bg-[#c9a227]/3 blur-[80px] pointer-events-none" />
           <div className="absolute top-0 left-0 right-0 h-px"
-            style={{ background: 'gradient(90deg, transparent, rgba(201,162,39,0.08), transparent)' }} />
+            style={{ background: 'linear-gradient(90deg, transparent, rgba(201,162,39,0.08), transparent)' }} />
 
           {/* Section Header */}
           <div className="w-full flex flex-col items-center text-center relative z-10">
@@ -108,13 +163,16 @@ export default function AICoursesSection() {
             </p>
           </div>
 
-          {/* Horizontal Scroll Track: Standard manual overflow scrolling */}
-          <div className="w-full relative z-10 overflow-x-auto pb-6 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white/10 snap-x snap-mandatory">
+          {/* Horizontal Scroll Track: Auto-scrollable and manual overflow scrolling */}
+          <div 
+            ref={scrollContainerRef}
+            className="w-full relative z-10 overflow-x-auto pb-6 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white/10"
+          >
             <div className="flex gap-6 w-max px-2">
-              {aiModules.map((mod) => (
+              {[...aiModules, ...aiModules].map((mod, idx) => (
                 <div
-                  key={mod.title}
-                  className="w-[280px] h-[390px] snap-center flex-shrink-0 rounded-2xl border border-white/5 bg-[#0b0a0c] p-6 flex flex-col justify-between shadow-xl relative overflow-hidden group transition-all duration-500 hover:border-[#c9a227]/30"
+                  key={`${mod.title}-${idx}`}
+                  className="w-[280px] h-[390px] flex-shrink-0 rounded-2xl border border-white/5 bg-[#0b0a0c] p-6 flex flex-col justify-between shadow-xl relative overflow-hidden group transition-all duration-500 hover:border-[#c9a227]/30"
                 >
                   {/* Grid line bg overlay */}
                   <div className="absolute inset-0 bg-[radial-gradient(#1a1712_1px,transparent_1px)] [background-size:16px_16px] opacity-15 pointer-events-none" />

@@ -13,16 +13,25 @@ export default function HomeClientWrapper({ children }) {
     return () => clearTimeout(timer);
   }, []);
 
+  // Disable scrollbar / scrolling during preloading to prevent glitchy side borders
+  useEffect(() => {
+    if (loading) {
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+    };
+  }, [loading]);
+
   return (
     <>
       {loading && <Preloader onComplete={() => setLoading(false)} />}
-      <div 
-        style={{ 
-          visibility: loading ? 'hidden' : 'visible',
-          height: loading ? '100vh' : 'auto',
-          overflow: loading ? 'hidden' : 'visible'
-        }}
-      >
+      <div className={loading ? "pointer-events-none select-none" : ""}>
         {children}
       </div>
     </>

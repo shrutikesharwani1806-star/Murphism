@@ -43,7 +43,7 @@ export default function ContactPage() {
   ];
 
   return (
-    <main className="bg-[#050508] min-h-screen">
+    <main className="bg-[#050505] min-h-screen">
       <Navbar />
 
       {/* Hero */}

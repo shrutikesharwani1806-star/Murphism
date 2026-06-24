@@ -30,7 +30,7 @@ const playfairDisplay = Playfair_Display({
 export const metadata = {
   title: 'MURPHISM Academy | We Morph You Into Industry-Ready Creators',
   description:
-    'Join Murphism — the premium creative & tech academy offering Graphic Design, Website Development, Video Editing, 3D Modelling, AI Courses, and Diploma in Animations & Modelling. 100% Job Assistance. Foreign Work Exposure.',
+    'Join Murphism — the premium creative & tech academy offering Graphic Design, Website Development, Video Editing, 3D Modelling, AI Courses, and Diploma in Animations & Modelling. 100% Job Assistance. Foreign Work Exposures Provided.',
   icons: {
     icon: '/logo.png',
     shortcut: '/logo.png',
@@ -51,7 +51,7 @@ export const metadata = {
   openGraph: {
     title: 'MURPHISM Academy | Industry-Ready Creators & Innovators',
     description:
-      'We Morph You to Become Industry Ready Creators/Innovators. 100% Job Assistance. Foreign Work Exposure.',
+      'We Morph You to Become Industry Ready Creators/Innovators. 100% Job Assistance. Foreign Work Exposures Provided.',
     type: 'website',
     locale: 'en_IN',
   },
@@ -59,13 +59,17 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'MURPHISM Academy',
     description:
-      'Premium creative & tech academy. 100% job assistance. Foreign work exposure.',
+      'Premium creative & tech academy. 100% job assistance. Foreign work exposures provided.',
   },
   robots: { index: true, follow: true },
 };
 
 export const viewport = {
-  themeColor: '#050508',
+  themeColor: '#050505',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({ children }) {

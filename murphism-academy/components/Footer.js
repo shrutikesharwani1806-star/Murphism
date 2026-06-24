@@ -50,7 +50,7 @@ const socials = [
 
 export default function Footer() {
   return (
-    <footer className="bg-[#050508] border-t border-[rgba(245,197,24,0.08)] pt-16 pb-8">
+    <footer className="bg-[#050505] border-t border-[rgba(245,197,24,0.08)] pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
 
@@ -161,7 +161,7 @@ export default function Footer() {
             © 2026 MURPHISM Academy. All rights reserved.
           </p>
           <div className="flex gap-6">
-            {['Privacy Policy', 'Terms of Use', 'Refund Policy'].map((l) => (
+            {['Privacy Policy', 'Terms of Use', 'No Refund Policy'].map((l) => (
               <a key={l} href="#" className="text-[#9999bb] text-xs hover:text-[#f5c518] transition-colors">
                 {l}
               </a>

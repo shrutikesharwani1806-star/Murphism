@@ -199,14 +199,14 @@ export default function AdminDashboard() {
 
   if (loading || !isAuthenticated) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#050508] text-white">
+      <div className="min-h-screen flex items-center justify-center bg-[#050505] text-white">
         <BookLoader />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#050508] text-[#f0ece0] font-sans pb-16">
+    <div className="min-h-screen bg-[#050505] text-[#f0ece0] font-sans pb-16">
       {/* Navbar */}
       <header className="border-b border-gray-900 bg-[#0a0907]/80 backdrop-blur sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">

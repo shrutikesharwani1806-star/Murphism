@@ -35,7 +35,7 @@ export default function CoursePage() {
     return (
       <main>
         <Navbar />
-        <div className="min-h-screen flex flex-col items-center justify-center bg-[#050508]">
+        <div className="min-h-screen flex flex-col items-center justify-center bg-[#050505]">
           <div className="text-6xl mb-6">🔍</div>
           <p className="text-white text-2xl font-bold mb-3">Course Not Found</p>
           <p className="text-[#b8b099] text-sm mb-6">The course you&apos;re looking for doesn&apos;t exist or has been moved.</p>
@@ -78,13 +78,13 @@ export default function CoursePage() {
   const accentColor = course.accentColor || '#c9a227';
 
   return (
-    <main className="bg-[#050508] min-h-screen">
+    <main className="bg-[#050505] min-h-screen">
       <Navbar />
 
       {/* Hero Section */}
       <section
         className="relative pt-32 pb-20 overflow-hidden"
-        style={{ background: `linear-gradient(135deg, ${accentColor}08 0%, #050508 60%)` }}
+        style={{ background: `linear-gradient(135deg, ${accentColor}08 0%, #050505 60%)` }}
       >
         {/* Background Glow */}
         <div className="absolute top-0 right-0 w-96 h-96 rounded-full blur-[150px] pointer-events-none" style={{ background: `${accentColor}12` }} />

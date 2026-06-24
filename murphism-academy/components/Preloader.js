@@ -8,9 +8,6 @@ export default function Preloader({ onComplete }) {
   const [isFadingOut, setIsFadingOut] = useState(false);
 
   useEffect(() => {
-    // Disable scroll during preloading
-    document.body.style.overflow = 'hidden';
-
     let intervalId;
     let index = 0;
     
@@ -30,7 +27,6 @@ export default function Preloader({ onComplete }) {
           setTimeout(() => {
             setIsFadingOut(true);
             setTimeout(() => {
-              document.body.style.overflow = 'unset';
               if (onComplete) onComplete();
             }, 400); // exit animation
           }, 500); // hold time after typing
@@ -41,7 +37,6 @@ export default function Preloader({ onComplete }) {
     return () => {
       clearTimeout(startTimeout);
       if (intervalId) clearInterval(intervalId);
-      document.body.style.overflow = 'unset';
     };
   }, [onComplete]);
 
@@ -50,9 +45,10 @@ export default function Preloader({ onComplete }) {
       {!isFadingOut && (
         <motion.div
           initial={{ opacity: 1 }}
-          exit={{ opacity: 0, y: -20 }}
+          exit={{ opacity: 0 }}
           transition={{ duration: 0.5, ease: "easeInOut" }}
           className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-[#050505]"
+          style={{ border: 'none', outline: 'none', boxShadow: 'none' }}
         >
           {/* Subtle gold radial background glow */}
           <div className="absolute w-[300px] h-[300px] rounded-full bg-[#c9a227]/5 blur-[80px] pointer-events-none" />

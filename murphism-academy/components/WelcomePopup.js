@@ -149,7 +149,7 @@ export default function WelcomePopup() {
                 <div className="flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold"
                   style={{ background: 'rgba(201,162,39,0.06)', border: '1px solid rgba(201,162,39,0.12)', color: '#b8b099' }}>
                   <Sparkles size={14} style={{ color: '#c9a227' }} />
-                  Foreign Exposure
+                  Foreign Work Exposures Provided
                 </div>
               </motion.div>
 

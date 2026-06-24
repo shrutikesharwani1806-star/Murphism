@@ -60,7 +60,7 @@ export default function Testimonials() {
   const t = testimonials[current];
 
   return (
-    <section id="testimonials" className="section-pad bg-[#050508] relative overflow-hidden">
+    <section id="testimonials" className="section-pad bg-[#050505] relative overflow-hidden">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[#7c3aed]/5 blur-[150px] pointer-events-none" />
 
       <div className="relative max-w-4xl mx-auto px-6">

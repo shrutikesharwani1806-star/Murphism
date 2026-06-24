@@ -278,7 +278,7 @@ export default function ComboBuilderSection({ hideHeader = false }) {
   }
 
   return (
-    <section id="combo-builder" className="section-pad relative overflow-hidden" style={{ background: '#050508' }}>
+    <section id="combo-builder" className="section-pad relative overflow-hidden" style={{ background: '#050505' }}>
       {/* Glow Rings */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full blur-[220px] pointer-events-none"
         style={{ background: 'rgba(201,162,39,0.02)' }} />

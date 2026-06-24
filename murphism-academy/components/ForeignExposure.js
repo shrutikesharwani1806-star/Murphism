@@ -84,7 +84,7 @@ export default function ForeignExposure() {
           >
             Foreign Work
             <br />
-            <span className="text-gold">Exposure Only</span>
+            <span className="text-gold">Exposures Provided</span>
           </h2>
           <div className="divider-gold" style={{ margin: '1.5rem auto', width: '48px' }} />
           <p className="text-[#b8b099] text-sm md:text-base max-w-xl mx-auto leading-relaxed">

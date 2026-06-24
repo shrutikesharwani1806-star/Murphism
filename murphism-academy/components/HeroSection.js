@@ -30,7 +30,7 @@ export default function HeroSection() {
       ref={containerRef}
       onMouseMove={handleMouseMove}
       className="relative min-h-screen flex items-center justify-center overflow-hidden grain-overlay"
-      style={{ background: '#050507' }}
+      style={{ background: '#050505' }}
     >
       {/* ── BACKGROUND ARTWORK ── */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden select-none">

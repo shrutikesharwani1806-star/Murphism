@@ -58,7 +58,7 @@ export default function ComputerLoader() {
             filter: 'blur(2vh)',
           }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#050507] overflow-hidden"
+          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#050505] overflow-hidden"
         >
           {/* Subtle grid background */}
           <div 

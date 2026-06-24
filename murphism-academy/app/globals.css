@@ -21,20 +21,49 @@
 }
 
 /* ─── Base ─── */
+html, body, #__next, [data-reactroot] {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  max-width: 100% !important;
+  width: 100% !important;
+  overflow-x: clip !important;
+  background: #050505 !important;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold-primary) #050505;
+}
+
+main {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  max-width: 100% !important;
+  width: 100% !important;
+}
 html { scroll-behavior: smooth; }
 body {
-  background: var(--black-deep);
+  background: #050505 !important; /* Standardized to avoid edge line color differences */
   color: var(--white-warm);
-  overflow-x: hidden;
   font-family: var(--font-outfit), sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 * { box-sizing: border-box; }
 
 /* ─── Scrollbar ─── */
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: var(--black-deep); }
-::-webkit-scrollbar-thumb { background: var(--gold-primary); border-radius: 2px; }
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #050505 !important;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--gold-primary) !important;
+  border-radius: 3px;
+}
 
 /* ─── Keyframes ─── */
 @keyframes float-gentle {
@@ -295,3 +324,94 @@ html.lenis, html.lenis body {
     cursor: none !important;
   }
 }
+
+/* ─── Mobile Highlights & Balanced Headings Override ─── */
+@media (max-width: 767px) {
+  :root {
+    --white-warm:     #ffffff !important; /* highlighted pure white for headers */
+    --white-muted:    #f5f2eb !important; /* bright cream for descriptions */
+    --white-subtle:   #a8a294 !important; /* readable gray for stats/subtext */
+    --gold-primary:   #f3ca4e !important; /* slightly brighter gold for mobile visibility */
+  }
+
+  /* Brighten hardcoded/Tailwind muted text colors on mobile to prevent dimness */
+  .text-\[\#d4cebe\] {
+    color: #f5f2eb !important;
+  }
+  .text-\[\#b8b099\] {
+    color: #e6e2d8 !important;
+  }
+  .text-\[\#6b6459\] {
+    color: #a8a294 !important;
+  }
+  .text-\[\#f0ece0\] {
+    color: #ffffff !important;
+  }
+  .text-\[\#a1a1aa\] {
+    color: #e4e4e7 !important;
+  }
+  .text-\[\#a89e84\] {
+    color: #d1c8b2 !important;
+  }
+  .text-warm-muted {
+    color: #f5f2eb !important;
+  }
+
+  /* Heading sizes adjustments on mobile (preventing too big / too small) */
+  h1, .h1, h1.text-2xl, h1.text-3xl, h1.text-4xl, h1.text-5xl {
+    font-size: 1.85rem !important; /* Balanced mobile h1 size */
+    line-height: 1.25 !important;
+  }
+  
+  h2, .h2, h2.text-2xl, h2.text-3xl, h2.text-4xl, h2.text-5xl,
+  .heading-display, .heading-xl {
+    font-size: 1.6rem !important; /* Balanced mobile h2 size */
+    line-height: 1.25 !important;
+  }
+
+  h3, .h3, h3.text-xl, h3.text-2xl, h3.text-3xl {
+    font-size: 1.3rem !important; /* Balanced mobile h3 size */
+    line-height: 1.3 !important;
+  }
+  
+  /* Make sure labels/tags aren't too small or too big */
+  .label-tag, .label {
+    font-size: 0.7rem !important;
+    letter-spacing: 0.18em !important;
+  }
+
+  /* Make paragraphs slightly larger and clearer on mobile */
+  p, .text-sm, .text-base {
+    font-size: 0.85rem !important; /* Highly readable body text size */
+    line-height: 1.6 !important;
+  }
+
+  /* Brighten additional text styles on mobile */
+  .text-\[\#9c9380\] {
+    color: #dfd9cc !important;
+  }
+  .text-\[\#8a8a93\] {
+    color: #d1d1d6 !important;
+  }
+  .text-zinc-400, .text-gray-400, .text-neutral-400 {
+    color: #ded9cd !important;
+  }
+  .text-zinc-500, .text-gray-500, .text-neutral-500 {
+    color: #b0ab9f !important;
+  }
+}
+
+/* ─── Hide Netlify/Dev Badges that cause screen border glitches ─── */
+#netlify-drawer,
+.netlify-drawer,
+#netlify-badge,
+.netlify-badge,
+iframe[src*="netlify"],
+[data-netlify-badge] {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
+
+

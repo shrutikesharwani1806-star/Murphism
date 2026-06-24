@@ -6,6 +6,7 @@ export default function CustomCursor() {
   const [hidden, setHidden] = useState(true);
   const [hovered, setHovered] = useState(false);
   const [isMobile, setIsMobile] = useState(true);
+  const [mounted, setMounted] = useState(false);
 
   // Mouse coordinates
   const mouseX = useMotionValue(-100);
@@ -16,6 +17,16 @@ export default function CustomCursor() {
   const ringY = useSpring(mouseY, { stiffness: 450, damping: 30, mass: 0.2 });
 
   useEffect(() => {
+    // Delay cursor rendering until preloader has fully finished (approx 1.8s)
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 1800);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+
     // Only enable custom cursor on non-touch devices with fine pointers
     const checkDevice = () => {
       const touchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
@@ -81,7 +92,7 @@ export default function CustomCursor() {
     };
   }, [isMobile, hidden]);
 
-  if (isMobile || hidden) return null;
+  if (isMobile || !mounted || hidden) return null;
 
   return (
     <>
