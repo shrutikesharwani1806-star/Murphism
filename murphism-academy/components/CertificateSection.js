@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowRight, Award } from 'lucide-react';
@@ -63,9 +63,83 @@ const certs = [
 
 export default function CertificateSection() {
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const containerRef = useRef(null);
   
-  // Repeat the list 3 times to ensure seamless infinite looping on wider monitors
+  // Drag states
+  const [isMouseDown, setIsMouseDown] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeftState, setScrollLeftState] = useState(0);
+  const [hasDragged, setHasDragged] = useState(false);
+
+  // Repeat the list 3 times to ensure seamless infinite looping
   const containerCerts = [...certs, ...certs, ...certs];
+
+  // Set initial scroll position to middle (1/3 of the scrollWidth) on mount
+  useEffect(() => {
+    const container = containerRef.current;
+    if (container) {
+      const timer = setTimeout(() => {
+        container.scrollLeft = container.scrollWidth / 3;
+      }, 50);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
+  // Smooth automatic scrolling loop
+  useEffect(() => {
+    let animationFrameId;
+    const scrollSpeed = 0.8; // Smooth automatic scroll speed
+
+    const scroll = () => {
+      const container = containerRef.current;
+      if (container && hoveredIndex === null && !isMouseDown) {
+        container.scrollLeft += scrollSpeed;
+      }
+      animationFrameId = requestAnimationFrame(scroll);
+    };
+
+    animationFrameId = requestAnimationFrame(scroll);
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [hoveredIndex, isMouseDown]);
+
+  // Wrap around scroll handler for infinite loop (covers both auto-scroll, mouse drag, touch/trackpad)
+  const handleScroll = () => {
+    const container = containerRef.current;
+    if (!container) return;
+    const oneThird = container.scrollWidth / 3;
+    if (container.scrollLeft >= oneThird * 2) {
+      container.scrollLeft -= oneThird;
+    } else if (container.scrollLeft <= 0) {
+      container.scrollLeft += oneThird;
+    }
+  };
+
+  // Mouse Drag Handlers
+  const handleMouseDown = (e) => {
+    setIsMouseDown(true);
+    setHasDragged(false);
+    setStartX(e.pageX - containerRef.current.offsetLeft);
+    setScrollLeftState(containerRef.current.scrollLeft);
+  };
+
+  const handleMouseLeaveContainer = () => {
+    setIsMouseDown(false);
+  };
+
+  const handleMouseUp = () => {
+    setIsMouseDown(false);
+  };
+
+  const handleMouseMoveContainer = (e) => {
+    if (!isMouseDown) return;
+    e.preventDefault();
+    const x = e.pageX - containerRef.current.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    if (Math.abs(walk) > 5) {
+      setHasDragged(true);
+    }
+    containerRef.current.scrollLeft = scrollLeftState - walk;
+  };
 
   return (
     <section
@@ -110,19 +184,16 @@ export default function CertificateSection() {
         </motion.div>
       </div>
 
-      {/* Infinite Marquee Track (Left to Right) */}
+      {/* Infinite Marquee Track (Left to Right / Interactive Drag & Scroll) */}
       <div className="w-full overflow-hidden relative py-6 select-none">
-        {/* Style block for smooth CSS marquee */}
+        {/* Style block for scrollbar hiding */}
         <style>{`
-          @keyframes marqueeScroll {
-            0% { transform: translate3d(-33.333%, 0, 0); }
-            100% { transform: translate3d(0, 0, 0); }
+          .no-scrollbar::-webkit-scrollbar {
+            display: none;
           }
-          .marquee-track-custom {
-            display: flex;
-            gap: 1.5rem;
-            width: max-content;
-            animation: marqueeScroll 45s linear infinite;
+          .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
           }
         `}</style>
 
@@ -131,10 +202,13 @@ export default function CertificateSection() {
         <div className="absolute right-0 top-0 bottom-0 w-20 md:w-32 bg-gradient-to-l from-[#050508] to-transparent z-20 pointer-events-none" />
 
         <div
-          className="marquee-track-custom px-3"
-          style={{
-            animationPlayState: hoveredIndex !== null ? 'paused' : 'running',
-          }}
+          ref={containerRef}
+          onScroll={handleScroll}
+          onMouseDown={handleMouseDown}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseLeaveContainer}
+          onMouseMove={handleMouseMoveContainer}
+          className="w-full overflow-x-auto flex gap-6 px-3 py-4 no-scrollbar cursor-grab active:cursor-grabbing"
         >
           {containerCerts.map((cert, index) => {
             const isHovered = hoveredIndex === index;
@@ -144,6 +218,11 @@ export default function CertificateSection() {
               <Link
                 href={`/courses/${cert.slug}`}
                 key={`${cert.title}-${index}`}
+                onClick={(e) => {
+                  if (hasDragged) {
+                    e.preventDefault();
+                  }
+                }}
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
                 className="w-[280px] md:w-[310px] h-[340px] md:h-[370px] flex-shrink-0 rounded-2xl p-6 flex flex-col justify-between relative overflow-hidden transition-all duration-300 ease-out cursor-pointer block"

@@ -80,7 +80,7 @@ export default function AICoursesSection() {
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ['start start', 'end end'],
+    offset: ['start end', 'start start'],
   });
 
   // Base row horizontal movement
