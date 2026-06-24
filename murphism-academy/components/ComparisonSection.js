@@ -1,40 +1,43 @@
 'use client';
-import { useState, useRef } from 'react';
-import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
+import { useState, useRef, useEffect } from 'react';
+import { motion, useInView } from 'framer-motion';
 import { Check, X, Layers, ArrowDown } from 'lucide-react';
 import Image from 'next/image';
 
 export default function ComparisonSection() {
   const containerRef = useRef(null);
   const [activeStep, setActiveStep] = useState(-1); // -1 = initial, 0..4 = rows active
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const isInView = useInView(containerRef, { once: true, margin: "-5% 0px" });
 
-  // Track scroll position of comparison section container relative to viewport
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start 65%", "end 35%"]
-  });
+  useEffect(() => {
+    if (!isInView) return;
 
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    // Constrain scroll progress between 0 and 1
-    const clamped = Math.min(Math.max(latest, 0), 1);
-    setScrollProgress(clamped);
+    // Trigger first step immediately on arrival
+    setActiveStep(0);
+    let currentStep = 0;
+    
+    const interval = setInterval(() => {
+      if (currentStep < 4) {
+        currentStep += 1;
+        setActiveStep(currentStep);
+      } else {
+        clearInterval(interval);
+      }
+    }, 1500); // Automatically trigger next row and arrow flow down every 1.5 seconds
 
-    // Sequence of reveals based on scroll depth
-    if (clamped < 0.15) {
-      setActiveStep(-1);
-    } else if (clamped < 0.35) {
-      setActiveStep(0);
-    } else if (clamped < 0.55) {
-      setActiveStep(1);
-    } else if (clamped < 0.75) {
-      setActiveStep(2);
-    } else if (clamped < 0.90) {
-      setActiveStep(3);
-    } else {
-      setActiveStep(4);
-    }
-  });
+    return () => clearInterval(interval);
+  }, [isInView]);
+
+  const getArrowPercent = (step) => {
+    if (step === -1) return 0;
+    if (step === 0) return 8;
+    if (step === 1) return 29;
+    if (step === 2) return 50;
+    if (step === 3) return 71;
+    return 92;
+  };
+
+  const progressPercent = getArrowPercent(activeStep);
 
   const rows = [
     {
@@ -58,16 +61,6 @@ export default function ComparisonSection() {
       right: 'Limited Career Support & Local Placements',
     },
   ];
-
-  // Calculate clean percentage height matching the scroll depth
-  const getProgressPercent = () => {
-    if (scrollProgress < 0.1) return 0;
-    // Map 0.1 - 0.9 range to 0% - 92% track height
-    const mapped = ((scrollProgress - 0.1) / 0.8) * 92;
-    return Math.min(Math.max(mapped, 0), 92);
-  };
-
-  const progressPercent = getProgressPercent();
 
   return (
     <section id="comparison" ref={containerRef} className="section-pad relative overflow-hidden" style={{ background: '#050508' }}>
@@ -209,13 +202,13 @@ export default function ComparisonSection() {
               
               {/* Glowing active path line */}
               <div 
-                className="absolute top-0 w-full bg-gradient-to-b from-[#22c55e]/60 to-[#c9a227] rounded-full transition-all duration-300 ease-out"
+                className="absolute top-0 w-full bg-gradient-to-b from-[#22c55e]/60 to-[#c9a227] rounded-full transition-all duration-[1500ms] cubic-bezier(0.25, 1, 0.5, 1)"
                 style={{ height: `${progressPercent}%` }}
               />
-
+              
               {/* Arrow Down Indicator */}
               <div 
-                className="absolute left-1/2 -translate-x-1/2 transition-all duration-300 ease-out flex items-center justify-center"
+                className="absolute left-1/2 -translate-x-1/2 transition-all duration-[1500ms] cubic-bezier(0.25, 1, 0.5, 1) flex items-center justify-center"
                 style={{
                   top: `${progressPercent}%`,
                   transform: 'translate(-50%, -50%)',
@@ -237,6 +230,22 @@ export default function ComparisonSection() {
 
           </div>
         </div>
+
+        {/* The Murphism Promise Quote */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="mt-16 text-center max-w-2xl mx-auto px-4"
+        >
+          <p className="text-xl md:text-2xl font-bold italic tracking-wide text-gold font-serif">
+            “They came, we shaped, they got placed.”
+          </p>
+          <p className="text-xs md:text-sm tracking-widest text-[#8e8a7d] uppercase font-mono mt-3">
+            — The Murphism Promise
+          </p>
+        </motion.div>
 
       </div>
     </section>

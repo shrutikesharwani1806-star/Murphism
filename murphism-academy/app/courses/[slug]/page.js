@@ -17,8 +17,8 @@ const allCoursesList = [
   'Specialization',
   'AI Courses',
   'VFX',
-  'BSc in Animation & Modelling',
-  'Diploma in Animations & Modelling',
+  'B.Sc. in Animations & Multimedia',
+  'Diploma in Animations & Multimedia',
 ];
 
 export default function CoursePage() {

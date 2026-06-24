@@ -93,33 +93,82 @@ export const courses = [
     image: '/courses/vfx.png',
   },
   {
-    slug: 'bsc-animations-modelling',
+    slug: 'bsc-animations-multimedia',
     emoji: '🎓',
-    title: 'BSc in Animation & Modelling',
+    title: 'B.Sc. in Animations & Multimedia',
     tagline: 'Full Degree Program · 3 Years',
     accentColor: '#c9a227',
     duration: '3 Years',
     level: 'Degree Program',
     highlights: ['Animation Principles', '3D Modelling & Rigging', 'VFX & Compositing', 'Game Design', 'AI in Animation', 'Industry Internships'],
-    description: 'Earn a full BSc Degree in Animations & Modelling. A comprehensive 3-year degree combining theory, practice, and real-world industry exposure.',
+    description: 'Earn a full B.Sc. Degree in Animations & Multimedia. A comprehensive 3-year degree combining theory, practice, and real-world industry exposure.',
     isDegree: true,
     image: '/courses/bsc-animation.png',
   },
   {
-    slug: 'diploma-animations-modelling',
+    slug: 'diploma-animations-multimedia',
     emoji: '📜',
-    title: 'Diploma in Animations & Modelling',
+    title: 'Diploma in Animations & Multimedia',
     tagline: 'Full Diploma Program · 3 Years',
     accentColor: '#c9a227',
     duration: '3 Years',
     level: 'Diploma Program',
     highlights: ['Animation Principles', '3D Modelling & Rigging', 'VFX & Compositing', 'Game Design', 'AI in Animation', 'Industry Internships'],
-    description: 'Earn a recognized Diploma in Animations & Modelling. A comprehensive 3-year diploma combining theory, practice, and real-world industry exposure.',
+    description: 'Earn a recognized Diploma in Animations & Multimedia. A comprehensive 3-year diploma combining theory, practice, and real-world industry exposure.',
     isDegree: false,
     isDiploma: true,
     image: '/courses/bsc-animation.png',
   },
 ];
+
+// Helper to get distinct luxury styles for each card to prevent visual merging
+const getCardStyles = (course, idx) => {
+  const isAICard = course.slug === 'ai-courses';
+  
+  const backgrounds = [
+    'linear-gradient(135deg, #0b0a08 0%, #15120e 100%)', // 0: Dark Charcoal
+    'linear-gradient(135deg, #181410 0%, #221c15 100%)', // 1: Deep Bronze
+    'linear-gradient(135deg, #0a0c0e 0%, #111518 100%)', // 2: Deep Navy/Slate
+    'linear-gradient(135deg, #120916 0%, #1c1022 100%)', // 3: Deep Plum/Purple
+    'linear-gradient(135deg, #091510 0%, #112219 100%)', // 4: Deep Forest
+    'linear-gradient(135deg, #0d0c0a 0%, #171510 100%)', // 5: AI - Rich Obsidian Gold (replaced Vibrant Terracotta Orange)
+    'linear-gradient(135deg, #1e1910 0%, #2a2215 100%)', // 6: Deep Amber
+    'linear-gradient(135deg, #0d0d0f 0%, #16161a 100%)', // 7: Onyx Black
+    'linear-gradient(135deg, #160f0f 0%, #241818 100%)', // 8: Crimson Black
+  ];
+  
+  const bg = backgrounds[idx % backgrounds.length];
+  
+  if (isAICard) {
+    return {
+      bg,
+      border: 'border-[rgba(201,162,39,0.25)]', // Brighter luxury gold border for AI card
+      titleText: 'text-white',
+      taglineText: 'text-[#c9a227]',
+      descText: 'text-[#b8b099]',
+      highlightBullet: 'text-[#c9a227]',
+      highlightText: 'text-[#9c9380]',
+      badgeText: 'text-[#9c9380]',
+      badgeIcon: 'text-[#c9a227]',
+      durationBadge: 'text-[#c9a227] bg-[#c9a227]/10 border-[#c9a227]/20',
+      btnBg: 'bg-[#c9a227] hover:bg-[#b08d20] text-black shadow-[#c9a227]/20',
+    };
+  }
+  
+  return {
+    bg,
+    border: 'border-[rgba(201,162,39,0.12)]',
+    titleText: 'text-white',
+    taglineText: 'text-[#c9a227]',
+    descText: 'text-[#b8b099]',
+    highlightBullet: 'text-[#c9a227]',
+    highlightText: 'text-[#9c9380]',
+    badgeText: 'text-[#9c9380]',
+    badgeIcon: 'text-[#c9a227]',
+    durationBadge: 'text-[#c9a227] bg-[#c9a227]/10 border-[#c9a227]/20',
+    btnBg: 'bg-[#c9a227] hover:bg-[#b08d20] text-black shadow-[#c9a227]/20',
+  };
+};
 
 export default function CoursesSection() {
   const [isMobile, setIsMobile] = useState(false);
@@ -187,8 +236,10 @@ export default function CoursesSection() {
         /* Cards Stacking Container */
         <div className="max-w-5xl mx-auto px-6 flex flex-col gap-12 relative" style={{ overflow: 'visible' }}>
           {courses.map((course, idx) => {
-            // Tiered stack calculation (increasing top values)
-            const stickyTop = 100 + idx * 24; 
+            const styles = getCardStyles(course, idx);
+            // Tiered stack calculation (increasing top values to ensure cards stack correctly)
+            const stickyTop = isMobile ? (70 + idx * 20) : (100 + idx * 48); 
+            const cardScale = isMobile ? (0.95 + idx * 0.006) : (0.92 + idx * 0.01);
             
             return (
               <motion.div
@@ -197,12 +248,14 @@ export default function CoursesSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-10% 0px" }}
                 transition={{ duration: 0.7, delay: idx * 0.05 }}
-                className="relative md:sticky w-full rounded-3xl border border-[rgba(201,162,39,0.12)] p-8 md:p-10 flex flex-col md:flex-row gap-8 items-center"
+                className={`sticky w-full rounded-3xl ${styles.border} p-6 md:p-10 flex flex-col md:flex-row gap-6 md:gap-8 items-center transition-all duration-300`}
                 style={{
-                  top: isMobile ? 'auto' : `${stickyTop}px`,
-                  background: 'linear-gradient(135deg, #0b0a08 0%, #12100d 100%)',
-                  boxShadow: '0 25px 60px rgba(0, 0, 0, 0.75), inset 0 1px 1px rgba(255, 255, 255, 0.03)',
-                  minHeight: '400px',
+                  top: `${stickyTop}px`,
+                  transform: `scale(${cardScale})`,
+                  transformOrigin: 'top center',
+                  background: styles.bg,
+                  boxShadow: '0 30px 70px rgba(0, 0, 0, 0.85), inset 0 1px 2px rgba(255, 255, 255, 0.05)',
+                  minHeight: isMobile ? 'auto' : '400px',
                 }}
               >
                 {/* Accent blur gradient glow */}
@@ -218,7 +271,7 @@ export default function CoursesSection() {
                   <div>
                     <div className="flex flex-wrap items-center gap-2.5 mb-4">
                       <span className="text-2xl">{course.emoji}</span>
-                      <span className="text-[10px] font-black tracking-widest uppercase text-[#c9a227] px-2.5 py-1 bg-[#c9a227]/10 rounded border border-[#c9a227]/20">
+                      <span className={`text-[10px] font-black tracking-widest uppercase px-2.5 py-1 rounded border ${styles.durationBadge}`}>
                         {course.duration}
                       </span>
                       {course.isNew && (
@@ -238,25 +291,23 @@ export default function CoursesSection() {
                       )}
                     </div>
                     
-                    <h3 className="text-white text-2xl md:text-3xl font-extrabold tracking-tight mb-2">
+                    <h3 className={`text-2xl md:text-3xl font-extrabold tracking-tight mb-2 ${styles.titleText}`}>
                       {course.title}
                     </h3>
                     
-                    <p className="text-[#c9a227] text-xs font-bold uppercase tracking-wider mb-4">
+                    <p className={`text-xs font-bold uppercase tracking-wider mb-4 ${styles.taglineText}`}>
                       {course.tagline}
                     </p>
-
-
                     
-                    <p className="text-[#b8b099] text-sm md:text-base leading-relaxed mb-6">
+                    <p className={`text-sm md:text-base leading-relaxed mb-6 ${styles.descText}`}>
                       {course.description}
                     </p>
 
                     {/* Highlights Grid */}
                     <div className="grid grid-cols-2 gap-x-4 gap-y-2 mb-8">
                       {course.highlights.slice(0, 4).map((h) => (
-                        <div key={h} className="text-xs text-[#9c9380] flex items-center gap-2">
-                          <span className="text-[#c9a227] text-[10px]">✦</span>
+                        <div key={h} className={`text-xs flex items-center gap-2 ${styles.highlightText}`}>
+                          <span className={`text-[10px] ${styles.highlightBullet}`}>✦</span>
                           {h}
                         </div>
                       ))}
@@ -267,20 +318,20 @@ export default function CoursesSection() {
                   <div className="flex flex-wrap items-center justify-between gap-4 border-t border-white/5 pt-6 mt-auto">
                     {/* Badges */}
                     <div className="flex gap-4">
-                      <div className="flex items-center gap-1.5 text-xs text-[#9c9380]">
-                        <svg className="w-4 h-4 text-[#c9a227]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                      <div className={`flex items-center gap-1.5 text-xs ${styles.badgeText}`}>
+                        <svg className={`w-4 h-4 ${styles.badgeIcon}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
                         {course.duration}
                       </div>
-                      <div className="flex items-center gap-1.5 text-xs text-[#9c9380]">
-                        <svg className="w-4 h-4 text-[#c9a227]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                      <div className={`flex items-center gap-1.5 text-xs ${styles.badgeText}`}>
+                        <svg className={`w-4 h-4 ${styles.badgeIcon}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
                         </svg>
                         Certified
                       </div>
-                      <div className="flex items-center gap-1.5 text-xs text-[#9c9380]">
-                        <svg className="w-4 h-4 text-[#c9a227]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                      <div className={`flex items-center gap-1.5 text-xs ${styles.badgeText}`}>
+                        <svg className={`w-4 h-4 ${styles.badgeIcon}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
                         </svg>
                         24/7 Support
@@ -290,7 +341,7 @@ export default function CoursesSection() {
                     {/* View Course Button */}
                     <Link href={`/courses/${course.slug}`}>
                       <button
-                        className="px-6 py-2 rounded-full text-xs font-bold tracking-widest uppercase flex items-center gap-2 transition-all duration-300 bg-[#c9a227] hover:bg-[#b08d20] text-black shadow-lg hover:shadow-[#c9a227]/20"
+                        className={`px-6 py-2 rounded-full text-xs font-bold tracking-widest uppercase flex items-center gap-2 transition-all duration-300 ${styles.btnBg}`}
                       >
                         View Course <ArrowRight size={13} />
                       </button>

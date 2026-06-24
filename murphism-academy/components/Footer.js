@@ -9,7 +9,7 @@ const courses = [
   { label: 'Video Editing', href: '/courses/video-editing-vfx' },
   { label: '3D Modelling', href: '/courses/3d-modelling' },
   { label: 'AI Courses', href: '/courses/ai-courses' },
-  { label: 'Diploma in Animations & Modelling', href: '/courses/diploma-animations-modelling' },
+  { label: 'Diploma in Animations & Multimedia', href: '/courses/diploma-animations-multimedia' },
 ];
 
 // SVG social icons — avoids lucide-react version issues
@@ -70,11 +70,8 @@ export default function Footer() {
                 style={{ filter: 'brightness(1.25) contrast(1.15) drop-shadow(0 0 8px rgba(201, 162, 39, 0.3))' }}
               />
             </Link>
-            <p className="text-[#9999bb] text-sm leading-relaxed mb-4">
+            <p className="text-[#9999bb] text-sm leading-relaxed mb-6">
               We Morph You to Become Industry Ready Creators &amp; Innovators.
-            </p>
-            <p className="text-[#f5c518] text-sm font-semibold italic mb-6">
-              &quot;They came, we shaped, they got placed.&quot;
             </p>
 
             {/* Socials */}
@@ -118,7 +115,7 @@ export default function Footer() {
                 { label: 'About Murphism',   href: '/#why' },
                 { label: 'Success Stories',  href: '/#stories' },
                 { label: 'Certifications',   href: '/#certs' },
-                { label: 'Diploma Program',       href: '/courses/diploma-animations-modelling' },
+                { label: 'Diploma Program',       href: '/courses/diploma-animations-multimedia' },
                 { label: 'Contact Us',       href: '/contact' },
                 { label: 'Enroll Now',       href: '/#courses' },
               ].map((l) => (

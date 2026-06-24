@@ -118,7 +118,7 @@ export default function HeroSection() {
       <motion.div
         animate={{ y: [0, -1.5, 0].map(val => `${val}vh`) }}
         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute left-[3vw] md:left-[5vw] top-[22vh] md:top-[26vh] z-20"
+        className="hidden md:block absolute left-[3vw] md:left-[5vw] top-[22vh] md:top-[26vh] z-20"
       >
         <div 
           className="w-[8vw] h-[8vw] md:w-[4vw] md:h-[4vw] rounded-full flex items-center justify-center border border-[rgba(201,162,39,0.25)] relative transition-all duration-300 hover:border-[#c9a227] hover:scale-105"
@@ -148,7 +148,7 @@ export default function HeroSection() {
       <motion.div
         animate={{ y: [0, 1.3, 0].map(val => `${val}vh`) }}
         transition={{ duration: 6.2, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute left-[6vw] md:left-[8vw] top-[40vh] md:top-[44vh] z-20"
+        className="hidden md:block absolute left-[6vw] md:left-[8vw] top-[40vh] md:top-[44vh] z-20"
       >
         <div 
           className="w-[8vw] h-[8vw] md:w-[4vw] md:h-[4vw] rounded-full flex items-center justify-center border border-[rgba(232,191,90,0.25)] relative transition-all duration-300 hover:border-[#e8bf5a] hover:scale-105"
@@ -179,7 +179,7 @@ export default function HeroSection() {
       <motion.div
         animate={{ y: [0, 1.5, 0].map(val => `${val}vh`) }}
         transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute right-[3vw] md:right-[5vw] top-[24vh] md:top-[28vh] z-20"
+        className="hidden md:block absolute right-[3vw] md:right-[5vw] top-[24vh] md:top-[28vh] z-20"
       >
         <div 
           className="w-[8vw] h-[8vw] md:w-[4vw] md:h-[4vw] rounded-full flex items-center justify-center border border-[rgba(168,85,247,0.25)] relative transition-all duration-300 hover:border-[#a855f7] hover:scale-105"
@@ -209,7 +209,7 @@ export default function HeroSection() {
       <motion.div
         animate={{ y: [0, -1.3, 0].map(val => `${val}vh`) }}
         transition={{ duration: 6.8, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute right-[6vw] md:right-[8vw] top-[42vh] md:top-[46vh] z-20"
+        className="hidden md:block absolute right-[6vw] md:right-[8vw] top-[42vh] md:top-[46vh] z-20"
       >
         <div 
           className="w-[8vw] h-[8vw] md:w-[4vw] md:h-[4vw] rounded-full flex items-center justify-center border border-[rgba(192,132,252,0.25)] relative transition-all duration-300 hover:border-[#c084fc] hover:scale-105"

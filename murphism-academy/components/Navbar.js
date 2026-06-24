@@ -92,20 +92,20 @@ export default function Navbar() {
             <Image
               src="/logo.png"
               alt="MURPHISM Logo"
-              width={48}
-              height={48}
+              width={54}
+              height={54}
               priority
-              className="h-8 md:h-12 w-auto object-contain transition-all duration-300 relative z-10"
+              className="h-9 md:h-13 w-auto object-contain transition-all duration-300 relative z-10"
               style={{ filter: 'brightness(1.55) contrast(1.15) drop-shadow(0 0 8px rgba(201, 162, 39, 0.45))' }}
             />
-            <div className="h-6 md:h-8 w-px bg-white/20 self-center relative z-10" />
+            <div className="h-7 md:h-9 w-px bg-white/20 self-center relative z-10" />
             <Image
               src="/name.png"
               alt="MURPHISM"
-              width={140}
-              height={36}
+              width={180}
+              height={46}
               priority
-              className="h-6 md:h-9 w-auto object-contain transition-all duration-300 relative z-10"
+              className="h-8 md:h-11 w-auto object-contain transition-all duration-300 relative z-10"
               style={{ filter: 'brightness(1.55) contrast(1.15) drop-shadow(0 0 8px rgba(201, 162, 39, 0.45))' }}
             />
           </Link>

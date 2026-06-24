@@ -291,11 +291,7 @@ html.lenis, html.lenis body {
 /* Custom Cursor Hide */
 @media (pointer: fine) {
   body.custom-cursor-active,
-  body.custom-cursor-active a,
-  body.custom-cursor-active button,
-  body.custom-cursor-active [role="button"],
-  body.custom-cursor-active .btn-gold,
-  body.custom-cursor-active .btn-ghost {
+  body.custom-cursor-active * {
     cursor: none !important;
   }
 }

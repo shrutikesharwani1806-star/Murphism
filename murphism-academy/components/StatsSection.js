@@ -39,6 +39,14 @@ function TypewriterText({ text, speed = 35, delay = 0 }) {
 export default function StatsSection() {
   const containerRef = useRef(null);
   const isInView = useInView(containerRef, { once: true, margin: "-15% 0px" });
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
     <section
@@ -69,10 +77,10 @@ export default function StatsSection() {
               
               {/* Card 1: YouTube / Socials - Coming from Left */}
               <motion.div
-                initial={{ opacity: 0, x: -120 }}
+                initial={{ opacity: 0, x: isMobile ? -30 : -100 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-10% 0px" }}
-                transition={{ type: "spring", stiffness: 60, damping: 15, duration: 0.8 }}
+                viewport={{ once: true, margin: isMobile ? "0px" : "-10% 0px" }}
+                transition={{ type: "spring", stiffness: isMobile ? 120 : 60, damping: 15, duration: isMobile ? 0.45 : 0.8 }}
                 className="rounded-3xl border border-[rgba(201,162,39,0.12)] p-6 md:p-8 flex flex-col justify-between gap-6 transition-all duration-300 hover:border-[rgba(201,162,39,0.3)] group"
                 style={{
                   background: 'rgba(15, 14, 18, 0.65)',
@@ -88,7 +96,7 @@ export default function StatsSection() {
                       </svg>
                     </div>
                     <span className="text-2xl sm:text-3xl font-bold text-[#e25c3d] tracking-tight">
-                      <TypewriterText text="10k" speed={120} delay={300} />
+                      <TypewriterText text="10k" speed={120} delay={isMobile ? 100 : 300} />
                     </span>
                   </div>
                   <h3 className="text-[#f5f5f7] text-xs sm:text-sm font-semibold tracking-wider uppercase font-mono">
@@ -102,10 +110,10 @@ export default function StatsSection() {
 
               {/* Card 2: Career Learners - Coming from Right */}
               <motion.div
-                initial={{ opacity: 0, x: 120 }}
+                initial={{ opacity: 0, x: isMobile ? 30 : 100 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-10% 0px" }}
-                transition={{ type: "spring", stiffness: 60, damping: 15, duration: 0.8, delay: 0.1 }}
+                viewport={{ once: true, margin: isMobile ? "0px" : "-10% 0px" }}
+                transition={{ type: "spring", stiffness: isMobile ? 120 : 60, damping: 15, duration: isMobile ? 0.45 : 0.8, delay: isMobile ? 0 : 0.1 }}
                 className="rounded-3xl border border-[rgba(201,162,39,0.12)] p-6 md:p-8 flex flex-col justify-between gap-6 transition-all duration-300 hover:border-[rgba(201,162,39,0.3)] group"
                 style={{
                   background: 'rgba(15, 14, 18, 0.65)',
@@ -121,7 +129,7 @@ export default function StatsSection() {
                       </svg>
                     </div>
                     <span className="text-2xl sm:text-3xl font-bold text-[#c9a227] tracking-tight">
-                      <TypewriterText text="20k" speed={100} delay={500} />
+                      <TypewriterText text="20k" speed={100} delay={isMobile ? 150 : 500} />
                     </span>
                   </div>
                   <h3 className="text-[#f5f5f7] text-xs sm:text-sm font-semibold tracking-wider uppercase font-mono">
@@ -137,10 +145,10 @@ export default function StatsSection() {
 
             {/* Bottom Row: Wide Announcement Card - Coming from Bottom */}
             <motion.div
-              initial={{ opacity: 0, y: 120 }}
+              initial={{ opacity: 0, y: isMobile ? 30 : 100 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-10% 0px" }}
-              transition={{ type: "spring", stiffness: 50, damping: 15, duration: 0.8, delay: 0.2 }}
+              viewport={{ once: true, margin: isMobile ? "0px" : "-10% 0px" }}
+              transition={{ type: "spring", stiffness: isMobile ? 120 : 50, damping: 15, duration: isMobile ? 0.45 : 0.8, delay: isMobile ? 0 : 0.2 }}
               className="rounded-3xl border border-[rgba(201,162,39,0.12)] p-6 md:p-8 flex flex-col justify-between gap-6 relative overflow-hidden transition-all duration-300 hover:border-[rgba(201,162,39,0.3)]"
               style={{
                 background: 'rgba(15, 14, 18, 0.65)',
@@ -180,13 +188,13 @@ export default function StatsSection() {
                 </div>
 
                 {/* Main Action Header with typing animation */}
-                <h2 className="text-[#f5f5f7] text-base sm:text-lg md:text-2xl font-bold tracking-tight leading-tight uppercase font-sans">
+                <div className="text-[#f5f5f7] text-base sm:text-lg md:text-2xl font-bold tracking-tight leading-tight uppercase font-sans">
                   {isInView ? (
-                    <TypewriterText text="FIRST JOB AND INTERNSHIP WITH US!" speed={30} delay={600} />
+                    <TypewriterText text="FIRST JOB AND INTERNSHIP WITH US!" speed={30} delay={isMobile ? 200 : 600} />
                   ) : (
                     <span>&nbsp;</span>
                   )}
-                </h2>
+                </div>
               </div>
             </motion.div>
 
@@ -194,10 +202,10 @@ export default function StatsSection() {
 
           {/* Right Column: Tall Card - Coming from Top */}
           <motion.div
-            initial={{ opacity: 0, y: -120 }}
+            initial={{ opacity: 0, y: isMobile ? 30 : -100 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-10% 0px" }}
-            transition={{ type: "spring", stiffness: 50, damping: 15, duration: 0.8, delay: 0.3 }}
+            viewport={{ once: true, margin: isMobile ? "0px" : "-10% 0px" }}
+            transition={{ type: "spring", stiffness: isMobile ? 120 : 50, damping: 15, duration: isMobile ? 0.45 : 0.8, delay: isMobile ? 0 : 0.3 }}
             className="rounded-3xl border border-[rgba(201,162,39,0.12)] p-6 md:p-8 flex flex-col justify-between min-h-[300px] lg:min-h-full relative overflow-hidden transition-all duration-300 hover:border-[rgba(201,162,39,0.3)] group"
             style={{
               background: 'rgba(15, 14, 18, 0.65)',
@@ -207,13 +215,13 @@ export default function StatsSection() {
             {/* Blurry, moving background typewriter text */}
             <div className="absolute inset-0 flex flex-col justify-center gap-4 pointer-events-none select-none z-0 px-4 opacity-[0.25]">
               <div className="text-4xl md:text-5xl font-black uppercase text-[#e25c3d] blur-[1px] tracking-widest leading-none truncate whitespace-nowrap">
-                {isInView && <TypewriterText text="make it happen" speed={40} delay={200} />}
+                {isInView && <TypewriterText text="make it happen" speed={40} delay={isMobile ? 50 : 200} />}
               </div>
               <div className="text-4xl md:text-5xl font-black uppercase text-[#e25c3d] blur-[1px] tracking-widest leading-none truncate whitespace-nowrap pl-4">
-                {isInView && <TypewriterText text="make it happen" speed={40} delay={500} />}
+                {isInView && <TypewriterText text="make it happen" speed={40} delay={isMobile ? 150 : 500} />}
               </div>
               <div className="text-4xl md:text-5xl font-black uppercase text-[#e25c3d] blur-[1px] tracking-widest leading-none truncate whitespace-nowrap pl-8">
-                {isInView && <TypewriterText text="make it happen" speed={40} delay={800} />}
+                {isInView && <TypewriterText text="make it happen" speed={40} delay={isMobile ? 250 : 800} />}
               </div>
             </div>
 

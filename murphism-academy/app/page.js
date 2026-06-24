@@ -7,6 +7,7 @@ import AICoursesSection from '@/components/AICoursesSection';
 import ForeignExposure from '@/components/ForeignExposure';
 import CertificateSection from '@/components/CertificateSection';
 import ComparisonSection from '@/components/ComparisonSection';
+import WhyMurphism from '@/components/WhyMurphism';
 import FAQSection from '@/components/FAQSection';
 import Footer from '@/components/Footer';
 
@@ -38,6 +39,7 @@ export default function Home() {
       <ForeignExposure />
       <CertificateSection />
       <ComparisonSection />
+      <WhyMurphism />
       <FAQSection />
       <Footer />
     </main>

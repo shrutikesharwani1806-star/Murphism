@@ -72,9 +72,9 @@ export default function WhyMurphism() {
         >
           <div className="label-tag">Why Choose Murphism</div>
           <h2 className="text-3xl md:text-5xl font-bold tracking-wide text-[#f0ece0] mx-auto" style={{ lineHeight: '1.25' }}>
-            We&apos;re Doing It
+            What Sets Murphism
             <br />
-            <span className="text-gold">Better &amp; Faster</span>
+            <span className="text-gold">Apart From Others</span>
           </h2>
           <div className="divider-gold" style={{ margin: '1.5rem auto', width: '48px' }} />
           <p className="text-[#b8b099] text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
@@ -131,25 +131,7 @@ export default function WhyMurphism() {
           ))}
         </div>
 
-        {/* Quote block */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="mt-20 border-l-2 pl-8 py-4"
-          style={{ borderColor: '#c9a227' }}
-        >
-          <p
-            className="text-3xl md:text-4xl text-[#f0ece0] font-bold mb-3"
-            style={{ fontFamily: 'Playfair Display, serif', fontStyle: 'italic' }}
-          >
-            &ldquo;They came, we shaped,
-            <br />
-            <span className="text-gold">they got placed.&rdquo;</span>
-          </p>
-          <p className="text-[#6b6459] text-sm tracking-widest uppercase">— The Murphism Promise</p>
-        </motion.div>
+
       </div>
     </section>
   );

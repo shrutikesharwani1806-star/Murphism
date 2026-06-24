@@ -1,8 +1,8 @@
 'use client';
-import { useState, useRef, useEffect } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { useState } from 'react';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { ArrowRight, Award, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, Award } from 'lucide-react';
 
 const certs = [
   {
@@ -55,48 +55,17 @@ const certs = [
   },
 ];
 
-// Final spread positions mapped to indices 0..6
-const SPREAD_X   = [-520, -340, -170, 0, 170, 340, 520];
-const SPREAD_ROT = [-12,  -8,   -4,   0, 4,   8,   12 ];
-const SPREAD_SCL = [0.72, 0.80, 0.90, 1, 0.90, 0.80, 0.72];
-const SPREAD_OPC = [0.40, 0.60, 0.80, 1, 0.80, 0.60, 0.40];
-const SPREAD_BLR = ['4px','2px','0px','0px','0px','2px','4px'];
-
-function getWrappedOffset(i, active, total) {
-  let diff = i - active;
-  while (diff > total / 2) diff -= total;
-  while (diff < -total / 2) diff += total;
-  return diff;
-}
-
 export default function CertificateSection() {
-  const sectionRef = useRef(null);
-  const isInView   = useInView(sectionRef, { once: true, margin: '-120px' });
-  const [spread, setSpread] = useState(false);
-  const [active, setActive] = useState(3); // center card index
-
-  useEffect(() => {
-    if (isInView) {
-      const t = setTimeout(() => setSpread(true), 500);
-      return () => clearTimeout(t);
-    }
-  }, [isInView]);
-
-  const prev = () => setActive((a) => (a - 1 + certs.length) % certs.length);
-  const next = () => setActive((a) => (a + 1) % certs.length);
-
-  const handleCardClick = (i, offset) => {
-    if (spread && offset !== 0) {
-      setActive(i);
-    }
-  };
+  const [hoveredIndex, setHoveredIndex] = useState(null);
+  
+  // Repeat the list 3 times to ensure seamless infinite looping on wider monitors
+  const containerCerts = [...certs, ...certs, ...certs];
 
   return (
     <section
       id="certificates"
-      ref={sectionRef}
       className="section-pad relative overflow-hidden"
-      style={{ background: '#06080f' }}
+      style={{ background: '#050508' }}
     >
       <div
         className="absolute top-0 left-0 right-0 h-px"
@@ -104,17 +73,17 @@ export default function CertificateSection() {
       />
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 70% 50% at 50% 60%, rgba(201,162,39,0.05) 0%, transparent 70%)' }}
+        style={{ background: 'radial-gradient(ellipse 70% 50% at 50% 60%, rgba(201,162,39,0.04) 0%, transparent 70%)' }}
       />
 
-      <div className="max-w-7xl mx-auto px-6 relative">
+      <div className="max-w-7xl mx-auto px-6 relative z-10 mb-12">
         {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="mb-20 flex flex-col items-center text-center"
+          className="flex flex-col items-center text-center"
         >
           <div className="label-tag" style={{ margin: '0 auto 1.5rem auto' }}>
             Every Candidate Certified
@@ -128,236 +97,154 @@ export default function CertificateSection() {
             <span className="text-gold">A Certificate. Always.</span>
           </h2>
           <div className="divider-gold" style={{ margin: '1.5rem auto', width: '48px' }} />
-          <p className="text-[#b8b099] text-sm md:text-base max-w-xl mx-auto leading-relaxed">
-            No exams. No stress. Every student who completes a Murphism program receives an
-            industry-valued certificate — proof you&apos;re built for the real world.
+          <p className="text-[#b8b099] text-xs md:text-sm max-w-xl mx-auto leading-relaxed">
+            No traditional exams. No pressure. Every student who completes a Murphism program receives an
+            industry-recognized certificate of accomplishment — proof you&apos;re built for the creative industry.
           </p>
         </motion.div>
+      </div>
 
-        {/* ── DESKTOP: Center-stack → fan left & right ── */}
+      {/* Infinite Marquee Track (Left to Right) */}
+      <div className="w-full overflow-hidden relative py-6 select-none">
+        {/* Style block for smooth CSS marquee */}
+        <style>{`
+          @keyframes marqueeScroll {
+            0% { transform: translate3d(-33.333%, 0, 0); }
+            100% { transform: translate3d(0, 0, 0); }
+          }
+          .marquee-track-custom {
+            display: flex;
+            gap: 1.5rem;
+            width: max-content;
+            animation: marqueeScroll 45s linear infinite;
+          }
+        `}</style>
+
+        {/* Fade overlays for smooth edges */}
+        <div className="absolute left-0 top-0 bottom-0 w-20 md:w-32 bg-gradient-to-r from-[#050508] to-transparent z-20 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-20 md:w-32 bg-gradient-to-l from-[#050508] to-transparent z-20 pointer-events-none" />
+
         <div
-          className="hidden md:block relative"
-          style={{ height: '380px', marginBottom: '3rem' }}
+          className="marquee-track-custom px-3"
+          style={{
+            animationPlayState: hoveredIndex !== null ? 'paused' : 'running',
+          }}
         >
-          <div className="absolute inset-0 flex items-center justify-center">
-            {certs.map((cert, i) => {
-              const offset = getWrappedOffset(i, active, certs.length);
-              const si = offset + 3; // Map to 0..6 for visual parameters
-              const isCenter = offset === 0;
+          {containerCerts.map((cert, index) => {
+            const isHovered = hoveredIndex === index;
+            const isAnyHovered = hoveredIndex !== null;
 
-              // Stack cascade coordinates for initial stacked deck state
-              const deckX = offset * 12;
-              const deckRot = offset * 3;
-              const deckY = Math.abs(offset) * 4;
+            return (
+              <div
+                key={`${cert.title}-${index}`}
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
+                className="w-[280px] md:w-[310px] h-[340px] md:h-[370px] flex-shrink-0 rounded-2xl p-6 flex flex-col justify-between relative overflow-hidden transition-all duration-300 ease-out cursor-pointer"
+                style={{
+                  background: 'linear-gradient(160deg, #0f0e0b 0%, #050505 100%)',
+                  border: isHovered 
+                    ? '1px solid rgba(201,162,39,0.5)' 
+                    : '1px solid rgba(201,162,39,0.15)',
+                  boxShadow: isHovered
+                    ? '0 20px 45px rgba(201,162,39,0.15), 0 15px 35px rgba(0,0,0,0.8)'
+                    : '0 15px 35px rgba(0,0,0,0.6)',
+                  opacity: isAnyHovered && !isHovered ? 0.35 : 1,
+                  filter: isAnyHovered && !isHovered ? 'blur(3px)' : 'blur(0px)',
+                  transform: isHovered ? 'scale(1.04)' : 'scale(1)',
+                  zIndex: isHovered ? 30 : 10,
+                }}
+              >
+                {/* Cyberpunk accent corners */}
+                <div className="absolute top-2 left-2 w-3 h-3 border-t border-l border-[#c9a227]/30" />
+                <div className="absolute top-2 right-2 w-3 h-3 border-t border-r border-[#c9a227]/30" />
+                <div className="absolute bottom-2 left-2 w-3 h-3 border-b border-l border-[#c9a227]/30" />
+                <div className="absolute bottom-2 right-2 w-3 h-3 border-b border-r border-[#c9a227]/30" />
 
-              return (
-                <motion.div
-                  key={cert.title}
-                  style={{
-                    position: 'absolute',
-                    width: '230px',
-                    height: '310px',
-                    transformOrigin: 'bottom center',
-                    zIndex: spread ? (isCenter ? 10 : 6 - Math.abs(offset)) : 5,
-                    cursor: spread && !isCenter ? 'pointer' : 'default',
-                  }}
-                  // Initial deck stack
-                  initial={{ x: deckX, rotate: deckRot, scale: 0.9, opacity: 0, y: deckY + 30 }}
-                  animate={
-                    isInView
-                      ? spread
-                        ? {
-                            x: SPREAD_X[si],
-                            rotate: SPREAD_ROT[si],
-                            scale: SPREAD_SCL[si],
-                            opacity: SPREAD_OPC[si],
-                            y: 0,
-                            filter: `blur(${SPREAD_BLR[si]})`,
-                          }
-                        : {
-                            x: deckX,
-                            rotate: deckRot,
-                            scale: 1 - Math.abs(offset) * 0.02,
-                            opacity: 0.9,
-                            y: deckY,
-                            filter: 'blur(0px)',
-                          }
-                      : { x: deckX, rotate: deckRot, scale: 0.9, opacity: 0, y: deckY + 30 }
-                  }
-                  transition={{
-                    duration: 0.75,
-                    ease: [0.25, 1, 0.5, 1]
-                  }}
-                  onClick={() => handleCardClick(i, offset)}
-                  whileHover={spread && !isCenter ? { scale: SPREAD_SCL[si] * 1.06 } : {}}
-                >
+                {/* Top row */}
+                <div className="flex items-start justify-between z-10">
+                  <div>
+                    <p className="text-[8px] font-black tracking-[0.2em] uppercase text-[#c9a227] mb-0.5">
+                      {cert.type}
+                    </p>
+                    <p className="text-[8px] text-[#5c5446] tracking-wider font-mono">
+                      MURPHISM ACADEMY
+                    </p>
+                  </div>
                   <div
-                    className="rounded-2xl p-6 h-full flex flex-col gap-3"
-                    style={{
-                      background: isCenter
-                        ? 'linear-gradient(160deg, #141210 0%, #0f0e0b 100%)'
-                        : 'linear-gradient(160deg, #0f0e0b 0%, #0a0908 100%)',
-                      border: `1px solid ${isCenter ? 'rgba(201,162,39,0.3)' : 'rgba(201,162,39,0.15)'}`,
-                      boxShadow: isCenter
-                        ? '0 30px 70px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.06)'
-                        : '0 15px 40px rgba(0,0,0,0.6)',
-                    }}
+                    className="w-9 h-9 rounded-full flex items-center justify-center text-lg flex-shrink-0"
+                    style={{ background: 'rgba(201,162,39,0.08)', border: '1px solid rgba(201,162,39,0.15)' }}
                   >
-                    {/* Top row */}
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <p className="text-[9px] font-black tracking-[0.2em] uppercase text-[#c9a227] mb-0.5">
-                          {cert.type}
-                        </p>
-                        <p className="text-[9px] text-[#2e2c28] tracking-wider font-mono">
-                          MURPHISM ACADEMY
-                        </p>
-                      </div>
-                      <div
-                        className="w-10 h-10 rounded-full flex items-center justify-center text-xl flex-shrink-0"
-                        style={{ background: 'rgba(201,162,39,0.1)', border: '1px solid rgba(201,162,39,0.18)' }}
-                      >
-                        {cert.emoji}
-                      </div>
-                    </div>
+                    {cert.emoji}
+                  </div>
+                </div>
 
-                    <div className="w-full h-px" style={{ background: 'rgba(201,162,39,0.1)' }} />
+                <div className="w-full h-px my-2" style={{ background: 'rgba(201,162,39,0.08)' }} />
 
-                    <div className="flex-1">
-                      <p className="text-[9px] font-bold tracking-widest uppercase mb-1.5"
-                        style={{ color: 'rgba(201,162,39,0.5)' }}>
-                        {cert.field}
-                      </p>
-                      <h3
-                        className="text-[#f0ece0] font-bold leading-snug mb-2"
-                        style={{ fontSize: '14px', fontFamily: 'Space Grotesk, sans-serif' }}
-                      >
-                        {cert.title}
-                      </h3>
-                      <p className="text-[#4a4540] leading-relaxed" style={{ fontSize: '11px' }}>
-                        {cert.desc}
-                      </p>
-                    </div>
+                {/* Body */}
+                <div className="flex-1 flex flex-col justify-center z-10">
+                  <p className="text-[8px] font-bold tracking-widest uppercase mb-1"
+                    style={{ color: 'rgba(201,162,39,0.5)' }}>
+                    {cert.field}
+                  </p>
+                  <h3
+                    className="text-[#f0ece0] font-bold leading-snug mb-2 text-sm md:text-base font-sans"
+                  >
+                    {cert.title}
+                  </h3>
+                  <p className="text-[#8c8476] leading-relaxed text-[11px] font-sans">
+                    {cert.desc}
+                  </p>
+                </div>
 
-                    <div className="flex items-center justify-between pt-3 border-t border-white/5">
-                      <div className="flex items-center gap-1">
-                        <Award size={10} style={{ color: '#c9a227' }} />
-                        <span className="text-[9px] font-bold tracking-widest uppercase text-[#c9a227]">
-                          No Exam
-                        </span>
-                      </div>
-                      <span
-                        className="text-[9px] font-bold px-2 py-1 rounded-sm"
-                        style={{
-                          color: '#c9a227',
-                          background: 'rgba(201,162,39,0.07)',
-                          border: '1px solid rgba(201,162,39,0.13)',
-                        }}
-                      >
-                        ⏱ {cert.duration}
+                {/* Footer */}
+                <div className="flex flex-col gap-2 pt-3 border-t border-white/5 z-10">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-1">
+                      <Award size={10} style={{ color: '#c9a227' }} />
+                      <span className="text-[8px] font-bold tracking-widest uppercase text-[#c9a227]">
+                        Verified Credential
                       </span>
                     </div>
+                    <span
+                      className="text-[8px] font-bold px-2 py-0.5 rounded-sm"
+                      style={{
+                        color: '#c9a227',
+                        background: 'rgba(201,162,39,0.05)',
+                        border: '1px solid rgba(201,162,39,0.1)',
+                      }}
+                    >
+                      ⏱ {cert.duration}
+                    </span>
+                  </div>
 
-                    <div className="flex gap-1">
+                  <div className="flex justify-between items-center mt-1">
+                    <div className="flex gap-0.5">
                       {[...Array(5)].map((_, si2) => (
-                        <span key={si2} style={{ color: '#c9a227', fontSize: '10px' }}>★</span>
+                        <span key={si2} style={{ color: '#c9a227', fontSize: '9px' }}>★</span>
                       ))}
                     </div>
+                    <span className="text-[7px] font-mono text-[#5c5446] tracking-widest uppercase">ID: MRPH-{1000 + (index % certs.length)}</span>
                   </div>
-                </motion.div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Navigation arrows — desktop */}
-        <div className="hidden md:flex items-center justify-center gap-6 mb-14">
-          <button
-            onClick={prev}
-            aria-label="Previous"
-            className="w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
-            style={{ background: 'rgba(201,162,39,0.08)', border: '1px solid rgba(201,162,39,0.2)', color: '#c9a227' }}
-            onMouseEnter={e => (e.currentTarget.style.background = 'rgba(201,162,39,0.18)')}
-            onMouseLeave={e => (e.currentTarget.style.background = 'rgba(201,162,39,0.08)')}
-          >
-            <ChevronLeft size={18} />
-          </button>
-
-          <div className="flex gap-2">
-            {certs.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setActive(i)}
-                aria-label={`Go to ${i + 1}`}
-                className="rounded-full transition-all duration-300"
-                style={{
-                  width: i === active ? '22px' : '6px',
-                  height: '6px',
-                  background: i === active ? '#c9a227' : 'rgba(201,162,39,0.2)',
-                }}
-              />
-            ))}
-          </div>
-
-          <button
-            onClick={next}
-            aria-label="Next"
-            className="w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
-            style={{ background: 'rgba(201,162,39,0.08)', border: '1px solid rgba(201,162,39,0.2)', color: '#c9a227' }}
-            onMouseEnter={e => (e.currentTarget.style.background = 'rgba(201,162,39,0.18)')}
-            onMouseLeave={e => (e.currentTarget.style.background = 'rgba(201,162,39,0.08)')}
-          >
-            <ChevronRight size={18} />
-          </button>
-        </div>
-
-        {/* ── MOBILE: vertical stagger ── */}
-        <div className="flex flex-col gap-4 md:hidden mb-10">
-          {certs.map((cert, i) => (
-            <motion.div
-              key={cert.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.08 }}
-              className="rounded-2xl p-5"
-              style={{
-                background: 'linear-gradient(145deg, #0f0e0b 0%, #0a0908 100%)',
-                border: '1px solid rgba(201,162,39,0.15)',
-                boxShadow: '0 10px 30px rgba(0,0,0,0.5)',
-              }}
-            >
-              <div className="flex items-center justify-between mb-3">
-                <p className="text-[9px] font-black tracking-widest uppercase text-[#c9a227]">
-                  {cert.field}
-                </p>
-                <span className="text-lg">{cert.emoji}</span>
-              </div>
-              <h3 className="text-[#f0ece0] font-bold text-sm mb-1.5">{cert.title}</h3>
-              <p className="text-[#4a4540] text-xs leading-relaxed mb-3">{cert.desc}</p>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-1">
-                  <Award size={10} style={{ color: '#c9a227' }} />
-                  <span className="text-[9px] font-bold tracking-widest uppercase text-[#c9a227]">No Exam</span>
                 </div>
-                <span className="text-[9px] text-[#6b6459]">⏱ {cert.duration}</span>
               </div>
-            </motion.div>
-          ))}
+            );
+          })}
         </div>
+      </div>
 
+      <div className="max-w-7xl mx-auto px-6 relative z-10 mt-12">
         {/* Trust badges */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="flex flex-wrap gap-4 justify-center mb-12"
+          className="flex flex-wrap gap-4 justify-center mb-10"
         >
           {['No Exam Needed', 'Issued on Completion', 'LinkedIn Ready'].map((b) => (
             <span
               key={b}
-              className="text-xs font-medium tracking-widest uppercase px-5 py-2.5 rounded-sm"
+              className="text-[9px] md:text-xs font-semibold tracking-widest uppercase px-5 py-2.5 rounded-sm"
               style={{
                 color: '#b8b099',
                 border: '1px solid rgba(201,162,39,0.12)',

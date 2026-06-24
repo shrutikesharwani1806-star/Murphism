@@ -27,7 +27,7 @@ export default function DegreeSection() {
         >
           <div className="label-tag" style={{ margin: '0 auto 1.5rem auto' }}>Degree Program</div>
           <h2 className="text-3xl md:text-5xl font-bold tracking-wide text-[#f0ece0] mx-auto" style={{ lineHeight: '1.25' }}>
-            BSc in Animations &amp; Modelling
+            B.Sc. in Animations &amp; Multimedia
           </h2>
           <div className="divider-gold" style={{ margin: '1.5rem auto', width: '48px' }} />
         </motion.div>
@@ -57,7 +57,7 @@ export default function DegreeSection() {
                 </div>
                 <div>
                   <p className="text-[9px] font-black tracking-widest uppercase text-[#c9a227]">MURPHISM ACADEMY</p>
-                  <p className="text-[#f0ece0] font-bold text-sm">BSc in Animations &amp; Modelling</p>
+                  <p className="text-[#f0ece0] font-bold text-sm">B.Sc. in Animations &amp; Multimedia</p>
                   <p className="text-[#6b6459] text-xs">3-Year Full Degree Program</p>
                 </div>
               </div>
@@ -70,7 +70,7 @@ export default function DegreeSection() {
               </div>
             </div>
 
-            <Link href="/courses/bsc-animations-modelling">
+            <Link href="/courses/bsc-animations-multimedia">
               <button className="btn-gold">
                 <span>Apply for Degree Program</span>
                 <ArrowRight size={16} />

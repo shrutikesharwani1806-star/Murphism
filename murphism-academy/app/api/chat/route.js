@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 const LOCAL_FALLBACKS = [
   {
     keywords: ['course', 'offer', 'class', 'catalog', 'program', 'learn', 'syllabus', 'curriculum', 'study'],
-    response: "We offer several premium courses designed to make you industry-ready:\n\n1. **Graphic Design** (3 Months)\n   - Illustrator, Photoshop, Figma, Layout, Typography, Branding.\n2. **Website Development** (3 Months)\n   - HTML, CSS, Tailwind, JavaScript, React, Node.js, Express, MongoDB.\n3. **3D Modelling & Animation** (6 Months Specialization)\n   - 3ds Max, Maya, ZBrush, Substance Painter, 3D Animation, Character Creator.\n4. **AI Courses** (2 Months)\n   - Generative AI, Prompt Engineering, Midjourney, Runway, ChatGPT, Cursor.\n5. **BSc in Animations & Modelling** (3 Years Full Degree)\n   - Government recognized degree with film-quality VFX, game engines, and portfolio design.\n6. **Diploma in Animations & Modelling** (3 Years Full Diploma)\n   - Comprehensive diploma program combining principles, 3D modelling, VFX, and gaming.\n\nYou can also build a Custom Combo in the Courses section to design a personalized learning track!"
+    response: "We offer several premium courses designed to make you industry-ready:\n\n1. **Graphic Design** (3 Months)\n   - Illustrator, Photoshop, Figma, Layout, Typography, Branding.\n2. **Website Development** (3 Months)\n   - HTML, CSS, Tailwind, JavaScript, React, Node.js, Express, MongoDB.\n3. **3D Modelling & Animation** (6 Months Specialization)\n   - 3ds Max, Maya, ZBrush, Substance Painter, 3D Animation, Character Creator.\n4. **AI Courses** (2 Months)\n   - Generative AI, Prompt Engineering, Midjourney, Runway, ChatGPT, Cursor.\n5. **B.Sc. in Animations & Multimedia** (3 Years Full Degree)\n   - Government recognized degree with film-quality VFX, game engines, and portfolio design.\n6. **Diploma in Animations & Multimedia** (3 Years Full Diploma)\n   - Comprehensive diploma program combining principles, 3D modelling, VFX, and gaming.\n\nYou can also build a Custom Combo in the Courses section to design a personalized learning track!"
   },
   {
     keywords: ['job', 'placement', 'assistance', 'hire', 'career', 'work', 'recruit', 'internship', 'company', 'salary'],
@@ -11,7 +11,7 @@ const LOCAL_FALLBACKS = [
   },
   {
     keywords: ['3d', 'modelling', 'animation', 'maya', 'zbrush', 'bsc', 'rigging', 'vfx', 'animator'],
-    response: "Our 3D Modelling & Animation course is a premium 6-month program. It covers 3ds Max, Maya, ZBrush, Substance Painter, and Character Creator. We also offer a 3-Year BSc Degree and a 3-Year Diploma in Animations & Modelling!"
+    response: "Our 3D Modelling & Animation course is a premium 6-month program. It covers 3ds Max, Maya, ZBrush, Substance Painter, and Character Creator. We also offer a 3-Year B.Sc. Degree and a 3-Year Diploma in Animations & Multimedia!"
   },
   {
     keywords: ['web', 'development', 'javascript', 'react', 'html', 'css', 'coding', 'node', 'mongodb', 'developer'],
@@ -93,12 +93,12 @@ COURSE CATALOG:
 4. AI Courses:
    - Duration: 2 Months
    - Topics: Generative AI, Prompt Engineering, Midjourney, Runway, ChatGPT, Cursor, Automation.
-5. BSc in Animations & Modelling:
+5. B.Sc. in Animations & Multimedia:
    - Duration: 3 Years (Full Degree, Govt. Recognized)
    - First year: Animation basics, 2D art, 3D modelling.
    - Second year: Advanced 3D, rigging, VFX, AI in animation.
    - Third year: Film-quality VFX, game engines, internship, portfolio.
-6. Diploma in Animations & Modelling:
+6. Diploma in Animations & Multimedia:
    - Duration: 3 Years (Full Diploma Program)
    - Topics: Animation Principles, 3D Modelling & Rigging, VFX & Compositing, Game Design, AI in Animation, Industry Internships.
 7. Custom Combo Builder:

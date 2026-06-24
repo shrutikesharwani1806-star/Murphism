@@ -5,7 +5,7 @@ import { MessageSquare, X, Send, Sparkles, AlertCircle } from 'lucide-react';
 
 const SUGGESTIONS = [
   'What courses do you offer?',
-  'Tell me about BSc Animations & Modelling',
+  'Tell me about B.Sc. Animations & Multimedia',
   'Do you provide job placement support?',
   'How does the Custom Career Combo work?',
 ];

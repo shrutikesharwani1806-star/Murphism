@@ -87,7 +87,7 @@ export default function CustomCursor() {
     <>
       {/* Inner dot */}
       <motion.div
-        className="fixed top-0 left-0 w-1.5 h-1.5 bg-[#c9a227] rounded-full pointer-events-none z-[999999]"
+        className="fixed top-0 left-0 w-1.5 h-1.5 bg-[#c9a227] rounded-full pointer-events-none z-[99999999]"
         style={{
           x: mouseX,
           y: mouseY,
@@ -97,7 +97,7 @@ export default function CustomCursor() {
       />
       {/* Outer ring */}
       <motion.div
-        className="fixed top-0 left-0 rounded-full pointer-events-none z-[999998] border border-[#c9a227]"
+        className="fixed top-0 left-0 rounded-full pointer-events-none z-[99999998] border border-[#c9a227]"
         animate={{
           width: hovered ? 46 : 22,
           height: hovered ? 46 : 22,
