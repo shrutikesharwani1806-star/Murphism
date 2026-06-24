@@ -12,6 +12,7 @@ const certs = [
     emoji: '🎨',
     field: 'Brand & Visual Identity',
     desc: 'Awarded to students who master Adobe Photoshop, Illustrator, and brand identity design with a production-grade portfolio.',
+    slug: 'graphic-design',
   },
   {
     title: 'Full Stack Developer',
@@ -20,6 +21,7 @@ const certs = [
     emoji: '💻',
     field: 'Web Development',
     desc: 'Awarded on completion of HTML, CSS, React, Node.js, and deployment — with a full-stack capstone project.',
+    slug: 'website-development',
   },
   {
     title: 'Video Production Specialist',
@@ -28,6 +30,7 @@ const certs = [
     emoji: '🎬',
     field: 'Cinematic Editing & Post Production',
     desc: 'Awarded for proficiency in Premiere Pro, DaVinci Resolve, color grading, and reel/YouTube content creation.',
+    slug: 'video-editing-vfx',
   },
   {
     title: '3D Animation Artist',
@@ -36,6 +39,7 @@ const certs = [
     emoji: '🧊',
     field: '3D Modelling & VFX',
     desc: 'Awarded for completing Blender, Maya, character rigging, VFX, and lighting with a full 3D portfolio.',
+    slug: '3d-modelling',
   },
   {
     title: 'VFX Specialist',
@@ -44,6 +48,7 @@ const certs = [
     emoji: '🌀',
     field: 'Visual Effects & Compositing',
     desc: 'Awarded for mastery in After Effects, Nuke, compositing, motion tracking, and CGI integration for film and advertising.',
+    slug: 'vfx',
   },
   {
     title: 'AI Tools Practitioner',
@@ -52,6 +57,7 @@ const certs = [
     emoji: '🤖',
     field: 'Generative AI & Workflows',
     desc: 'Awarded for hands-on mastery of generative AI tools, prompt engineering, and AI-augmented creative workflows.',
+    slug: 'ai-courses',
   },
 ];
 
@@ -135,11 +141,12 @@ export default function CertificateSection() {
             const isAnyHovered = hoveredIndex !== null;
 
             return (
-              <div
+              <Link
+                href={`/courses/${cert.slug}`}
                 key={`${cert.title}-${index}`}
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
-                className="w-[280px] md:w-[310px] h-[340px] md:h-[370px] flex-shrink-0 rounded-2xl p-6 flex flex-col justify-between relative overflow-hidden transition-all duration-300 ease-out cursor-pointer"
+                className="w-[280px] md:w-[310px] h-[340px] md:h-[370px] flex-shrink-0 rounded-2xl p-6 flex flex-col justify-between relative overflow-hidden transition-all duration-300 ease-out cursor-pointer block"
                 style={{
                   background: 'linear-gradient(160deg, #0f0e0b 0%, #050505 100%)',
                   border: isHovered 
@@ -226,7 +233,7 @@ export default function CertificateSection() {
                     <span className="text-[7px] font-mono text-[#5c5446] tracking-widest uppercase">ID: MRPH-{1000 + (index % certs.length)}</span>
                   </div>
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>
