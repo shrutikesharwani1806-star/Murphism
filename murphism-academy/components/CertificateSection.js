@@ -156,7 +156,7 @@ export default function CertificateSection() {
         style={{ background: 'radial-gradient(ellipse 70% 50% at 50% 60%, rgba(201,162,39,0.04) 0%, transparent 70%)' }}
       />
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10 mb-12">
+      <div className="max-w-7xl mx-auto px-6 relative z-10 mb-6">
         {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}

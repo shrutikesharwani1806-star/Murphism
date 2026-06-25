@@ -23,7 +23,7 @@ export default function DegreeSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="mb-16 flex flex-col items-center text-center"
+          className="mb-10 flex flex-col items-center text-center"
         >
           <div className="label-tag" style={{ margin: '0 auto 1.5rem auto' }}>Degree Program</div>
           <h2 className="text-3xl md:text-5xl font-bold tracking-wide text-[#f0ece0] mx-auto" style={{ lineHeight: '1.25' }}>

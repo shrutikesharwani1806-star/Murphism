@@ -75,7 +75,7 @@ export default function ForeignExposure() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="mb-20 flex flex-col items-center text-center"
+          className="mb-10 flex flex-col items-center text-center"
         >
           <div className="label-tag" style={{ margin: '0 auto 1.5rem auto' }}>Global Reach</div>
           <h2

@@ -137,7 +137,7 @@ export default function AICoursesSection() {
     >
       {isMobile ? (
         // Mobile & Tablet: Standard vertical layout with horizontal scrolling card row
-        <div className="w-full flex flex-col py-16 px-6 gap-10 relative">
+        <div className="w-full flex flex-col py-10 px-6 gap-6 relative">
           {/* Glow backdrop */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full bg-[#c9a227]/3 blur-[80px] pointer-events-none" />
           <div className="absolute top-0 left-0 right-0 h-px"
@@ -240,7 +240,7 @@ export default function AICoursesSection() {
         </div>
       ) : (
         // Desktop / Laptop: Horizontal scroll-linked tracking layout
-        <div className="sticky top-0 left-0 w-full h-screen overflow-hidden flex flex-col justify-between py-10 md:py-16">
+        <div className="sticky top-0 left-0 w-full h-screen overflow-hidden flex flex-col justify-between py-6 md:py-10">
           {/* Glow backdrop */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-[#c9a227]/3 blur-[120px] pointer-events-none" />
           <div className="absolute top-0 left-0 right-0 h-px"
@@ -267,7 +267,7 @@ export default function AICoursesSection() {
           </div>
 
           {/* Horizontal Scroll Track (Desktop only, scroll-linked) */}
-          <div className="flex-grow w-full flex items-center relative z-10 overflow-hidden my-6">
+          <div className="flex-grow w-full flex items-center relative z-10 overflow-hidden my-4">
             <motion.div 
               style={{ x: xDesktop }} 
               className="flex gap-6 px-6 md:px-24 w-full justify-center overflow-visible"

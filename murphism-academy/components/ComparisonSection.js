@@ -6,38 +6,7 @@ import Image from 'next/image';
 
 export default function ComparisonSection() {
   const containerRef = useRef(null);
-  const [activeStep, setActiveStep] = useState(-1); // -1 = initial, 0..4 = rows active
-  const isInView = useInView(containerRef, { once: true, margin: "-5% 0px" });
-
-  useEffect(() => {
-    if (!isInView) return;
-
-    // Trigger first step immediately on arrival
-    setActiveStep(0);
-    let currentStep = 0;
-    
-    const interval = setInterval(() => {
-      if (currentStep < 4) {
-        currentStep += 1;
-        setActiveStep(currentStep);
-      } else {
-        clearInterval(interval);
-      }
-    }, 600); // Automatically trigger next row and arrow flow down every 0.6 seconds
-
-    return () => clearInterval(interval);
-  }, [isInView]);
-
-  const getArrowPercent = (step) => {
-    if (step === -1) return 0;
-    if (step === 0) return 8;
-    if (step === 1) return 29;
-    if (step === 2) return 50;
-    if (step === 3) return 71;
-    return 92;
-  };
-
-  const progressPercent = getArrowPercent(activeStep);
+  const isInView = useInView(containerRef, { once: true, margin: "-10% 0px" });
 
   const rows = [
     {
@@ -57,7 +26,7 @@ export default function ComparisonSection() {
       right: 'No Practical Studio Exposure',
     },
     {
-      left: '100% Placement & Global Work Opportunities',
+      left: '100% placement assistance',
       right: 'Limited Career Support & Local Placements',
     },
   ];
@@ -77,7 +46,7 @@ export default function ComparisonSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="mb-12 flex flex-col items-center text-center"
+          className="mb-8 flex flex-col items-center text-center"
         >
           <div className="label-tag" style={{ margin: '0 auto 1.5rem auto' }}>Comparison</div>
           <h2 className="text-3xl md:text-5xl font-bold tracking-wide text-[#f0ece0] mx-auto max-w-3xl mb-4" style={{ lineHeight: '1.25' }}>
@@ -97,7 +66,7 @@ export default function ComparisonSection() {
           className="rounded-3xl p-6 md:p-12 relative overflow-hidden"
           style={{
             background: 'linear-gradient(145deg, #0a0907 0%, #050505 100%)',
-            border: '1px solid rgba(201,162,39,0.12)',
+            border: '1px solid rgba(255, 255, 255, 0.08)',
             boxShadow: '0 30px 80px rgba(0,0,0,0.6)',
           }}
         >
@@ -105,12 +74,20 @@ export default function ComparisonSection() {
           <div className="grid md:grid-cols-2 gap-8 md:gap-16 relative">
             
             {/* LEFT SIDE: Murphism Academy */}
-            <div 
+            <motion.div 
               className="rounded-2xl p-6 md:p-8 flex flex-col gap-6 md:gap-8"
+              initial={{
+                borderColor: 'rgba(34, 197, 94, 0.03)',
+                boxShadow: 'inset 0 0 30px rgba(34, 197, 94, 0.01), 0 0 0px rgba(34, 197, 94, 0)',
+              }}
+              animate={isInView ? {
+                borderColor: 'rgba(34, 197, 94, 0.8)',
+                boxShadow: 'inset 0 0 30px rgba(34, 197, 94, 0.05), 0 0 30px rgba(34, 197, 94, 0.25)',
+              } : {}}
+              transition={{ duration: 1.5, ease: 'easeOut' }}
               style={{
                 background: 'rgba(34, 197, 94, 0.02)',
-                border: '1px solid rgba(34, 197, 94, 0.15)',
-                boxShadow: 'inset 0 0 30px rgba(34, 197, 94, 0.02)',
+                border: '1.5px solid',
               }}
             >
               <div className="flex items-center gap-3 border-b border-white/5 pb-4">
@@ -129,9 +106,9 @@ export default function ComparisonSection() {
                 {rows.map((row, index) => (
                   <motion.div
                     key={`left-${index}`}
-                    initial={{ opacity: 0, x: -30 }}
-                    animate={activeStep >= index ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
-                    transition={{ duration: 0.5, ease: 'easeOut' }}
+                    initial={{ opacity: 0 }}
+                    animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+                    transition={{ duration: 0.8, delay: 0.1 }}
                     className="flex items-center gap-4 min-h-[50px]"
                   >
                     <div 
@@ -139,7 +116,7 @@ export default function ComparisonSection() {
                       style={{
                         background: 'rgba(34,197,94,0.1)',
                         border: '1px solid rgba(34,197,94,0.3)',
-                        boxShadow: activeStep >= index ? '0 0 10px rgba(34,197,94,0.2)' : 'none',
+                        boxShadow: '0 0 10px rgba(34,197,94,0.2)',
                       }}
                     >
                       <Check size={14} className="text-[#22c55e]" />
@@ -150,14 +127,14 @@ export default function ComparisonSection() {
                   </motion.div>
                 ))}
               </div>
-            </div>
+            </motion.div>
 
             {/* RIGHT SIDE: Others */}
             <div 
-              className="rounded-2xl p-6 md:p-8 flex flex-col gap-6 md:gap-8"
+              className="p-6 md:p-8 flex flex-col gap-6 md:gap-8"
               style={{
-                background: 'rgba(255, 255, 255, 0.01)',
-                border: '1px solid rgba(255, 255, 255, 0.05)',
+                background: 'transparent',
+                border: '1.5px solid transparent',
               }}
             >
               <div className="flex items-center gap-3 border-b border-white/5 pb-4">
@@ -179,9 +156,9 @@ export default function ComparisonSection() {
                 {rows.map((row, index) => (
                   <motion.div
                     key={`right-${index}`}
-                    initial={{ opacity: 0, x: 30 }}
-                    animate={activeStep >= index ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
-                    transition={{ duration: 0.5, ease: 'easeOut' }}
+                    initial={{ opacity: 0 }}
+                    animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+                    transition={{ duration: 0.8, delay: 0.1 }}
                     className="flex items-center gap-4 min-h-[50px]"
                   >
                     <div 
@@ -198,39 +175,6 @@ export default function ComparisonSection() {
                     </span>
                   </motion.div>
                 ))}
-              </div>
-            </div>
-
-            {/* CENTRAL DIVIDER TRACK & ANIMATED ARROW */}
-            <div className="hidden md:block absolute top-[110px] bottom-[30px] left-1/2 -translate-x-1/2 w-0.5 pointer-events-none">
-              {/* Background track line */}
-              <div className="absolute inset-0 bg-white/5 rounded-full" />
-              
-              {/* Glowing active path line */}
-              <div 
-                className="absolute top-0 w-full bg-gradient-to-b from-[#22c55e]/60 to-[#c9a227] rounded-full transition-all duration-[700ms] cubic-bezier(0.25, 1, 0.5, 1)"
-                style={{ height: `${progressPercent}%` }}
-              />
-              
-              {/* Arrow Down Indicator */}
-              <div 
-                className="absolute left-1/2 -translate-x-1/2 transition-all duration-[700ms] cubic-bezier(0.25, 1, 0.5, 1) flex items-center justify-center"
-                style={{
-                  top: `${progressPercent}%`,
-                  transform: 'translate(-50%, -50%)',
-                }}
-              >
-                <div 
-                  className="w-8 h-8 rounded-full flex items-center justify-center shadow-lg relative"
-                  style={{
-                    background: '#c9a227',
-                    border: '2px solid #e8bf5a',
-                    boxShadow: '0 0 15px rgba(201,162,39,0.5)',
-                  }}
-                >
-                  <ArrowDown size={14} className="text-[#050508] animate-bounce" />
-                  <span className="absolute w-12 h-12 rounded-full border border-[#c9a227]/40 animate-ping opacity-70 pointer-events-none" />
-                </div>
               </div>
             </div>
 

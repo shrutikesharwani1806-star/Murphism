@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { ArrowRight } from 'lucide-react';
 import ComboBuilderSection from './ComboBuilderSection';
 
@@ -171,6 +172,7 @@ const getCardStyles = (course, idx) => {
 };
 
 function CourseCard({ course, idx, total, isMobile, parentScrollYProgress }) {
+  const router = useRouter();
   const containerRef = useRef(null);
   const styles = getCardStyles(course, idx);
 
@@ -187,11 +189,12 @@ function CourseCard({ course, idx, total, isMobile, parentScrollYProgress }) {
   if (isMobile) {
     return (
       <motion.div
+        onClick={() => router.push(`/courses/${course.slug}`)}
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-5% 0px" }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
-        className={`w-full rounded-3xl ${styles.border} p-6 flex flex-col gap-6 items-center relative overflow-hidden`}
+        className={`w-full rounded-3xl ${styles.border} p-6 flex flex-col gap-6 items-center relative overflow-hidden cursor-pointer`}
         style={{
           position: 'sticky',
           top: `calc(8vh + ${idx * 32}px)`,
@@ -204,7 +207,6 @@ function CourseCard({ course, idx, total, isMobile, parentScrollYProgress }) {
           backfaceVisibility: 'hidden',
           WebkitBackfaceVisibility: 'hidden',
           backgroundClip: 'padding-box',
-          outline: '1px solid transparent',
         }}
       >
         {/* Accent blur gradient glow */}
@@ -235,6 +237,11 @@ function CourseCard({ course, idx, total, isMobile, parentScrollYProgress }) {
               )}
               {course.isDegree && (
                 <span className="text-[10px] font-black tracking-widest uppercase px-2.5 py-1 rounded bg-purple-950/40 text-purple-400 border border-purple-900/30">
+                  Degree
+                </span>
+              )}
+              {course.isDiploma && (
+                <span className="text-[10px] font-black tracking-widest uppercase px-2.5 py-1 rounded bg-amber-950/40 text-amber-400 border border-amber-900/30">
                   Diploma
                 </span>
               )}
@@ -333,9 +340,9 @@ function CourseCard({ course, idx, total, isMobile, parentScrollYProgress }) {
         backfaceVisibility: 'hidden',
         WebkitBackfaceVisibility: 'hidden',
         backgroundClip: 'padding-box',
-        outline: '1px solid transparent',
       }}
-      className={`w-full rounded-3xl ${styles.border} p-10 flex flex-row gap-8 items-center relative overflow-hidden`}
+      className={`w-full rounded-3xl ${styles.border} p-10 flex flex-row gap-8 items-center relative overflow-hidden cursor-pointer`}
+      onClick={() => router.push(`/courses/${course.slug}`)}
     >
       {/* Accent blur gradient glow */}
       <div 
@@ -365,6 +372,11 @@ function CourseCard({ course, idx, total, isMobile, parentScrollYProgress }) {
             )}
             {course.isDegree && (
               <span className="text-[10px] font-black tracking-widest uppercase px-2.5 py-1 rounded bg-purple-950/40 text-purple-400 border border-purple-900/30">
+                Degree
+              </span>
+            )}
+            {course.isDiploma && (
+              <span className="text-[10px] font-black tracking-widest uppercase px-2.5 py-1 rounded bg-amber-950/40 text-amber-400 border border-amber-900/30">
                 Diploma
               </span>
             )}
@@ -468,12 +480,12 @@ export default function CoursesSection() {
   }, []);
 
   return (
-    <section id="courses" className="py-24 relative" style={{ background: '#050505', overflow: 'visible' }}>
+    <section id="courses" className="section-pad relative" style={{ background: '#050505', overflow: 'visible' }}>
       {/* Top rule separator */}
-      <div className="w-full h-px mb-16" style={{ background: 'linear-gradient(90deg, transparent, rgba(201,162,39,0.15), transparent)' }} />
+      <div className="w-full h-px mb-10" style={{ background: 'linear-gradient(90deg, transparent, rgba(201,162,39,0.15), transparent)' }} />
 
       {/* Header */}
-      <div className="max-w-7xl mx-auto px-6 mb-20">
+      <div className="max-w-7xl mx-auto px-6 mb-10">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}

@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 
 export default function CTASection() {
   return (
-    <section className="relative w-full overflow-hidden bg-[#050505] py-24 md:py-36 border-t border-[rgba(201,162,39,0.08)]">
+    <section className="relative w-full overflow-hidden bg-[#050505] py-14 md:py-20 border-t border-[rgba(201,162,39,0.08)]">
       {/* ── BACKGROUND FLOATING CARDS ── */}
       <div className="absolute inset-0 pointer-events-none select-none overflow-hidden opacity-30">
         

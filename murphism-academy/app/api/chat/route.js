@@ -3,19 +3,27 @@ import { NextResponse } from 'next/server';
 const LOCAL_FALLBACKS = [
   {
     keywords: ['course', 'offer', 'class', 'catalog', 'program', 'learn', 'syllabus', 'curriculum', 'study'],
-    response: "We offer several premium courses designed to make you industry-ready:\n\n1. **Graphic Design** (3 Months)\n   - Illustrator, Photoshop, Figma, Layout, Typography, Branding.\n2. **Website Development** (3 Months)\n   - HTML, CSS, Tailwind, JavaScript, React, Node.js, Express, MongoDB.\n3. **3D Modelling & Animation** (6 Months Specialization)\n   - 3ds Max, Maya, ZBrush, Substance Painter, 3D Animation, Character Creator.\n4. **AI Courses** (2 Months)\n   - Generative AI, Prompt Engineering, Midjourney, Runway, ChatGPT, Cursor.\n5. **B.Sc. in Animations & Multimedia** (3 Years Full Degree)\n   - Government recognized degree with film-quality VFX, game engines, and portfolio design.\n6. **Diploma in Animations & Multimedia** (3 Years Full Diploma)\n   - Comprehensive diploma program combining principles, 3D modelling, VFX, and gaming.\n\nYou can also build a Custom Combo in the Courses section to design a personalized learning track!"
+    response: "We offer several premium courses designed to make you industry-ready:\n\n1. **Graphic Design** (3 to 6 Months)\n   - Illustrator, Photoshop, Figma, Layout, Typography, Branding.\n2. **Website Development** (3 to 6 Months)\n   - HTML, CSS, Tailwind, JavaScript, React, Node.js, Express, MongoDB.\n3. **3D Modelling & Animation** (6 Months Specialization)\n   - 3ds Max, Maya, ZBrush, Substance Painter, 3D Animation, Character Creator.\n4. **AI Courses** (2 Months)\n   - Generative AI, Prompt Engineering, Midjourney, Runway, ChatGPT, Cursor.\n5. **B.Sc. in Animations & Multimedia** (3 Years Full Degree)\n   - Government recognized degree with film-quality VFX, game engines, and portfolio design.\n6. **Diploma in Animations & Multimedia** (3 Years Full Diploma)\n   - Comprehensive diploma program combining principles, 3D modelling, VFX, and gaming.\n\nYou can also build a Custom Combo in the Courses section to design a personalized learning track!"
   },
   {
     keywords: ['job', 'placement', 'assistance', 'hire', 'career', 'work', 'recruit', 'internship', 'company', 'salary'],
     response: "Yes! Murphism Academy provides 100% Placement & Job Assistance. We have a dedicated placement cell, strong industry connections, and offer foreign work exposure (with connections in UK, UAE, Singapore) along with a Global Mentor Network to guide you into high-paying creative careers."
   },
   {
-    keywords: ['3d', 'modelling', 'animation', 'maya', 'zbrush', 'bsc', 'rigging', 'vfx', 'animator'],
+    keywords: ['3d', 'modelling', 'animation', 'maya', 'zbrush', 'rigging', 'vfx', 'animator'],
     response: "Our 3D Modelling & Animation course is a premium 6-month program. It covers 3ds Max, Maya, ZBrush, Substance Painter, and Character Creator. We also offer a 3-Year B.Sc. Degree and a 3-Year Diploma in Animations & Multimedia!"
   },
   {
+    keywords: ['graphic', 'design', 'illustration', 'photoshop', 'illustrator', 'figma', 'branding'],
+    response: "Our Graphic Design course is a professional 3 to 6 months program. You will master Illustrator, Photoshop, Figma, Layout Design, Typography, and Branding."
+  },
+  {
     keywords: ['web', 'development', 'javascript', 'react', 'html', 'css', 'coding', 'node', 'mongodb', 'developer'],
-    response: "Our Website Development course is a comprehensive 3-month program. You'll master HTML, CSS, Tailwind, JavaScript, React, Node.js, Express, and MongoDB."
+    response: "Our Website Development course is a comprehensive 3 to 6 months program. You'll master HTML, CSS, Tailwind, JavaScript, React, Node.js, Express, and MongoDB."
+  },
+  {
+    keywords: ['bsc', 'degree', 'diploma', 'animations', 'multimedia', '3 years', 'undergraduate', 'graduation'],
+    response: "We offer both a 3-Year B.Sc. Degree and a 3-Year Diploma in Animations & Multimedia!\n\n- **B.Sc. in Animations & Multimedia** (3-Year Govt. Recognized Degree):\n  - Year 1: Animation Fundamentals, 2D Digital Art, Drawing & Composition, Intro to 3D Modelling, History of Animation, Design Principles.\n  - Year 2: Advanced 3D, Rigging & Skinning, VFX & Compositing, Motion Graphics, AI in Animation.\n  - Year 3: Film-Quality VFX, Game Engine Integration, Portfolio, Industry Internship.\n\n- **Diploma in Animations & Multimedia** (3-Year Full Diploma):\n  - Comprehensive, hands-on curriculum covering Animation Principles, 3D Modelling & Rigging, VFX & Compositing, Game Design, AI in Animation, and Industry Internships."
   },
   {
     keywords: ['ai', 'prompt', 'midjourney', 'chatgpt', 'generative', 'stable diffusion', 'runway'],
@@ -82,10 +90,10 @@ MURPHISM ACADEMY INFO SUMMARY:
 
 COURSE CATALOG:
 1. Graphic Design:
-   - Duration: 3 Months
+   - Duration: 3 to 6 Months (3-6 Months)
    - Topics: Illustrator, Photoshop, Figma, Layout Design, Typography, Branding.
 2. Website Development:
-   - Duration: 3 Months
+   - Duration: 3 to 6 Months (3-6 Months)
    - Topics: HTML, CSS, Tailwind, JavaScript, React, Node.js, Express, MongoDB.
 3. 3D Modelling & Animation (Specialization / Core):
    - Duration: 6 Months
@@ -95,9 +103,9 @@ COURSE CATALOG:
    - Topics: Generative AI, Prompt Engineering, Midjourney, Runway, ChatGPT, Cursor, Automation.
 5. B.Sc. in Animations & Multimedia:
    - Duration: 3 Years (Full Degree, Govt. Recognized)
-   - First year: Animation basics, 2D art, 3D modelling.
-   - Second year: Advanced 3D, rigging, VFX, AI in animation.
-   - Third year: Film-quality VFX, game engines, internship, portfolio.
+   - First year: Animation basics, 2D art, 3D modelling, Fundamentals of Animation, Drawing & Composition, Intro to 3D Modelling, History of Animation, Design Principles.
+   - Second year: Advanced 3D, rigging, VFX, AI in animation, Advanced 3D Modelling, Character Rigging & Skinning, VFX & Compositing, Motion Graphics, Lighting & Rendering.
+   - Third year: Film-quality VFX, game engines, internship, portfolio, Game Engine Integration, Final Year Project, Industry Internship, Portfolio Development, Career Placement.
 6. Diploma in Animations & Multimedia:
    - Duration: 3 Years (Full Diploma Program)
    - Topics: Animation Principles, 3D Modelling & Rigging, VFX & Compositing, Game Design, AI in Animation, Industry Internships.

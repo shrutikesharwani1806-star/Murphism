@@ -83,7 +83,7 @@ export default function Navbar() {
 
           {/* ── LEFT: Logo ── */}
           <div className="flex-1 flex justify-start min-w-max">
-            <Link href="/" className="flex items-center gap-1.5 md:gap-2.5 group w-fit relative py-1 px-1">
+            <Link href="/" className="flex items-center gap-2 md:gap-3 group w-fit relative py-1 px-1">
               <div
                 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[130%] h-[130%] rounded-full opacity-60 blur-xl pointer-events-none transition-all duration-500 group-hover:opacity-90 group-hover:scale-110"
                 style={{
@@ -93,21 +93,21 @@ export default function Navbar() {
               <Image
                 src="/logo.png"
                 alt="MURPHISM Logo"
-                width={48}
-                height={48}
+                width={64}
+                height={64}
                 priority
-                className="h-8 md:h-11 w-auto object-contain transition-all duration-300 relative z-10"
-                style={{ filter: 'brightness(1.6) contrast(1.2) drop-shadow(0 0 10px rgba(201, 162, 39, 0.5))' }}
+                className="h-11 md:h-15 w-auto object-contain transition-all duration-300 relative z-10"
+                style={{ filter: 'brightness(1.6) contrast(1.2) drop-shadow(0 0 12px rgba(201, 162, 39, 0.6))' }}
               />
-              <div className="h-6 md:h-8 w-px bg-gradient-to-b from-[#c9a227]/30 via-[#c9a227]/60 to-[#c9a227]/30 self-center relative z-10 mx-1 md:mx-2" />
+              <div className="h-8 md:h-11 w-px bg-gradient-to-b from-[#c9a227]/30 via-[#c9a227]/60 to-[#c9a227]/30 self-center relative z-10 mx-2 md:mx-3" />
               <Image
                 src="/name.png"
                 alt="MURPHISM"
-                width={140}
-                height={36}
+                width={180}
+                height={48}
                 priority
-                className="h-6 md:h-8 w-auto object-contain transition-all duration-300 relative z-10"
-                style={{ filter: 'brightness(1.6) contrast(1.2) drop-shadow(0 0 10px rgba(201, 162, 39, 0.5))' }}
+                className="h-8 md:h-11 w-auto object-contain transition-all duration-300 relative z-10"
+                style={{ filter: 'brightness(1.6) contrast(1.2) drop-shadow(0 0 12px rgba(201, 162, 39, 0.6))' }}
               />
             </Link>
           </div>

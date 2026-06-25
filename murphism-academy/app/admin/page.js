@@ -24,6 +24,7 @@ export default function AdminDashboard() {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [courseFilter, setCourseFilter] = useState('all');
+  const [deleteTarget, setDeleteTarget] = useState(null); // { id, type, name }
 
   // Securely verify admin session on mount
   useEffect(() => {
@@ -93,8 +94,7 @@ export default function AdminDashboard() {
     }
   };
 
-  const handleDelete = async (id, type) => {
-    if (!confirm('Are you sure you want to delete this enquiry?')) return;
+  const confirmDeleteEnquiry = async (id, type) => {
     try {
       const res = await fetch(`/api/admin/enquiries?id=${id}&type=${type}`, {
         method: 'DELETE',
@@ -112,8 +112,7 @@ export default function AdminDashboard() {
     }
   };
 
-  const handleDeleteUser = async (userId) => {
-    if (!confirm('Are you sure you want to delete this user account?')) return;
+  const confirmDeleteUser = async (userId) => {
     try {
       const res = await fetch(`/api/admin/users?id=${userId}`, {
         method: 'DELETE',
@@ -209,13 +208,13 @@ export default function AdminDashboard() {
     <div className="min-h-screen bg-[#050505] text-[#f0ece0] font-sans pb-16">
       {/* Navbar */}
       <header className="border-b border-gray-900 bg-[#0a0907]/80 backdrop-blur sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-4">
             <Link href="/" className="text-[#c9a227] font-bold text-xl tracking-wider hover:opacity-80 transition-all">
               MURPHISM <span className="text-white text-sm font-normal tracking-normal border-l border-gray-800 pl-3 ml-2">ADMIN</span>
             </Link>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             <Link 
               href="/" 
               className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-gray-900/50 hover:bg-gray-900 text-gray-300 hover:text-white text-xs border border-gray-800 transition-all font-medium"
@@ -301,12 +300,12 @@ export default function AdminDashboard() {
 
         {/* Tab Controls & Filters */}
         <div className="bg-[#0a0907] border border-gray-900 rounded-xl p-6 shadow-xl mb-8">
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-6 border-b border-gray-900">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-gray-900">
             {/* Tabs */}
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2 w-full lg:w-auto">
               <button
                 onClick={() => { setActiveTab('enrollments'); setStatusFilter('all'); }}
-                className={`px-4 py-2.5 rounded text-sm font-semibold tracking-wide transition-all ${
+                className={`px-4 py-2.5 rounded text-sm font-semibold tracking-wide transition-all text-center ${
                   activeTab === 'enrollments'
                     ? 'bg-[#c9a227] text-black shadow-md shadow-[#c9a227]/10'
                     : 'bg-[#100f0d] text-gray-400 hover:text-white border border-gray-800'
@@ -316,7 +315,7 @@ export default function AdminDashboard() {
               </button>
               <button
                 onClick={() => { setActiveTab('contacts'); setStatusFilter('all'); }}
-                className={`px-4 py-2.5 rounded text-sm font-semibold tracking-wide transition-all ${
+                className={`px-4 py-2.5 rounded text-sm font-semibold tracking-wide transition-all text-center ${
                   activeTab === 'contacts'
                     ? 'bg-[#c9a227] text-black shadow-md shadow-[#c9a227]/10'
                     : 'bg-[#100f0d] text-gray-400 hover:text-white border border-gray-800'
@@ -326,7 +325,7 @@ export default function AdminDashboard() {
               </button>
               <button
                 onClick={() => { setActiveTab('users'); setStatusFilter('all'); }}
-                className={`px-4 py-2.5 rounded text-sm font-semibold tracking-wide transition-all ${
+                className={`px-4 py-2.5 rounded text-sm font-semibold tracking-wide transition-all text-center ${
                   activeTab === 'users'
                     ? 'bg-[#c9a227] text-black shadow-md shadow-[#c9a227]/10'
                     : 'bg-[#100f0d] text-gray-400 hover:text-white border border-gray-800'
@@ -337,16 +336,16 @@ export default function AdminDashboard() {
             </div>
 
             {/* Filters */}
-            <div className="flex flex-wrap items-center gap-3">
+            <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 w-full lg:w-auto">
               {/* Search */}
-              <div className="relative">
+              <div className="relative w-full sm:w-64">
                 <Search className="w-4 h-4 text-gray-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="text"
                   placeholder="Search name, email..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 pr-4 py-2.5 rounded bg-[#100f0d] border border-gray-800 text-sm text-white focus:outline-none focus:border-[#c9a227] w-64 transition-all"
+                  className="pl-10 pr-4 py-2.5 rounded bg-[#100f0d] border border-gray-800 text-sm text-white focus:outline-none focus:border-[#c9a227] w-full transition-all"
                 />
               </div>
 
@@ -355,7 +354,7 @@ export default function AdminDashboard() {
                 <select
                   value={statusFilter}
                   onChange={(e) => setStatusFilter(e.target.value)}
-                  className="px-3 py-2.5 rounded bg-[#100f0d] border border-gray-800 text-sm text-white focus:outline-none focus:border-[#c9a227]"
+                  className="px-3 py-2.5 rounded bg-[#100f0d] border border-gray-800 text-sm text-white focus:outline-none focus:border-[#c9a227] w-full sm:w-auto"
                 >
                   <option value="all">All Statuses</option>
                   {activeTab === 'enrollments' ? (
@@ -380,7 +379,7 @@ export default function AdminDashboard() {
                 <select
                   value={courseFilter}
                   onChange={(e) => setCourseFilter(e.target.value)}
-                  className="px-3 py-2.5 rounded bg-[#100f0d] border border-gray-800 text-sm text-white focus:outline-none focus:border-[#c9a227]"
+                  className="px-3 py-2.5 rounded bg-[#100f0d] border border-gray-800 text-sm text-white focus:outline-none focus:border-[#c9a227] w-full sm:w-auto"
                 >
                   <option value="all">All Courses</option>
                   {uniqueCourses.map(course => (
@@ -391,78 +390,134 @@ export default function AdminDashboard() {
             </div>
           </div>
 
-          {/* Table / List */}
-          <div className="overflow-x-auto mt-6">
+          {/* Table / List Container */}
+          <div className="mt-6">
             {activeTab === 'enrollments' ? (
               filteredEnrollments.length === 0 ? (
                 <div className="text-center py-12 text-gray-500 text-sm">
                   No enrollment requests found matching the current filters.
                 </div>
               ) : (
-                <table className="w-full text-left border-collapse">
-                  <thead>
-                    <tr className="border-b border-gray-900 text-gray-400 text-xs font-semibold uppercase tracking-wider">
-                      <th className="py-4 px-4">Student Details</th>
-                      <th className="py-4 px-4">Enrolling Course</th>
-                      <th className="py-4 px-4">Message</th>
-                      <th className="py-4 px-4">Submitted At</th>
-                      <th className="py-4 px-4">Status</th>
-                      <th className="py-4 px-4 text-right">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-900/60 text-sm">
+                <>
+                  {/* Desktop Table View */}
+                  <div className="hidden md:block overflow-x-auto">
+                    <table className="w-full text-left border-collapse">
+                      <thead>
+                        <tr className="border-b border-gray-900 text-gray-400 text-xs font-semibold uppercase tracking-wider">
+                          <th className="py-4 px-4">Student Details</th>
+                          <th className="py-4 px-4">Enrolling Course</th>
+                          <th className="py-4 px-4">Message</th>
+                          <th className="py-4 px-4">Submitted At</th>
+                          <th className="py-4 px-4">Status</th>
+                          <th className="py-4 px-4 text-right">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-gray-900/60 text-sm">
+                        {filteredEnrollments.map((item) => (
+                          <tr key={item._id} className="hover:bg-white/[0.01] transition-all">
+                            <td className="py-4 px-4">
+                              <div className="font-semibold text-white text-base">{item.name}</div>
+                              <div className="flex flex-col gap-0.5 mt-1 text-xs text-gray-400">
+                                <span className="flex items-center gap-1.5"><Mail className="w-3 h-3 text-[#c9a227]" /> {item.email}</span>
+                                {item.mobile && <span className="flex items-center gap-1.5"><Phone className="w-3 h-3 text-[#c9a227]" /> {item.mobile}</span>}
+                              </div>
+                            </td>
+                            <td className="py-4 px-4">
+                              <span className="px-2.5 py-1 rounded bg-[#c9a227]/10 text-[#c9a227] font-medium text-xs border border-[#c9a227]/20 uppercase tracking-wider">
+                                {item.course}
+                              </span>
+                            </td>
+                            <td className="py-4 px-4 max-w-xs">
+                              <p className="text-gray-300 text-xs break-words line-clamp-3" title={item.message}>
+                                {item.message || <span className="text-gray-600 italic">No message provided</span>}
+                              </p>
+                            </td>
+                            <td className="py-4 px-4 text-xs text-gray-400">
+                              {new Date(item.createdAt).toLocaleString()}
+                            </td>
+                            <td className="py-4 px-4">
+                              <select
+                                value={item.status}
+                                onChange={(e) => handleStatusChange(item._id, 'enrollment', e.target.value)}
+                                className={`px-2 py-1 rounded text-xs font-semibold focus:outline-none border transition-all ${
+                                  item.status === 'pending' ? 'bg-amber-950/40 text-amber-400 border-amber-900/40' :
+                                  item.status === 'contacted' ? 'bg-blue-950/40 text-blue-400 border-blue-900/40' :
+                                  item.status === 'enrolled' ? 'bg-green-950/40 text-green-400 border-green-900/40' :
+                                  'bg-red-950/40 text-red-400 border-red-900/40'
+                                }`}
+                              >
+                                <option value="pending" className="bg-[#0a0907] text-white">Pending</option>
+                                <option value="contacted" className="bg-[#0a0907] text-white">Contacted</option>
+                                <option value="enrolled" className="bg-[#0a0907] text-white">Enrolled</option>
+                                <option value="rejected" className="bg-[#0a0907] text-white">Rejected</option>
+                              </select>
+                            </td>
+                            <td className="py-4 px-4 text-right">
+                              <button
+                                onClick={() => setDeleteTarget({ id: item._id, type: 'enrollment', name: item.name })}
+                                className="p-2 rounded bg-red-950/20 hover:bg-red-950/60 text-red-400 hover:text-red-200 border border-red-900/30 transition-all"
+                                title="Delete"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {/* Mobile Card List View */}
+                  <div className="block md:hidden space-y-4">
                     {filteredEnrollments.map((item) => (
-                      <tr key={item._id} className="hover:bg-white/[0.01] transition-all">
-                        <td className="py-4 px-4">
-                          <div className="font-semibold text-white text-base">{item.name}</div>
-                          <div className="flex flex-col gap-0.5 mt-1 text-xs text-gray-400">
-                            <span className="flex items-center gap-1.5"><Mail className="w-3 h-3 text-[#c9a227]" /> {item.email}</span>
-                            {item.mobile && <span className="flex items-center gap-1.5"><Phone className="w-3 h-3 text-[#c9a227]" /> {item.mobile}</span>}
+                      <div key={item._id} className="p-5 rounded-xl bg-[#0b0a08] border border-gray-900 shadow-md">
+                        <div className="flex justify-between items-start gap-2 mb-3">
+                          <div>
+                            <h4 className="font-bold text-white text-base">{item.name}</h4>
+                            <span className="inline-block mt-1.5 px-2 py-0.5 rounded bg-[#c9a227]/10 text-[#c9a227] font-medium text-[10px] border border-[#c9a227]/25 uppercase tracking-wider">
+                              {item.course}
+                            </span>
                           </div>
-                        </td>
-                        <td className="py-4 px-4">
-                          <span className="px-2.5 py-1 rounded bg-[#c9a227]/10 text-[#c9a227] font-medium text-xs border border-[#c9a227]/20 uppercase tracking-wider">
-                            {item.course}
-                          </span>
-                        </td>
-                        <td className="py-4 px-4 max-w-xs">
-                          <p className="text-gray-300 text-xs break-words line-clamp-3" title={item.message}>
-                            {item.message || <span className="text-gray-600 italic">No message provided</span>}
+                          <button
+                            onClick={() => setDeleteTarget({ id: item._id, type: 'enrollment', name: item.name })}
+                            className="p-2 rounded bg-red-950/20 hover:bg-red-950/60 text-red-400 border border-red-900/30 transition-all"
+                            title="Delete"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                        <div className="space-y-1.5 text-xs text-gray-400 mb-4 border-t border-gray-900 pt-3">
+                          <div className="flex items-center gap-1.5"><Mail className="w-3.5 h-3.5 text-[#c9a227]" /> {item.email}</div>
+                          {item.mobile && <div className="flex items-center gap-1.5"><Phone className="w-3.5 h-3.5 text-[#c9a227]" /> {item.mobile}</div>}
+                          <div className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 text-[#c9a227]" /> {new Date(item.createdAt).toLocaleString()}</div>
+                        </div>
+                        <div className="p-3 bg-white/[0.02] border border-white/5 rounded-lg mb-4">
+                          <p className="text-gray-300 text-xs break-words">
+                            {item.message || <span className="text-gray-600 italic text-[11px]">No message provided</span>}
                           </p>
-                        </td>
-                        <td className="py-4 px-4 text-xs text-gray-400">
-                          {new Date(item.createdAt).toLocaleString()}
-                        </td>
-                        <td className="py-4 px-4">
+                        </div>
+                        <div className="flex items-center justify-between pt-3 border-t border-gray-900">
+                          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</span>
                           <select
                             value={item.status}
                             onChange={(e) => handleStatusChange(item._id, 'enrollment', e.target.value)}
-                            className={`px-2 py-1 rounded text-xs font-semibold focus:outline-none border transition-all ${
+                            className={`px-2.5 py-1 rounded text-xs font-semibold focus:outline-none border transition-all ${
                               item.status === 'pending' ? 'bg-amber-950/40 text-amber-400 border-amber-900/40' :
                               item.status === 'contacted' ? 'bg-blue-950/40 text-blue-400 border-blue-900/40' :
                               item.status === 'enrolled' ? 'bg-green-950/40 text-green-400 border-green-900/40' :
                               'bg-red-950/40 text-red-400 border-red-900/40'
                             }`}
                           >
-                            <option value="pending" className="bg-[#0a0907] text-white">Pending</option>
-                            <option value="contacted" className="bg-[#0a0907] text-white">Contacted</option>
-                            <option value="enrolled" className="bg-[#0a0907] text-white">Enrolled</option>
-                            <option value="rejected" className="bg-[#0a0907] text-white">Rejected</option>
+                            <option value="pending" className="bg-[#0a0907]">Pending</option>
+                            <option value="contacted" className="bg-[#0a0907]">Contacted</option>
+                            <option value="enrolled" className="bg-[#0a0907]">Enrolled</option>
+                            <option value="rejected" className="bg-[#0a0907]">Rejected</option>
                           </select>
-                        </td>
-                        <td className="py-4 px-4 text-right">
-                          <button
-                            onClick={() => handleDelete(item._id, 'enrollment')}
-                            className="p-2 rounded bg-red-950/20 hover:bg-red-950/60 text-red-400 hover:text-red-200 border border-red-900/30 transition-all"
-                            title="Delete"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </button>
-                        </td>
-                      </tr>
+                        </div>
+                      </div>
                     ))}
-                  </tbody>
-                </table>
+                  </div>
+                </>
               )
             ) : activeTab === 'contacts' ? (
               filteredContacts.length === 0 ? (
@@ -470,68 +525,122 @@ export default function AdminDashboard() {
                   No general contact enquiries found matching the current filters.
                 </div>
               ) : (
-                <table className="w-full text-left border-collapse">
-                  <thead>
-                    <tr className="border-b border-gray-900 text-gray-400 text-xs font-semibold uppercase tracking-wider">
-                      <th className="py-4 px-4">Contact Details</th>
-                      <th className="py-4 px-4">Subject</th>
-                      <th className="py-4 px-4">Message</th>
-                      <th className="py-4 px-4">Submitted At</th>
-                      <th className="py-4 px-4">Status</th>
-                      <th className="py-4 px-4 text-right">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-900/60 text-sm">
+                <>
+                  {/* Desktop Table View */}
+                  <div className="hidden md:block overflow-x-auto">
+                    <table className="w-full text-left border-collapse">
+                      <thead>
+                        <tr className="border-b border-gray-900 text-gray-400 text-xs font-semibold uppercase tracking-wider">
+                          <th className="py-4 px-4">Contact Details</th>
+                          <th className="py-4 px-4">Subject</th>
+                          <th className="py-4 px-4">Message</th>
+                          <th className="py-4 px-4">Submitted At</th>
+                          <th className="py-4 px-4">Status</th>
+                          <th className="py-4 px-4 text-right">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-gray-900/60 text-sm">
+                        {filteredContacts.map((item) => (
+                          <tr key={item._id} className="hover:bg-white/[0.01] transition-all">
+                            <td className="py-4 px-4">
+                              <div className="font-semibold text-white text-base">{item.name}</div>
+                              <div className="flex flex-col gap-0.5 mt-1 text-xs text-gray-400">
+                                <span className="flex items-center gap-1.5"><Mail className="w-3 h-3 text-[#c9a227]" /> {item.email}</span>
+                                {item.mobile && <span className="flex items-center gap-1.5"><Phone className="w-3 h-3 text-[#c9a227]" /> {item.mobile}</span>}
+                              </div>
+                            </td>
+                            <td className="py-4 px-4">
+                              <span className="font-medium text-gray-200">
+                                {item.subject || <span className="text-gray-600 italic">No subject</span>}
+                              </span>
+                            </td>
+                            <td className="py-4 px-4 max-w-xs">
+                              <p className="text-gray-300 text-xs break-words line-clamp-3" title={item.message}>
+                                {item.message}
+                              </p>
+                            </td>
+                            <td className="py-4 px-4 text-xs text-gray-400">
+                              {new Date(item.createdAt).toLocaleString()}
+                            </td>
+                            <td className="py-4 px-4">
+                              <select
+                                value={item.status}
+                                onChange={(e) => handleStatusChange(item._id, 'contact', e.target.value)}
+                                className={`px-2 py-1 rounded text-xs font-semibold focus:outline-none border transition-all ${
+                                  item.status === 'new' ? 'bg-amber-950/40 text-amber-400 border-amber-900/40' :
+                                  item.status === 'read' ? 'bg-blue-950/40 text-blue-400 border-blue-900/40' :
+                                  'bg-green-950/40 text-green-400 border-green-900/40'
+                                }`}
+                              >
+                                <option value="new" className="bg-[#0a0907] text-white">New</option>
+                                <option value="read" className="bg-[#0a0907] text-white">Read</option>
+                                <option value="replied" className="bg-[#0a0907] text-white">Replied</option>
+                              </select>
+                            </td>
+                            <td className="py-4 px-4 text-right">
+                              <button
+                                onClick={() => setDeleteTarget({ id: item._id, type: 'contact', name: item.name })}
+                                className="p-2 rounded bg-red-950/20 hover:bg-red-950/60 text-red-400 hover:text-red-200 border border-red-900/30 transition-all"
+                                title="Delete"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {/* Mobile Card List View */}
+                  <div className="block md:hidden space-y-4">
                     {filteredContacts.map((item) => (
-                      <tr key={item._id} className="hover:bg-white/[0.01] transition-all">
-                        <td className="py-4 px-4">
-                          <div className="font-semibold text-white text-base">{item.name}</div>
-                          <div className="flex flex-col gap-0.5 mt-1 text-xs text-gray-400">
-                            <span className="flex items-center gap-1.5"><Mail className="w-3 h-3 text-[#c9a227]" /> {item.email}</span>
-                            {item.mobile && <span className="flex items-center gap-1.5"><Phone className="w-3 h-3 text-[#c9a227]" /> {item.mobile}</span>}
+                      <div key={item._id} className="p-5 rounded-xl bg-[#0b0a08] border border-gray-900 shadow-md">
+                        <div className="flex justify-between items-start gap-2 mb-3">
+                          <div>
+                            <h4 className="font-bold text-white text-base">{item.name}</h4>
+                            <span className="inline-block mt-1.5 px-2 py-0.5 rounded bg-purple-950/40 text-purple-400 font-medium text-[10px] border border-purple-900/30 uppercase tracking-wider">
+                              {item.subject || 'General Enquiry'}
+                            </span>
                           </div>
-                        </td>
-                        <td className="py-4 px-4">
-                          <span className="font-medium text-gray-200">
-                            {item.subject || <span className="text-gray-600 italic">No subject</span>}
-                          </span>
-                        </td>
-                        <td className="py-4 px-4 max-w-xs">
-                          <p className="text-gray-300 text-xs break-words line-clamp-3" title={item.message}>
+                          <button
+                            onClick={() => setDeleteTarget({ id: item._id, type: 'contact', name: item.name })}
+                            className="p-2 rounded bg-red-950/20 hover:bg-red-950/60 text-red-400 border border-red-900/30 transition-all"
+                            title="Delete"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                        <div className="space-y-1.5 text-xs text-gray-400 mb-4 border-t border-gray-900 pt-3">
+                          <div className="flex items-center gap-1.5"><Mail className="w-3.5 h-3.5 text-[#c9a227]" /> {item.email}</div>
+                          {item.mobile && <div className="flex items-center gap-1.5"><Phone className="w-3.5 h-3.5 text-[#c9a227]" /> {item.mobile}</div>}
+                          <div className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 text-[#c9a227]" /> {new Date(item.createdAt).toLocaleString()}</div>
+                        </div>
+                        <div className="p-3 bg-white/[0.02] border border-white/5 rounded-lg mb-4">
+                          <p className="text-gray-300 text-xs break-words">
                             {item.message}
                           </p>
-                        </td>
-                        <td className="py-4 px-4 text-xs text-gray-400">
-                          {new Date(item.createdAt).toLocaleString()}
-                        </td>
-                        <td className="py-4 px-4">
+                        </div>
+                        <div className="flex items-center justify-between pt-3 border-t border-gray-900">
+                          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</span>
                           <select
                             value={item.status}
                             onChange={(e) => handleStatusChange(item._id, 'contact', e.target.value)}
-                            className={`px-2 py-1 rounded text-xs font-semibold focus:outline-none border transition-all ${
+                            className={`px-2.5 py-1 rounded text-xs font-semibold focus:outline-none border transition-all ${
                               item.status === 'new' ? 'bg-amber-950/40 text-amber-400 border-amber-900/40' :
                               item.status === 'read' ? 'bg-blue-950/40 text-blue-400 border-blue-900/40' :
                               'bg-green-950/40 text-green-400 border-green-900/40'
                             }`}
                           >
-                            <option value="new" className="bg-[#0a0907] text-white">New</option>
-                            <option value="read" className="bg-[#0a0907] text-white">Read</option>
-                            <option value="replied" className="bg-[#0a0907] text-white">Replied</option>
+                            <option value="new" className="bg-[#0a0907]">New</option>
+                            <option value="read" className="bg-[#0a0907]">Read</option>
+                            <option value="replied" className="bg-[#0a0907]">Replied</option>
                           </select>
-                        </td>
-                        <td className="py-4 px-4 text-right">
-                          <button
-                            onClick={() => handleDelete(item._id, 'contact')}
-                            className="p-2 rounded bg-red-950/20 hover:bg-red-950/60 text-red-400 hover:text-red-200 border border-red-900/30 transition-all"
-                            title="Delete"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </button>
-                        </td>
-                      </tr>
+                        </div>
+                      </div>
                     ))}
-                  </tbody>
-                </table>
+                  </div>
+                </>
               )
             ) : activeTab === 'users' ? (
               filteredUsers.length === 0 ? (
@@ -539,62 +648,134 @@ export default function AdminDashboard() {
                   No registered users found matching the current filters.
                 </div>
               ) : (
-                <table className="w-full text-left border-collapse">
-                  <thead>
-                    <tr className="border-b border-gray-900 text-gray-400 text-xs font-semibold uppercase tracking-wider">
-                      <th className="py-4 px-4">User Details</th>
-                      <th className="py-4 px-4">Phone</th>
-                      <th className="py-4 px-4">Role</th>
-                      <th className="py-4 px-4">Registered At</th>
-                      <th className="py-4 px-4 text-right">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-900/60 text-sm">
+                <>
+                  {/* Desktop Table View */}
+                  <div className="hidden md:block overflow-x-auto">
+                    <table className="w-full text-left border-collapse">
+                      <thead>
+                        <tr className="border-b border-gray-900 text-gray-400 text-xs font-semibold uppercase tracking-wider">
+                          <th className="py-4 px-4">User Details</th>
+                          <th className="py-4 px-4">Phone</th>
+                          <th className="py-4 px-4">Role</th>
+                          <th className="py-4 px-4">Registered At</th>
+                          <th className="py-4 px-4 text-right">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-gray-900/60 text-sm">
+                        {filteredUsers.map((item) => (
+                          <tr key={item._id} className="hover:bg-white/[0.01] transition-all">
+                            <td className="py-4 px-4">
+                              <div className="font-semibold text-white text-base">{item.name}</div>
+                              <div className="flex items-center gap-1.5 mt-1 text-xs text-gray-400">
+                                <Mail className="w-3 h-3 text-[#c9a227]" /> {item.email}
+                              </div>
+                            </td>
+                            <td className="py-4 px-4 text-sm text-gray-300">
+                              {item.phone ? (
+                                <span className="flex items-center gap-1.5"><Phone className="w-3 h-3 text-[#c9a227]" /> {item.phone}</span>
+                              ) : (
+                                <span className="text-gray-600 italic">Not provided</span>
+                              )}
+                            </td>
+                            <td className="py-4 px-4">
+                              {item.isAdmin ? (
+                                <span className="px-2.5 py-1 rounded bg-[#c9a227]/10 text-[#c9a227] font-medium text-xs border border-[#c9a227]/20 uppercase tracking-wider">Admin</span>
+                              ) : (
+                                <span className="px-2.5 py-1 rounded bg-gray-900/60 text-gray-400 font-medium text-xs border border-gray-800 uppercase tracking-wider">User</span>
+                              )}
+                            </td>
+                            <td className="py-4 px-4 text-xs text-gray-400">
+                              {new Date(item.createdAt).toLocaleString()}
+                            </td>
+                            <td className="py-4 px-4 text-right">
+                              {!item.isAdmin && (
+                                <button
+                                  onClick={() => setDeleteTarget({ id: item._id, type: 'user', name: item.name || item.email })}
+                                  className="p-2 rounded bg-red-950/20 hover:bg-red-950/60 text-red-400 hover:text-red-200 border border-red-900/30 transition-all"
+                                  title="Delete User"
+                                >
+                                  <Trash2 className="w-4 h-4" />
+                                </button>
+                              )}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {/* Mobile Card List View */}
+                  <div className="block md:hidden space-y-4">
                     {filteredUsers.map((item) => (
-                      <tr key={item._id} className="hover:bg-white/[0.01] transition-all">
-                        <td className="py-4 px-4">
-                          <div className="font-semibold text-white text-base">{item.name}</div>
-                          <div className="flex items-center gap-1.5 mt-1 text-xs text-gray-400">
-                            <Mail className="w-3 h-3 text-[#c9a227]" /> {item.email}
+                      <div key={item._id} className="p-5 rounded-xl bg-[#0b0a08] border border-gray-900 shadow-md">
+                        <div className="flex justify-between items-start gap-2 mb-3">
+                          <div>
+                            <h4 className="font-bold text-white text-base">{item.name}</h4>
+                            <span className="inline-block mt-1.5 px-2 py-0.5 rounded bg-gray-900/60 text-gray-400 font-medium text-[10px] border border-gray-800 uppercase tracking-wider">
+                              {item.isAdmin ? 'Admin' : 'User'}
+                            </span>
                           </div>
-                        </td>
-                        <td className="py-4 px-4 text-sm text-gray-300">
-                          {item.phone ? (
-                            <span className="flex items-center gap-1.5"><Phone className="w-3 h-3 text-[#c9a227]" /> {item.phone}</span>
-                          ) : (
-                            <span className="text-gray-600 italic">Not provided</span>
-                          )}
-                        </td>
-                        <td className="py-4 px-4">
-                          {item.isAdmin ? (
-                            <span className="px-2.5 py-1 rounded bg-[#c9a227]/10 text-[#c9a227] font-medium text-xs border border-[#c9a227]/20 uppercase tracking-wider">Admin</span>
-                          ) : (
-                            <span className="px-2.5 py-1 rounded bg-gray-900/60 text-gray-400 font-medium text-xs border border-gray-800 uppercase tracking-wider">User</span>
-                          )}
-                        </td>
-                        <td className="py-4 px-4 text-xs text-gray-400">
-                          {new Date(item.createdAt).toLocaleString()}
-                        </td>
-                        <td className="py-4 px-4 text-right">
                           {!item.isAdmin && (
                             <button
-                              onClick={() => handleDeleteUser(item._id)}
-                              className="p-2 rounded bg-red-950/20 hover:bg-red-950/60 text-red-400 hover:text-red-200 border border-red-900/30 transition-all"
+                              onClick={() => setDeleteTarget({ id: item._id, type: 'user', name: item.name || item.email })}
+                              className="p-2 rounded bg-red-950/20 hover:bg-red-950/60 text-red-400 border border-red-900/30 transition-all"
                               title="Delete User"
                             >
                               <Trash2 className="w-4 h-4" />
                             </button>
                           )}
-                        </td>
-                      </tr>
+                        </div>
+                        <div className="space-y-1.5 text-xs text-gray-400 mb-2 border-t border-gray-900 pt-3">
+                          <div className="flex items-center gap-1.5"><Mail className="w-3.5 h-3.5 text-[#c9a227]" /> {item.email}</div>
+                          {item.phone && <div className="flex items-center gap-1.5"><Phone className="w-3.5 h-3.5 text-[#c9a227]" /> {item.phone}</div>}
+                          <div className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 text-[#c9a227]" /> Registered {new Date(item.createdAt).toLocaleDateString()}</div>
+                        </div>
+                      </div>
                     ))}
-                  </tbody>
-                </table>
+                  </div>
+                </>
               )
             ) : null}
           </div>
         </div>
       </main>
+
+      {/* Custom Confirmation Modal overlay */}
+      {deleteTarget && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[999] flex items-center justify-center p-4">
+          <div className="bg-[#0f0e0b] border border-[rgba(201,162,39,0.2)] rounded-xl max-w-sm w-full p-6 text-center shadow-2xl">
+            <div className="mx-auto w-12 h-12 rounded-full bg-red-950/30 flex items-center justify-center text-red-400 border border-red-900/40 mb-4">
+              <Trash2 className="w-6 h-6" />
+            </div>
+            <h3 className="text-[#f0ece0] font-bold text-lg mb-2">Delete Confirmation</h3>
+            <p className="text-gray-400 text-sm mb-6 leading-relaxed">
+              Are you sure you want to delete <span className="text-[#e8bf5a] font-semibold">{deleteTarget.name}</span>? This action cannot be undone.
+            </p>
+            <div className="flex justify-center gap-3">
+              <button
+                onClick={() => setDeleteTarget(null)}
+                className="px-4 py-2 rounded bg-gray-900 hover:bg-gray-800 text-gray-300 font-semibold text-xs uppercase tracking-wider transition-all"
+              >
+                Cancel
+              </button>
+              <button
+                id="modal-confirm-delete"
+                onClick={() => {
+                  if (deleteTarget.type === 'user') {
+                    confirmDeleteUser(deleteTarget.id);
+                  } else {
+                    confirmDeleteEnquiry(deleteTarget.id, deleteTarget.type);
+                  }
+                  setDeleteTarget(null);
+                }}
+                className="px-4 py-2 rounded bg-red-950/40 hover:bg-red-900/40 text-red-400 border border-red-900/30 font-semibold text-xs uppercase tracking-wider transition-all"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -51,7 +51,7 @@ export default function StatsSection() {
   return (
     <section
       ref={containerRef}
-      className="relative py-16 md:py-24 border-y overflow-hidden"
+      className="relative py-12 md:py-16 border-y overflow-hidden"
       style={{
         background: '#050505',
         borderColor: 'rgba(201,162,39,0.08)',

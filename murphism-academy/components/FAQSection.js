@@ -34,7 +34,7 @@ export default function FAQSection() {
   };
 
   return (
-    <section id="faq" className="py-24 px-4 bg-[#050505] relative overflow-hidden">
+    <section id="faq" className="section-pad px-4 bg-[#050505] relative overflow-hidden">
       {/* Background Decorative Warm Gold Glow */}
       <div 
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-[150px] opacity-[0.06] pointer-events-none"
@@ -46,7 +46,7 @@ export default function FAQSection() {
       <div className="max-w-4xl mx-auto relative z-10">
         
         {/* Section Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-10">
           <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-[#b8b099] mb-4" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
             Frequently Asked <span className="text-[#c9a227]">Questions</span>
           </h2>
