@@ -37,7 +37,7 @@ const benefits = [
 
 // Spread positions: start all at center (0), fan out left/right on scroll
 // 4 cards: -3, -1, +1, +3 units from center
-const SPREAD_X   = [-420, -140, 140, 420]; // px — final spread
+const SPREAD_X   = [-480, -160, 160, 480]; // px — final spread
 const SPREAD_ROT = [-6,   -2,   2,   6  ]; // deg — gentle tilt
 
 export default function ForeignExposure() {
@@ -57,7 +57,7 @@ export default function ForeignExposure() {
     <section
       ref={sectionRef}
       className="section-pad relative overflow-hidden"
-      style={{ background: '#0a0907' }}
+      style={{ background: 'rgba(10,9,7,0.45)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}
     >
       <div
         className="absolute top-0 left-0 right-0 h-px"
@@ -108,8 +108,8 @@ export default function ForeignExposure() {
                   key={benefit.num}
                   style={{
                     position: 'absolute',
-                    width: '230px',
-                    height: '280px',
+                    width: '290px',
+                    height: '320px',
                     transformOrigin: 'bottom center',
                     // stack z: middle cards on top when collapsed
                     zIndex: spread ? i + 1 : (i < 2 ? i + 1 : 5 - i),
@@ -186,10 +186,10 @@ export default function ForeignExposure() {
 
                     {/* Text */}
                     <div className="flex-1 flex flex-col gap-1.5">
-                      <h3 className="text-[#f0ece0] font-bold text-sm leading-snug">
+                      <p className="text-[#f0ece0] font-semibold text-base md:text-[17.5px] leading-snug">
                         {benefit.title}
-                      </h3>
-                      <p className="text-[#6b6459] text-xs leading-relaxed">{benefit.desc}</p>
+                      </p>
+                      <p className="text-[#b8b099] text-[13px] md:text-[15px] leading-relaxed">{benefit.desc}</p>
                     </div>
                   </div>
                 </motion.div>
@@ -233,8 +233,8 @@ export default function ForeignExposure() {
                     {benefit.num}
                   </span>
                 </div>
-                <h3 className="text-[#f0ece0] font-bold text-sm mb-1.5">{benefit.title}</h3>
-                <p className="text-[#6b6459] text-xs leading-relaxed">{benefit.desc}</p>
+                <p className="text-[#f0ece0] font-semibold text-sm md:text-base mb-1.5">{benefit.title}</p>
+                <p className="text-[#b8b099] text-[12.5px] md:text-sm leading-relaxed">{benefit.desc}</p>
               </motion.div>
             );
           })}

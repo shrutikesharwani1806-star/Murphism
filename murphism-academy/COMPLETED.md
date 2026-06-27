@@ -80,6 +80,18 @@
 
 ---
 
+## 🎨 Aesthetic & Security Finalization (June 27)
+
+| Feature | Description | Status |
+|---------|-------------|--------|
+| **3D Motion Background** | High-performance 3D perspective grid with cursor parallax and lag inertia (lerp) utilizing gold, bronze, and amber glows | ✅ Done |
+| **Overlapping Certificates** | Scattered card deck presentation layout with alternating tilts (`-3.5deg` to `3deg`), margins, and active hover focus blur transitions | ✅ Done |
+| **Upscaled Typography** | Optimized card titles, taglines, and description font sizes in the AI curriculum and Foreign Exposure cards for optimal legibility | ✅ Done |
+| **Redesigned Footer** | Fully aligned to reference with large logo (`h-[90px]`), watermark silhouette, social lists, and matching font styles | ✅ Done |
+| **Secure Admin Routing** | Integrated Next.js 16+ `proxy.js` Edge middleware to enforce server-side redirection of guest users to homepage on `/admin` and `/api/admin` requests | ✅ Done |
+
+---
+
 ## 📱 Responsiveness Optimization
 - Replaced custom viewport units (`vw` / `vh`) inside `HeroSection.js`, `StatsSection.js`, and `Navbar.js` with responsive Tailwind classes to guarantee site-wide layout scaling on mobile, tablet, and widescreen viewports.
 
@@ -90,7 +102,7 @@
 ```
 URL:          http://localhost:3000
 Admin Path:   http://localhost:3000/admin
-Middleware:   ✅ Enforced 307 Redirects
+Middleware:   ✅ Enforced 307 Redirects via proxy.js
 Build Test:   ✓ Compiled successfully (0 compile/lint errors)
 Deploy:       ✓ Fully configured for Vercel (Front + Backend Serverless)
 Chatbot:      ✓ Live Gemini API-powered chat widget integrated

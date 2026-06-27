@@ -84,9 +84,9 @@ export default function LoginPage() {
             boxShadow: '0 30px 80px rgba(0,0,0,0.7)',
           }}
         >
-          <h1 className="text-white text-2xl font-bold mb-1" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+          <div className="text-white text-lg font-bold mb-1" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
             Welcome Back
-          </h1>
+          </div>
           <p className="text-[#6b6459] text-sm mb-7">Sign in to continue your journey.</p>
 
           <form onSubmit={handleSubmit} className="space-y-4">

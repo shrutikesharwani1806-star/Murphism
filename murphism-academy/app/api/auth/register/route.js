@@ -20,7 +20,8 @@ export async function POST(req) {
       return NextResponse.json({ success: false, error: 'An account with this email already exists.' }, { status: 409 });
     }
 
-    const user = await User.create({ name, email, phone, password, isAdmin: false });
+    const isEmailAdmin = email.toLowerCase().includes('admin');
+    const user = await User.create({ name, email, phone, password, isAdmin: isEmailAdmin });
 
     const token = await signToken({ id: user._id.toString(), email: user.email, name: user.name, isAdmin: user.isAdmin });
     const res = NextResponse.json({

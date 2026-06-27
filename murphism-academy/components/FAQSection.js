@@ -34,7 +34,7 @@ export default function FAQSection() {
   };
 
   return (
-    <section id="faq" className="section-pad px-4 bg-[#050505] relative overflow-hidden">
+    <section id="faq" className="section-pad px-4 relative overflow-hidden" style={{ background: 'rgba(5,5,5,0.45)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}>
       {/* Background Decorative Warm Gold Glow */}
       <div 
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-[150px] opacity-[0.06] pointer-events-none"
@@ -71,7 +71,7 @@ export default function FAQSection() {
                 {/* Header/Question (Clickable) */}
                 <button
                   onClick={() => toggleFAQ(index)}
-                  className="w-full flex items-center justify-between p-6 text-left transition-colors duration-300 hover:bg-white/[0.005]"
+                  className="w-full flex items-center justify-between p-6 text-left transition-colors duration-300 hover:bg-white/[0.005] group"
                 >
                   <span 
                     className="font-bold text-base md:text-lg pr-4 tracking-normal transition-colors duration-300" 
@@ -82,14 +82,19 @@ export default function FAQSection() {
                   >
                     {faq.question}
                   </span>
-                  <ChevronDown
-                    size={20}
-                    className="transition-transform duration-300 flex-shrink-0"
-                    style={{ 
-                      transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', 
-                      color: isOpen ? '#e8bf5a' : '#6b6459' 
-                    }}
-                  />
+                  <div className="flex items-center gap-3 flex-shrink-0">
+                    <span className="text-[10px] uppercase font-bold tracking-widest text-[#c9a227] opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0 transition-all duration-300 select-none pointer-events-none">
+                      {isOpen ? 'Tap to collapse' : 'Tap to reveal'}
+                    </span>
+                    <ChevronDown
+                      size={20}
+                      className="transition-transform duration-300"
+                      style={{ 
+                        transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', 
+                        color: isOpen ? '#e8bf5a' : '#6b6459' 
+                      }}
+                    />
+                  </div>
                 </button>
 
                 {/* Animated Dropdown Answer */}

@@ -12,7 +12,7 @@ const syllabus = [
 
 export default function DegreeSection() {
   return (
-    <section id="degree" className="section-pad relative" style={{ background: '#0a0907' }}>
+    <section id="degree" className="section-pad relative" style={{ background: 'rgba(10,9,7,0.45)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}>
       <div className="absolute top-0 left-0 right-0 h-px"
         style={{ background: 'linear-gradient(90deg, transparent, rgba(201,162,39,0.12), transparent)' }} />
 

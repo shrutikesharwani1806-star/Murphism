@@ -26,7 +26,7 @@ export default function TransformationSection() {
   return (
     <section
       className="section-pad relative overflow-hidden"
-      style={{ background: '#050505' }}
+      style={{ background: 'rgba(5,5,5,0.82)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' }}
     >
       {/* Top rule */}
       <div className="absolute top-0 left-0 right-0 h-px"

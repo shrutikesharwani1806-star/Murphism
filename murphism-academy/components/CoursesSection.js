@@ -480,12 +480,12 @@ export default function CoursesSection() {
   }, []);
 
   return (
-    <section id="courses" className="section-pad relative" style={{ background: '#050505', overflow: 'visible' }}>
+    <section id="courses" className="section-pad relative" style={{ background: 'rgba(5,5,5,0.45)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', overflow: 'visible' }}>
       {/* Top rule separator */}
       <div className="w-full h-px mb-10" style={{ background: 'linear-gradient(90deg, transparent, rgba(201,162,39,0.15), transparent)' }} />
 
       {/* Header */}
-      <div className="max-w-7xl mx-auto px-6 mb-10">
+      <div className="max-w-[1360px] mx-auto px-6 mb-10">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -503,7 +503,7 @@ export default function CoursesSection() {
           <p className="text-warm-muted text-sm md:text-base max-w-xl mx-auto leading-relaxed">
             Industry-aligned programs designed by working professionals. Experience our immersive learning.
           </p>
-
+ 
           {/* Tabs Toggler */}
           <div className="flex gap-2 mt-8 bg-white/5 p-1 rounded-full border border-white/5">
             <button
@@ -518,23 +518,23 @@ export default function CoursesSection() {
             </button>
             <button
               onClick={() => setActiveTab('combo')}
-              className={`px-6 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase transition-all duration-300 ${
+              className={`px-6 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase transition-all duration-300 flex items-center gap-1.5 ${
                 activeTab === 'combo'
                   ? 'bg-[#c9a227] text-black shadow-lg shadow-[#c9a227]/10'
-                  : 'text-warm-muted hover:text-white'
+                  : 'text-[#e8bf5a] hover:text-white border border-[#c9a227]/40 shadow-[0_0_12px_rgba(201,162,39,0.15)]'
               }`}
             >
-              Custom Career Builder
+              <span className="text-[10px]">✦</span> Custom Career Builder
             </button>
           </div>
         </motion.div>
       </div>
-
+ 
       {activeTab === 'individual' ? (
         /* Cards Stacking Container */
         <div 
           ref={parentRef}
-          className="max-w-5xl mx-auto px-6 flex flex-col relative" 
+          className="max-w-[1360px] mx-auto px-6 flex flex-col relative" 
           style={{ overflow: 'visible' }}
         >
           {courses.map((course, idx) => (
@@ -549,7 +549,7 @@ export default function CoursesSection() {
           ))}
         </div>
       ) : (
-        <div className="max-w-7xl mx-auto px-6 relative">
+        <div className="max-w-[1360px] mx-auto px-6 relative">
           <ComboBuilderSection hideHeader={true} />
         </div>
       )}

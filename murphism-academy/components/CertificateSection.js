@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { ArrowRight, Award } from 'lucide-react';
+import { ArrowRight, Award, Palette, Code, Video, Boxes, Tv, Cpu, ShieldCheck } from 'lucide-react';
 
 const certs = [
   {
@@ -60,6 +60,18 @@ const certs = [
     slug: 'ai-courses',
   },
 ];
+
+const getCertIcon = (slug) => {
+  switch (slug) {
+    case 'graphic-design': return Palette;
+    case 'website-development': return Code;
+    case 'video-editing-vfx': return Video;
+    case '3d-modelling': return Boxes;
+    case 'vfx': return Tv;
+    case 'ai-courses': return Cpu;
+    default: return Award;
+  }
+};
 
 export default function CertificateSection() {
   const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -145,7 +157,7 @@ export default function CertificateSection() {
     <section
       id="certificates"
       className="section-pad relative overflow-hidden"
-      style={{ background: '#050508' }}
+      style={{ background: 'rgba(5,5,8,0.45)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}
     >
       <div
         className="absolute top-0 left-0 right-0 h-px"
@@ -169,7 +181,7 @@ export default function CertificateSection() {
             Every Candidate Certified
           </div>
           <h2
-            className="text-3xl md:text-5xl font-bold tracking-wide text-[#f0ece0] mx-auto"
+            className="text-2xl md:text-4xl font-bold tracking-normal text-[#f0ece0] mx-auto"
             style={{ lineHeight: '1.25' }}
           >
             You Graduate With
@@ -208,11 +220,17 @@ export default function CertificateSection() {
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseLeaveContainer}
           onMouseMove={handleMouseMoveContainer}
-          className="w-full overflow-x-auto flex gap-6 px-3 py-4 no-scrollbar cursor-grab active:cursor-grabbing"
+          className="w-full overflow-x-auto flex px-6 py-16 no-scrollbar cursor-grab active:cursor-grabbing"
+          style={{ gap: '0px' }}
         >
           {containerCerts.map((cert, index) => {
             const isHovered = hoveredIndex === index;
             const isAnyHovered = hoveredIndex !== null;
+
+            // Tilted scattered deck values
+            const rot = [-3.5, 2, -2.5, 3, -1.5, 2.5][index % 6];
+            const transY = [12, -8, 8, -12, 10, -6][index % 6];
+            const baseZIndex = 10 + (index % 5);
 
             return (
               <Link
@@ -225,91 +243,114 @@ export default function CertificateSection() {
                 }}
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
-                className="w-[280px] md:w-[310px] h-[340px] md:h-[370px] flex-shrink-0 rounded-2xl p-6 flex flex-col justify-between relative overflow-hidden transition-all duration-300 ease-out cursor-pointer block"
+                className="w-[290px] md:w-[320px] h-[350px] md:h-[380px] flex-shrink-0 rounded-2xl p-6 flex flex-col justify-between relative overflow-hidden transition-all duration-500 ease-out cursor-pointer block mx-[-8px] md:mx-[-14px]"
                 style={{
-                  background: 'linear-gradient(160deg, #0f0e0b 0%, #050505 100%)',
+                  background: 'linear-gradient(165deg, #0d0c0a 0%, #050505 100%)',
                   border: isHovered 
-                    ? '1px solid rgba(201,162,39,0.5)' 
-                    : '1px solid rgba(201,162,39,0.15)',
+                    ? '1px solid rgba(201,162,39,0.45)' 
+                    : '1px solid rgba(201,162,39,0.14)',
                   boxShadow: isHovered
-                    ? '0 20px 45px rgba(201,162,39,0.15), 0 15px 35px rgba(0,0,0,0.8)'
+                    ? '0 25px 50px rgba(201,162,39,0.08), 0 20px 40px rgba(0,0,0,0.9)'
                     : '0 15px 35px rgba(0,0,0,0.6)',
-                  opacity: isAnyHovered && !isHovered ? 0.35 : 1,
-                  filter: isAnyHovered && !isHovered ? 'blur(3px)' : 'blur(0px)',
-                  transform: isHovered ? 'scale(1.04)' : 'scale(1)',
-                  zIndex: isHovered ? 30 : 10,
+                  opacity: isAnyHovered && !isHovered ? 0.3 : 1,
+                  filter: isAnyHovered && !isHovered ? 'blur(4px)' : 'blur(0px)',
+                  transform: isHovered 
+                    ? 'translateY(-24px) rotate(0deg) scale(1.06)' 
+                    : `translateY(${transY}px) rotate(${rot}deg) scale(1)`,
+                  zIndex: isHovered ? 30 : baseZIndex,
                 }}
               >
-                {/* Cyberpunk accent corners */}
-                <div className="absolute top-2 left-2 w-3 h-3 border-t border-l border-[#c9a227]/30" />
-                <div className="absolute top-2 right-2 w-3 h-3 border-t border-r border-[#c9a227]/30" />
-                <div className="absolute bottom-2 left-2 w-3 h-3 border-b border-l border-[#c9a227]/30" />
-                <div className="absolute bottom-2 right-2 w-3 h-3 border-b border-r border-[#c9a227]/30" />
+                {/* Ambient Radial glow behind icon area */}
+                <div 
+                  className="absolute -top-10 -left-10 w-32 h-32 rounded-full blur-[40px] pointer-events-none transition-opacity duration-500" 
+                  style={{
+                    background: 'radial-gradient(circle, rgba(201,162,39,0.08) 0%, transparent 70%)',
+                    opacity: isHovered ? 1 : 0.5
+                  }}
+                />
 
-                {/* Top row */}
+                {/* Top Row */}
                 <div className="flex items-start justify-between z-10">
                   <div>
-                    <p className="text-[8px] font-black tracking-[0.2em] uppercase text-[#c9a227] mb-0.5">
+                    <span className="text-[9px] font-black tracking-[0.18em] uppercase text-[#c9a227] block mb-0.5 font-mono">
                       {cert.type}
-                    </p>
-                    <p className="text-[8px] text-[#5c5446] tracking-wider font-mono">
+                    </span>
+                    <span className="text-[8px] text-[#8c8476] tracking-widest font-mono uppercase">
                       MURPHISM ACADEMY
-                    </p>
+                    </span>
                   </div>
+                  
+                  {/* Icon Container */}
                   <div
-                    className="w-9 h-9 rounded-full flex items-center justify-center text-lg flex-shrink-0"
-                    style={{ background: 'rgba(201,162,39,0.08)', border: '1px solid rgba(201,162,39,0.15)' }}
+                    className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-500"
+                    style={{ 
+                      background: 'rgba(201,162,39,0.05)', 
+                      border: '1px solid rgba(201,162,39,0.15)',
+                      boxShadow: isHovered ? '0 0 15px rgba(201,162,39,0.2)' : 'none'
+                    }}
                   >
-                    {cert.emoji}
+                    {(() => {
+                      const IconComponent = getCertIcon(cert.slug);
+                      return <IconComponent size={18} className="text-[#c9a227]" />;
+                    })()}
                   </div>
                 </div>
 
-                <div className="w-full h-px my-2" style={{ background: 'rgba(201,162,39,0.08)' }} />
+                {/* Decorative divider */}
+                <div className="w-full h-px my-3 bg-gradient-to-r from-[#c9a227]/20 via-[#c9a227]/5 to-transparent" />
 
-                {/* Body */}
-                <div className="flex-1 flex flex-col justify-center z-10">
-                  <p className="text-[8px] font-bold tracking-widest uppercase mb-1"
-                    style={{ color: 'rgba(201,162,39,0.5)' }}>
+                {/* Body Content */}
+                <div className="flex-1 flex flex-col justify-center z-10 my-2">
+                  <span 
+                    className="text-[9px] font-bold tracking-widest uppercase mb-1.5 block font-mono"
+                    style={{ color: 'rgba(201,162,39,0.6)' }}
+                  >
                     {cert.field}
-                  </p>
-                  <h3
-                    className="text-[#f0ece0] font-bold leading-snug mb-2 text-sm md:text-base font-sans"
+                  </span>
+                  
+                  <p
+                    className="text-[#f0ece0] font-semibold leading-snug mb-2 font-sans tracking-tight"
+                    style={{ fontSize: '15px', fontFamily: 'var(--font-outfit), sans-serif' }}
                   >
                     {cert.title}
-                  </h3>
-                  <p className="text-[#8c8476] leading-relaxed text-[11px] font-sans">
+                  </p>
+                  
+                  <p className="text-[#b8b099] leading-relaxed text-xs font-sans line-clamp-3">
                     {cert.desc}
                   </p>
                 </div>
 
-                {/* Footer */}
-                <div className="flex flex-col gap-2 pt-3 border-t border-white/5 z-10">
+                {/* Footer Section */}
+                <div className="flex flex-col gap-2.5 pt-3 border-t border-white/5 z-10">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-1">
-                      <Award size={10} style={{ color: '#c9a227' }} />
-                      <span className="text-[8px] font-bold tracking-widest uppercase text-[#c9a227]">
+                    <div className="flex items-center gap-1.5">
+                      <ShieldCheck size={11} className="text-[#c9a227]" />
+                      <span className="text-[8px] font-bold tracking-widest uppercase text-[#c9a227] font-mono">
                         Verified Credential
                       </span>
                     </div>
+                    
                     <span
-                      className="text-[8px] font-bold px-2 py-0.5 rounded-sm"
+                      className="text-[8px] font-bold px-2.5 py-1 rounded-sm font-mono"
                       style={{
                         color: '#c9a227',
-                        background: 'rgba(201,162,39,0.05)',
-                        border: '1px solid rgba(201,162,39,0.1)',
+                        background: 'rgba(201,162,39,0.06)',
+                        border: '1px solid rgba(201,162,39,0.12)',
                       }}
                     >
                       ⏱ {cert.duration}
                     </span>
                   </div>
 
-                  <div className="flex justify-between items-center mt-1">
+                  <div className="flex justify-between items-center">
                     <div className="flex gap-0.5">
-                      {[...Array(5)].map((_, si2) => (
-                        <span key={si2} style={{ color: '#c9a227', fontSize: '9px' }}>★</span>
+                      {[...Array(5)].map((_, starIdx) => (
+                        <span key={starIdx} className="text-[#c9a227]" style={{ fontSize: '9px' }}>★</span>
                       ))}
                     </div>
-                    <span className="text-[7px] font-mono text-[#5c5446] tracking-widest uppercase">ID: MRPH-{1000 + (index % certs.length)}</span>
+                    <span className="text-[7.5px] font-mono text-[#6b6459] tracking-widest uppercase">
+                      ID: MRPH-{1000 + (index % certs.length)}
+                    </span>
                   </div>
                 </div>
               </Link>

@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowRight, Terminal, Award, Shield, Users, ArrowUpRight } from 'lucide-react';
 
@@ -14,6 +14,7 @@ const aiModules = [
     badge: 'Core Foundation',
     icon: Terminal,
     accentColor: 'rgba(201, 162, 39, 0.15)',
+    image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop',
   },
   {
     num: '02',
@@ -24,6 +25,7 @@ const aiModules = [
     badge: 'Creative Engine',
     icon: Award,
     accentColor: 'rgba(160, 128, 48, 0.12)',
+    image: 'https://images.unsplash.com/photo-1626544827763-d516dce335e2?q=80&w=600&auto=format&fit=crop',
   },
   {
     num: '03',
@@ -34,6 +36,7 @@ const aiModules = [
     badge: 'Development Pro',
     icon: Shield,
     accentColor: 'rgba(138, 105, 20, 0.1)',
+    image: 'https://images.unsplash.com/photo-1607799279861-4dd421887fb3?q=80&w=600&auto=format&fit=crop',
   },
   {
     num: '04',
@@ -44,6 +47,7 @@ const aiModules = [
     badge: 'VFX & Production',
     icon: Users,
     accentColor: 'rgba(201, 162, 39, 0.15)',
+    image: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?q=80&w=600&auto=format&fit=crop',
   },
 ];
 
@@ -55,7 +59,6 @@ export default function AICoursesSection() {
 
   useEffect(() => {
     const handleResize = () => {
-      // 1024px is the laptop breakpoint
       setIsMobile(window.innerWidth < 1024);
     };
     handleResize();
@@ -71,12 +74,11 @@ export default function AICoursesSection() {
     if (!container) return;
 
     let animationFrameId;
-    const speed = 0.55; // Pixels per frame - smooth slow glide
+    const speed = 0.55;
 
     const step = () => {
       if (container) {
         container.scrollLeft += speed;
-        // Loop back seamlessly if we scroll past first set of modules
         const singleSetWidth = container.scrollWidth / 2;
         if (container.scrollLeft >= singleSetWidth) {
           container.scrollLeft -= singleSetWidth;
@@ -121,8 +123,7 @@ export default function AICoursesSection() {
     offset: ['start end', 'start start'],
   });
 
-  // Only animate on desktop/laptop
-  const xDesktop = useTransform(scrollYProgress, [0, 1], ['280px', '0px']);
+  const xDesktop = useTransform(scrollYProgress, [0, 1], ['400px', '0px']);
 
   return (
     <section
@@ -131,7 +132,9 @@ export default function AICoursesSection() {
       className="relative w-full"
       style={{
         height: isMobile ? 'auto' : '120vh',
-        background: '#050505',
+        background: 'rgba(5,5,5,0.45)',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
         overflow: 'visible',
       }}
     >
@@ -154,73 +157,95 @@ export default function AICoursesSection() {
               </span>
             </div>
 
-            <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight text-[#f0ece0] mb-2 font-sans">
+            <h2 
+              className="font-bold tracking-tight text-[#f0ece0] mb-3 font-sans"
+              style={{ fontSize: '28px' }}
+            >
               The Future is <span className="text-gold">AI-Powered</span>
             </h2>
             
-            <p className="text-[#b8b099] text-xs max-w-xl mx-auto leading-relaxed font-sans">
+            <p 
+              className="text-[#b8b099] max-w-xl mx-auto leading-relaxed font-sans px-4"
+              style={{ fontSize: '13.5px' }}
+            >
               Every industry is being disrupted by AI. Learn to use the tools that are reshaping creative careers — before they reshape you.
             </p>
           </div>
 
-          {/* Horizontal Scroll Track: Auto-scrollable and manual overflow scrolling */}
+          {/* Horizontal Scroll Track */}
           <div 
             ref={scrollContainerRef}
-            className="w-full relative z-10 overflow-x-auto pb-6 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white/10"
+            className="w-full relative z-10 overflow-x-auto py-8 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white/10"
           >
-            <div className="flex gap-6 w-max px-2">
+            <div className="flex gap-8 w-max px-2">
               {[...aiModules, ...aiModules].map((mod, idx) => (
                 <div
                   key={`${mod.title}-${idx}`}
-                  className="w-[280px] h-[390px] flex-shrink-0 rounded-2xl border border-white/5 bg-[#0b0a0c] p-6 flex flex-col justify-between shadow-xl relative overflow-hidden group transition-all duration-500 hover:border-[#c9a227]/30"
+                  className="w-[280px] h-[390px] flex-shrink-0 rounded-2xl border border-white/10 flex flex-col justify-between shadow-2xl relative overflow-hidden group transition-all duration-500 hover:border-[#c9a227]/30"
+                  style={{
+                    transform: idx % 2 === 0 ? 'translateY(-12px)' : 'translateY(12px)',
+                  }}
                 >
-                  {/* Grid line bg overlay */}
-                  <div className="absolute inset-0 bg-[radial-gradient(#1a1712_1px,transparent_1px)] [background-size:16px_16px] opacity-15 pointer-events-none" />
+                  {/* Background Image */}
+                  <div className="absolute inset-0 z-0">
+                    <img 
+                      src={mod.image} 
+                      alt={mod.title} 
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                    />
+                    {/* Dark gradient overlay to ensure text legibility */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/85 to-black/35 pointer-events-none" />
+                  </div>
 
-                  {/* Glow layer */}
-                  <div
-                    className="absolute -bottom-10 -right-10 w-44 h-44 rounded-full blur-[60px] opacity-10 pointer-events-none transition-all duration-500 group-hover:scale-110"
-                    style={{
-                      background: `radial-gradient(circle, ${mod.accentColor} 0%, transparent 70%)`,
-                    }}
-                  />
-
-                  {/* Top-right Circle Arrow Button */}
-                  <div className="absolute top-6 right-6 w-8 h-8 rounded-full bg-black/60 border border-white/10 flex items-center justify-center transition-all duration-300 group-hover:bg-[#c9a227] group-hover:border-[#c9a227]">
-                    <ArrowUpRight size={14} className="text-white group-hover:text-black transition-colors duration-300" />
+                  {/* Top-right Circle Arrow Button - black circle with white diagonal arrow */}
+                  <div className="absolute top-5 right-5 w-9 h-9 rounded-full bg-black flex items-center justify-center z-20 shadow-md border border-white/10 transition-transform duration-300 group-hover:scale-105">
+                    <ArrowUpRight size={16} className="text-white" />
                   </div>
 
                   {/* Card Header */}
-                  <div className="flex justify-between items-center z-10 pr-10">
+                  <div className="z-10 p-5 pb-0">
                     <span className="font-mono text-[9px] font-bold tracking-widest text-[#c9a227]">
                       {"// MODULE "}{mod.num}
                     </span>
                   </div>
 
-                  {/* Card Body */}
-                  <div className="flex-1 flex flex-col justify-center my-4 z-10">
-                    <span className="text-[8px] w-fit font-black tracking-widest uppercase px-2 py-0.5 rounded bg-[#c9a227]/5 text-[#c9a227] border border-[#c9a227]/10 mb-2">
+                  {/* Card Body & Footer */}
+                  <div className="z-10 p-5 mt-auto flex flex-col gap-2">
+                    {/* Badge */}
+                    <span className="text-[8px] w-fit font-black tracking-widest uppercase px-2 py-0.5 rounded bg-[#c9a227]/10 text-[#e8bf5a] border border-[#c9a227]/25 mb-0.5">
                       {mod.badge}
                     </span>
-                    <h3 className="text-white text-base font-extrabold tracking-tight mb-1 font-sans">
+
+                    {/* Title */}
+                    <p 
+                      className="text-[#f0ece0] font-bold leading-snug"
+                      style={{ fontSize: '20.5px', fontFamily: 'var(--font-outfit), sans-serif' }}
+                    >
                       {mod.title}
-                    </h3>
-                    <p className="text-[#a89e84] text-[9px] font-semibold uppercase tracking-wider mb-3 font-mono">
+                    </p>
+
+                    {/* Tagline */}
+                    <p className="text-[#c9a227] text-[11px] font-semibold uppercase tracking-wider font-mono">
                       {mod.tagline}
                     </p>
-                    <p className="text-[#a1a1aa] text-xs leading-relaxed font-sans line-clamp-5">
+
+                    {/* Description */}
+                    <p className="text-[#b8b099] text-[13.5px] leading-relaxed font-sans line-clamp-3">
                       {mod.desc}
                     </p>
-                  </div>
 
-                  {/* Card Footer */}
-                  <div className="flex justify-between items-center mt-auto z-10 pt-4 border-t border-white/5">
-                    <div className="flex flex-col">
-                      <span className="text-[8px] font-mono text-[#52525b] uppercase tracking-wider">Duration</span>
-                      <span className="text-white text-xs font-bold font-mono">{mod.duration}</span>
-                    </div>
-                    <div className="w-8 h-8 rounded-lg border border-white/5 bg-white/[0.02] flex items-center justify-center">
-                      <mod.icon className="w-4 h-4 text-[#8a8a93]" />
+                    {/* Divider */}
+                    <div className="w-full h-px my-1.5 bg-white/5" />
+
+                    {/* Footer Row */}
+                    <div className="flex justify-between items-center">
+                      <div className="flex flex-col">
+                        <span className="text-[8px] font-mono text-[#6b6459] uppercase tracking-wider">Duration</span>
+                        <span className="text-[#f0ece0] text-[11px] font-bold font-mono">{mod.duration}</span>
+                      </div>
+                      <div className="w-7 h-7 rounded-lg border border-white/5 bg-white/[0.02] flex items-center justify-center">
+                        <mod.icon className="w-3.5 h-3.5 text-[#b8b099]" />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -257,73 +282,95 @@ export default function AICoursesSection() {
               </span>
             </div>
 
-            <h2 className="text-2xl md:text-4xl font-extrabold tracking-tight text-[#f0ece0] mb-2 font-sans">
+            <h2 
+              className="font-bold tracking-tight text-[#f0ece0] mb-3 font-sans"
+              style={{ fontSize: '40px' }}
+            >
               The Future is <span className="text-gold">AI-Powered</span>
             </h2>
             
-            <p className="text-[#b8b099] text-xs md:text-sm max-w-xl mx-auto leading-relaxed font-sans">
+            <p 
+              className="text-[#b8b099] max-w-2xl mx-auto leading-relaxed font-sans"
+              style={{ fontSize: '15.5px' }}
+            >
               Every industry is being disrupted by AI. Learn to use the tools that are reshaping creative careers — before they reshape you.
             </p>
           </div>
 
-          {/* Horizontal Scroll Track (Desktop only, scroll-linked) */}
-          <div className="flex-grow w-full flex items-center relative z-10 overflow-hidden my-4">
+          {/* Horizontal Scroll Track */}
+          <div className="flex-grow w-full flex items-center relative z-10 overflow-visible my-4 py-8">
             <motion.div 
               style={{ x: xDesktop }} 
-              className="flex gap-6 px-6 md:px-24 w-full justify-center overflow-visible"
+              className="flex gap-10 px-6 md:px-24 w-full justify-center overflow-visible py-8"
             >
-              {aiModules.map((mod) => (
+              {aiModules.map((mod, idx) => (
                 <div
                   key={mod.title}
-                  className="w-[280px] md:w-[310px] h-[390px] md:h-[430px] flex-shrink-0 rounded-2xl border border-white/5 bg-[#0b0a0c] p-6 md:p-8 flex flex-col justify-between shadow-xl relative overflow-hidden group transition-all duration-500 hover:border-[#c9a227]/30"
+                  className="w-[280px] md:w-[310px] h-[390px] md:h-[430px] flex-shrink-0 rounded-2xl border border-white/10 flex flex-col justify-between shadow-2xl relative overflow-hidden group transition-all duration-500 hover:border-[#c9a227]/30"
+                  style={{
+                    transform: idx % 2 === 0 ? 'translateY(-20px)' : 'translateY(20px)',
+                  }}
                 >
-                  {/* Grid line bg overlay */}
-                  <div className="absolute inset-0 bg-[radial-gradient(#1a1712_1px,transparent_1px)] [background-size:16px_16px] opacity-15 pointer-events-none" />
+                  {/* Background Image */}
+                  <div className="absolute inset-0 z-0">
+                    <img 
+                      src={mod.image} 
+                      alt={mod.title} 
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                    />
+                    {/* Dark gradient overlay to ensure text legibility */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/85 to-black/35 pointer-events-none" />
+                  </div>
 
-                  {/* Glow layer */}
-                  <div
-                    className="absolute -bottom-10 -right-10 w-44 h-44 rounded-full blur-[60px] opacity-10 pointer-events-none transition-all duration-500 group-hover:scale-110"
-                    style={{
-                      background: `radial-gradient(circle, ${mod.accentColor} 0%, transparent 70%)`,
-                    }}
-                  />
-
-                  {/* Top-right Circle Arrow Button */}
-                  <div className="absolute top-6 right-6 w-8 h-8 rounded-full bg-black/60 border border-white/10 flex items-center justify-center transition-all duration-300 group-hover:bg-[#c9a227] group-hover:border-[#c9a227]">
-                    <ArrowUpRight size={14} className="text-white group-hover:text-black transition-colors duration-300" />
+                  {/* Top-right Circle Arrow Button - black circle with white diagonal arrow */}
+                  <div className="absolute top-5 right-5 w-9 h-9 rounded-full bg-black flex items-center justify-center z-20 shadow-md border border-white/10 transition-transform duration-300 group-hover:scale-105">
+                    <ArrowUpRight size={16} className="text-white" />
                   </div>
 
                   {/* Card Header */}
-                  <div className="flex justify-between items-center z-10 pr-10">
+                  <div className="z-10 p-5 pb-0">
                     <span className="font-mono text-[9px] font-bold tracking-widest text-[#c9a227]">
                       {"// MODULE "}{mod.num}
                     </span>
                   </div>
 
-                  {/* Card Body */}
-                  <div className="flex-1 flex flex-col justify-center my-4 z-10">
-                    <span className="text-[8px] w-fit font-black tracking-widest uppercase px-2 py-0.5 rounded bg-[#c9a227]/5 text-[#c9a227] border border-[#c9a227]/10 mb-2">
+                  {/* Card Body & Footer */}
+                  <div className="z-10 p-5 md:p-6 mt-auto flex flex-col gap-2">
+                    {/* Badge */}
+                    <span className="text-[8px] w-fit font-black tracking-widest uppercase px-2 py-0.5 rounded bg-[#c9a227]/10 text-[#e8bf5a] border border-[#c9a227]/25 mb-0.5">
                       {mod.badge}
                     </span>
-                    <h3 className="text-white text-base md:text-lg font-extrabold tracking-tight mb-1 font-sans">
+
+                    {/* Title */}
+                    <p 
+                      className="text-[#f0ece0] font-bold leading-snug"
+                      style={{ fontSize: '20.5px', fontFamily: 'var(--font-outfit), sans-serif' }}
+                    >
                       {mod.title}
-                    </h3>
-                    <p className="text-[#a89e84] text-[9px] font-semibold uppercase tracking-wider mb-3 font-mono">
+                    </p>
+
+                    {/* Tagline */}
+                    <p className="text-[#c9a227] text-[11px] font-semibold uppercase tracking-wider font-mono">
                       {mod.tagline}
                     </p>
-                    <p className="text-[#a1a1aa] text-xs leading-relaxed font-sans line-clamp-5">
+
+                    {/* Description */}
+                    <p className="text-[#b8b099] text-[13.5px] leading-relaxed font-sans line-clamp-3">
                       {mod.desc}
                     </p>
-                  </div>
 
-                  {/* Card Footer */}
-                  <div className="flex justify-between items-center mt-auto z-10 pt-4 border-t border-white/5">
-                    <div className="flex flex-col">
-                      <span className="text-[8px] font-mono text-[#52525b] uppercase tracking-wider">Duration</span>
-                      <span className="text-white text-xs font-bold font-mono">{mod.duration}</span>
-                    </div>
-                    <div className="w-8 h-8 rounded-lg border border-white/5 bg-white/[0.02] flex items-center justify-center">
-                      <mod.icon className="w-4 h-4 text-[#8a8a93]" />
+                    {/* Divider */}
+                    <div className="w-full h-px my-1.5 bg-white/5" />
+
+                    {/* Footer Row */}
+                    <div className="flex justify-between items-center">
+                      <div className="flex flex-col">
+                        <span className="text-[8px] font-mono text-[#6b6459] uppercase tracking-wider">Duration</span>
+                        <span className="text-[#f0ece0] text-[11px] font-bold font-mono">{mod.duration}</span>
+                      </div>
+                      <div className="w-7 h-7 rounded-lg border border-white/5 bg-white/[0.02] flex items-center justify-center">
+                        <mod.icon className="w-3.5 h-3.5 text-[#b8b099]" />
+                      </div>
                     </div>
                   </div>
                 </div>

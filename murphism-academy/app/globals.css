@@ -30,7 +30,7 @@ html, body, #__next, [data-reactroot] {
   max-width: 100% !important;
   width: 100% !important;
   overflow-x: clip !important;
-  background: #050505 !important;
+  background: transparent !important;
   scrollbar-width: thin;
   scrollbar-color: var(--gold-primary) #050505;
 }
@@ -45,13 +45,40 @@ main {
   width: 100% !important;
 }
 html { scroll-behavior: smooth; }
+
+/* ─── Global Heading Typography resets ─── */
+h1, .h1 {
+  font-size: clamp(2.2rem, 5vw, 4.2rem);
+  line-height: 1.15;
+}
+h2, .h2, .heading-display {
+  font-size: clamp(1.8rem, 4vw, 3.2rem);
+  line-height: 1.2;
+}
+h3, .h3, .heading-xl {
+  font-size: clamp(1.5rem, 3vw, 2.4rem);
+  line-height: 1.25;
+}
+h4, .h4 {
+  font-size: clamp(1.25rem, 2.5vw, 1.8rem);
+  line-height: 1.3;
+}
+h5, .h5 {
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  line-height: 1.35;
+}
+h6, .h6 {
+  font-size: clamp(0.95rem, 1.5vw, 1.15rem);
+  line-height: 1.4;
+}
 body {
-  background: #050505 !important; /* Standardized to avoid edge line color differences */
+  background: transparent !important; /* Transparent so fixed MotionBackground canvas shows through */
   color: var(--white-warm);
   font-family: var(--font-outfit), sans-serif;
   -webkit-font-smoothing: antialiased;
 }
-* { box-sizing: border-box; outline: none !important; }
+* { box-sizing: border-box; outline: none !important; outline-width: 0 !important; }
+*:focus, *:focus-visible, *:active, section:focus, main:focus, div:focus { outline: none !important; outline-width: 0 !important; box-shadow: none !important; }
 
 /* ─── Scrollbar ─── */
 ::-webkit-scrollbar {
@@ -322,7 +349,13 @@ html.lenis, html.lenis body {
 /* Custom Cursor Hide */
 @media (pointer: fine) {
   body.custom-cursor-active,
-  body.custom-cursor-active * {
+  body.custom-cursor-active *,
+  body.custom-cursor-active *::before,
+  body.custom-cursor-active *::after,
+  body.custom-cursor-active [role="dialog"],
+  body.custom-cursor-active [role="dialog"] *,
+  body.custom-cursor-active [data-overlay],
+  body.custom-cursor-active [data-overlay] * {
     cursor: none !important;
   }
 }
@@ -361,19 +394,34 @@ html.lenis, html.lenis body {
 
   /* Heading sizes adjustments on mobile (preventing too big / too small) */
   h1, .h1, h1.text-2xl, h1.text-3xl, h1.text-4xl, h1.text-5xl {
-    font-size: 1.85rem !important; /* Balanced mobile h1 size */
-    line-height: 1.25 !important;
+    font-size: 1.85rem;
+    line-height: 1.25;
   }
   
   h2, .h2, h2.text-2xl, h2.text-3xl, h2.text-4xl, h2.text-5xl,
   .heading-display, .heading-xl {
-    font-size: 1.6rem !important; /* Balanced mobile h2 size */
-    line-height: 1.25 !important;
+    font-size: 1.6rem;
+    line-height: 1.25;
   }
 
   h3, .h3, h3.text-xl, h3.text-2xl, h3.text-3xl {
-    font-size: 1.3rem !important; /* Balanced mobile h3 size */
-    line-height: 1.3 !important;
+    font-size: 1.35rem;
+    line-height: 1.3;
+  }
+
+  h4, .h4, h4.text-lg, h4.text-xl {
+    font-size: 1.15rem;
+    line-height: 1.3;
+  }
+
+  h5, .h5 {
+    font-size: 1.0rem;
+    line-height: 1.35;
+  }
+
+  h6, .h6 {
+    font-size: 0.9rem;
+    line-height: 1.4;
   }
   
   /* Make sure labels/tags aren't too small or too big */

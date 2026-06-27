@@ -63,8 +63,8 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? 'py-3' : 'py-5'
+      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${
+        scrolled ? 'py-2' : 'py-3'
       }`}
       style={
         scrolled
@@ -83,31 +83,31 @@ export default function Navbar() {
 
           {/* ── LEFT: Logo ── */}
           <div className="flex-1 flex justify-start min-w-max">
-            <Link href="/" className="flex items-center gap-2 md:gap-3 group w-fit relative py-1 px-1">
+            <Link href="/" className="flex items-center gap-1 md:gap-1.5 group w-fit relative py-1 px-1">
               <div
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[130%] h-[130%] rounded-full opacity-60 blur-xl pointer-events-none transition-all duration-500 group-hover:opacity-90 group-hover:scale-110"
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] rounded-full opacity-20 blur-xl pointer-events-none transition-all duration-500 group-hover:opacity-40 group-hover:scale-105"
                 style={{
-                  background: 'radial-gradient(circle, rgba(124,58,237,0.2) 0%, rgba(201,162,39,0.15) 50%, transparent 100%)'
+                  background: 'radial-gradient(circle, rgba(190,82,50,0.2) 0%, rgba(255,210,160,0.08) 60%, transparent 100%)'
                 }}
               />
               <Image
                 src="/logo.png"
                 alt="MURPHISM Logo"
-                width={64}
-                height={64}
+                width={80}
+                height={80}
                 priority
-                className="h-11 md:h-15 w-auto object-contain transition-all duration-300 relative z-10"
-                style={{ filter: 'brightness(1.6) contrast(1.2) drop-shadow(0 0 12px rgba(201, 162, 39, 0.6))' }}
+                className="h-11 md:h-14 w-auto object-contain transition-all duration-300 relative z-10"
+                style={{ filter: 'brightness(1.1) contrast(1.05)' }}
               />
-              <div className="h-8 md:h-11 w-px bg-gradient-to-b from-[#c9a227]/30 via-[#c9a227]/60 to-[#c9a227]/30 self-center relative z-10 mx-2 md:mx-3" />
+              <div className="h-8 md:h-10 w-px bg-gradient-to-b from-[#be5232]/20 via-[#be5232]/60 to-[#be5232]/20 self-center relative z-10 mx-1 md:mx-1.5" />
               <Image
                 src="/name.png"
                 alt="MURPHISM"
-                width={180}
-                height={48}
+                width={220}
+                height={60}
                 priority
-                className="h-8 md:h-11 w-auto object-contain transition-all duration-300 relative z-10"
-                style={{ filter: 'brightness(1.6) contrast(1.2) drop-shadow(0 0 12px rgba(201, 162, 39, 0.6))' }}
+                className="h-8 md:h-10 w-auto object-contain transition-all duration-300 relative z-10"
+                style={{ filter: 'brightness(1.1) contrast(1.05)' }}
               />
             </Link>
           </div>
@@ -115,21 +115,14 @@ export default function Navbar() {
           {/* ── CENTER: Nav links ── */}
           <div className="hidden md:flex flex-1 justify-center">
             <div
-              className="flex items-center gap-2 px-2 py-1 rounded-md"
-              style={{
-                background: 'rgba(10, 8, 12, 0.45)',
-                backdropFilter: 'blur(20px)',
-                WebkitBackdropFilter: 'blur(20px)',
-                border: '1px solid rgba(255, 255, 255, 0.08)',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
-              }}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-md"
             >
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="px-3 py-1.5 rounded text-sm font-semibold tracking-wide transition-all duration-300 whitespace-nowrap text-[#b8b099] hover:text-white"
-                  onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.06)'; }}
+                  className="px-4 py-1.5 rounded text-xs font-semibold tracking-wide transition-all duration-300 whitespace-nowrap text-[#b8b099] hover:text-white"
+                  onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.03)'; }}
                   onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
                 >
                   {link.label}

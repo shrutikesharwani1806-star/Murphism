@@ -74,7 +74,7 @@ export default function VideoShowcase() {
     <section
       id="video-showcase"
       className="section-pad overflow-hidden relative"
-      style={{ background: '#0a0907' }}
+      style={{ background: 'rgba(10,9,7,0.45)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}
     >
       <div className="absolute top-0 left-0 right-0 h-px"
         style={{ background: 'linear-gradient(90deg, transparent, rgba(201,162,39,0.12), transparent)' }} />

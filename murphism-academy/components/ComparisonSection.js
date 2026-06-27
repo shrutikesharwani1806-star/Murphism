@@ -32,7 +32,7 @@ export default function ComparisonSection() {
   ];
 
   return (
-    <section id="comparison" ref={containerRef} className="section-pad relative overflow-hidden" style={{ background: '#050505' }}>
+    <section id="comparison" ref={containerRef} className="section-pad relative overflow-hidden" style={{ background: 'rgba(5,5,5,0.45)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}>
       {/* Background Glows */}
       <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] rounded-full blur-[180px] pointer-events-none"
         style={{ background: 'rgba(201,162,39,0.03)' }} />

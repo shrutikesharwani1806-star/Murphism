@@ -38,10 +38,10 @@ export default function Home() {
         <Navbar />
         <HeroSection />
         <StatsSection />
+        <ForeignExposure />
         <CoursesSection />
         <AICoursesSection />
         <DegreeSection />
-        <ForeignExposure />
         <CertificateSection />
         <ComparisonSection />
         <WhyMurphism />

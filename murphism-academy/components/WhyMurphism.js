@@ -56,7 +56,7 @@ export default function WhyMurphism() {
       id="why"
       ref={containerRef}
       className="section-pad relative overflow-hidden"
-      style={{ background: '#0a0907' }}
+      style={{ background: 'rgba(10,9,7,0.45)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}
     >
       {/* Top/Bottom Divider Rules to Highlight Section */}
       <div
@@ -147,7 +147,12 @@ export default function WhyMurphism() {
                 style={{ background: '#c9a227' }}
               />
 
-              <h3 className="text-[#f0ece0] font-bold text-lg mb-3 leading-snug">{r.title}</h3>
+              <p
+                className="text-[#f0ece0] font-bold mb-3 leading-snug"
+                style={{ fontSize: '18px', fontFamily: "var(--font-outfit), sans-serif" }}
+              >
+                {r.title}
+              </p>
               <p className="text-[#6b6459] text-sm leading-relaxed mb-5">{r.desc}</p>
               <span
                 className="inline-block text-xs font-bold tracking-widest uppercase px-3 py-1.5 rounded-sm"

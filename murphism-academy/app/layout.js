@@ -4,6 +4,7 @@ import SmoothScroll from '@/components/SmoothScroll';
 import CustomCursor from '@/components/CustomCursor';
 import WelcomePopup from '@/components/WelcomePopup';
 import AIChatbot from '@/components/AIChatbot';
+import MotionBackground from '@/components/MotionBackground';
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -87,6 +88,7 @@ export default function RootLayout({ children }) {
         <CustomCursor />
         <WelcomePopup />
         <AIChatbot />
+        <MotionBackground />
         {children}
       </body>
     </html>
