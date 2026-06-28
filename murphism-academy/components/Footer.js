@@ -44,7 +44,35 @@ const socials = [
 
 export default function Footer() {
   return (
-    <footer className="bg-black/90 pt-24 pb-12 relative overflow-hidden" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}>
+    <>
+      {/* Large outline watermark word "Murphism" - desktop only, full screen width, before main footer */}
+      <div className="hidden md:block w-full overflow-hidden select-none bg-[#050505] pt-20 pb-4 border-t border-white/[0.02]">
+        <div className="w-full overflow-hidden flex items-center justify-center">
+          <span 
+            className="text-[17vw] font-bold tracking-tighter text-center leading-[0.8] select-none text-transparent block cursor-default whitespace-nowrap gold-outlined-text"
+            style={{
+              fontFamily: "'Clash Display', var(--font-space-grotesk), sans-serif",
+              letterSpacing: "-0.04em",
+            }}
+          >
+            Murphism
+          </span>
+        </div>
+        <style jsx>{`
+          .gold-outlined-text {
+            color: transparent;
+            -webkit-text-stroke: 1.5px rgba(201, 162, 39, 0.65);
+            transition: -webkit-text-stroke 0.4s ease, color 0.4s ease, filter 0.4s ease;
+          }
+          .gold-outlined-text:hover {
+            -webkit-text-stroke: 1.5px rgba(232, 191, 90, 0.95);
+            color: rgba(232, 191, 90, 0.05);
+            filter: drop-shadow(0 0 20px rgba(232, 191, 90, 0.45));
+          }
+        `}</style>
+      </div>
+
+      <footer className="bg-black/90 pt-24 pb-12 relative overflow-hidden" style={{ fontFamily: 'var(--font-outfit), sans-serif' }}>
       
       {/* Subtle outline watermark letter 'M' at top center, mirroring reference image detail */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none select-none z-0 opacity-[0.03] flex justify-center">
@@ -194,5 +222,6 @@ export default function Footer() {
         </div>
       </div>
     </footer>
+    </>
   );
 }

@@ -96,18 +96,18 @@ export default function Navbar() {
                 width={80}
                 height={80}
                 priority
-                className="h-11 md:h-14 w-auto object-contain transition-all duration-300 relative z-10"
-                style={{ filter: 'brightness(1.1) contrast(1.05)' }}
+                className="h-13 md:h-16 w-auto object-contain transition-all duration-300 relative z-10"
+                style={{ filter: 'brightness(1.9) contrast(1.15) drop-shadow(0 0 6px rgba(232, 191, 90, 0.25))' }}
               />
-              <div className="h-8 md:h-10 w-px bg-gradient-to-b from-[#be5232]/20 via-[#be5232]/60 to-[#be5232]/20 self-center relative z-10 mx-1 md:mx-1.5" />
+              <div className="h-9 md:h-11 w-px bg-gradient-to-b from-[#be5232]/20 via-[#be5232]/60 to-[#be5232]/20 self-center relative z-10 mx-1.5 md:mx-2" />
               <Image
                 src="/name.png"
                 alt="MURPHISM"
                 width={220}
                 height={60}
                 priority
-                className="h-8 md:h-10 w-auto object-contain transition-all duration-300 relative z-10"
-                style={{ filter: 'brightness(1.1) contrast(1.05)' }}
+                className="h-9 md:h-11 w-auto object-contain transition-all duration-300 relative z-10"
+                style={{ filter: 'brightness(1.9) contrast(1.15) drop-shadow(0 0 6px rgba(232, 191, 90, 0.25))' }}
               />
             </Link>
           </div>
