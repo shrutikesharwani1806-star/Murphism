@@ -111,6 +111,7 @@ export default function AIChatbot() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
+            data-lenis-prevent
             initial={{ opacity: 0, y: 100, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 100, scale: 0.95 }}
@@ -144,7 +145,7 @@ export default function AIChatbot() {
             </div>
 
             {/* Messages Body */}
-            <div className="flex-1 overflow-y-auto p-5 space-y-4 select-text">
+            <div data-lenis-prevent className="flex-1 overflow-y-auto p-5 space-y-4 select-text">
               {messages.map((msg, i) => (
                 <div
                   key={i}

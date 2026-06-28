@@ -70,7 +70,7 @@ export default function DegreeSection() {
               </div>
             </div>
 
-            <Link href="/courses/bsc-animations-multimedia">
+            <Link href="/courses/bsc-animations-multimedia#enroll">
               <button className="btn-gold">
                 <span>Apply for Degree Program</span>
                 <ArrowRight size={16} />

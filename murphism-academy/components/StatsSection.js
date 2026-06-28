@@ -47,6 +47,46 @@ export default function StatsSection() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  const card1Variants = {
+    hidden: isMobile ? { opacity: 0, y: 30 } : { opacity: 0, x: -80, y: -40 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      y: 0,
+      transition: { duration: 0.85, ease: [0.16, 1, 0.3, 1] }
+    }
+  };
+
+  const card2Variants = {
+    hidden: isMobile ? { opacity: 0, y: 30 } : { opacity: 0, y: -80 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      y: 0,
+      transition: { duration: 0.85, ease: [0.16, 1, 0.3, 1] }
+    }
+  };
+
+  const card3Variants = {
+    hidden: isMobile ? { opacity: 0, y: 30 } : { opacity: 0, y: 80 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      y: 0,
+      transition: { duration: 0.85, ease: [0.16, 1, 0.3, 1] }
+    }
+  };
+
+  const card4Variants = {
+    hidden: isMobile ? { opacity: 0, y: 30 } : { opacity: 0, x: 80 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      y: 0,
+      transition: { duration: 0.95, ease: [0.16, 1, 0.3, 1] }
+    }
+  };
+
   return (
     <section
       ref={containerRef}
@@ -78,10 +118,10 @@ export default function StatsSection() {
                 
                 {/* Card 1: YouTube */}
                 <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6 }}
+                  variants={card1Variants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: "-10% 0px" }}
                   className="rounded-3xl border border-white/5 p-8 flex flex-col justify-between min-h-[220px] transition-all duration-300 hover:border-white/10"
                   style={{
                     background: 'rgba(12, 12, 14, 0.85)',
@@ -110,10 +150,10 @@ export default function StatsSection() {
 
                 {/* Card 2: Career Learners */}
                 <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: 0.1 }}
+                  variants={card2Variants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: "-10% 0px" }}
                   className="rounded-3xl border border-white/5 p-8 flex flex-col justify-between min-h-[220px] transition-all duration-300 hover:border-white/10"
                   style={{
                     background: 'rgba(12, 12, 14, 0.85)',
@@ -144,10 +184,10 @@ export default function StatsSection() {
 
               {/* Bottom Row: Wide Announcement Card */}
               <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.2 }}
+                variants={card3Variants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-10% 0px" }}
                 className="rounded-3xl border border-white/5 p-8 md:p-10 flex flex-col justify-between gap-6 relative overflow-hidden transition-all duration-300 hover:border-white/10"
                 style={{
                   background: 'rgba(12, 12, 14, 0.85)',
@@ -196,10 +236,10 @@ export default function StatsSection() {
 
             {/* Right Column: Tall Card */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
+              variants={card4Variants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-10% 0px" }}
               className="rounded-3xl border border-white/5 p-8 md:p-10 flex flex-col justify-between min-h-[350px] lg:min-h-full relative overflow-hidden transition-all duration-300 hover:border-white/10"
               style={{
                 background: 'rgba(12, 12, 14, 0.85)',

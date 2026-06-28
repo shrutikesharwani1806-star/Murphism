@@ -77,13 +77,13 @@ export default function Navbar() {
           : { background: 'transparent' }
       }
     >
-      <div className="max-w-7xl mx-auto px-4 md:px-6">
+      <div className="max-w-7xl mx-auto px-3 md:px-6">
         {/* ── Flex container for responsive spacing ── */}
         <div className="flex items-center justify-between w-full">
 
           {/* ── LEFT: Logo ── */}
           <div className="flex-1 flex justify-start min-w-max">
-            <Link href="/" className="flex items-center gap-1 md:gap-1.5 group w-fit relative py-1 px-1">
+            <Link href="/" className="flex items-center gap-0.5 md:gap-1 group w-fit relative py-1 px-1">
               <div
                 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] rounded-full opacity-20 blur-xl pointer-events-none transition-all duration-500 group-hover:opacity-40 group-hover:scale-105"
                 style={{
@@ -96,17 +96,17 @@ export default function Navbar() {
                 width={80}
                 height={80}
                 priority
-                className="h-13 md:h-16 w-auto object-contain transition-all duration-300 relative z-10"
+                className="h-12 md:h-16 w-auto object-contain transition-all duration-300 relative z-10 -ml-2.5 -mr-2.5 md:-ml-4 md:-mr-4"
                 style={{ filter: 'brightness(1.9) contrast(1.15) drop-shadow(0 0 6px rgba(232, 191, 90, 0.25))' }}
               />
-              <div className="h-9 md:h-11 w-px bg-gradient-to-b from-[#be5232]/20 via-[#be5232]/60 to-[#be5232]/20 self-center relative z-10 mx-1.5 md:mx-2" />
+              <div className="h-9 md:h-11 w-px bg-gradient-to-b from-[#be5232]/20 via-[#be5232]/60 to-[#be5232]/20 self-center relative z-10 mx-0.5 md:mx-1" />
               <Image
                 src="/name.png"
                 alt="MURPHISM"
                 width={220}
                 height={60}
                 priority
-                className="h-9 md:h-11 w-auto object-contain transition-all duration-300 relative z-10"
+                className="h-9 md:h-11 w-auto object-contain transition-all duration-300 relative z-10 -ml-3 -mr-3 md:-ml-4 md:-mr-4"
                 style={{ filter: 'brightness(1.9) contrast(1.15) drop-shadow(0 0 6px rgba(232, 191, 90, 0.25))' }}
               />
             </Link>

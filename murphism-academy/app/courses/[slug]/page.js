@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
@@ -30,6 +30,23 @@ export default function CoursePage() {
   const [showPopup, setShowPopup] = useState(false);
   const [submittedName, setSubmittedName] = useState('');
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (window.location.hash === '#enroll') {
+      const el = document.getElementById('enroll');
+      if (el) {
+        setTimeout(() => {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 300);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (course) {
+      setForm((prev) => ({ ...prev, course: course.title }));
+    }
+  }, [course]);
 
   if (!course) {
     return (
@@ -120,17 +137,16 @@ export default function CoursePage() {
                 </span>
               </div>
 
-              {/* Emoji + Title */}
-              <div className="flex items-center gap-4 mb-5">
+              <div className="flex items-center gap-3.5 mb-5">
                 <div
-                  className="w-20 h-20 rounded-3xl flex items-center justify-center text-4xl"
+                  className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl flex-shrink-0"
                   style={{ background: `${accentColor}15`, border: `2px solid ${accentColor}30` }}
                 >
                   {course.emoji}
                 </div>
                 <div>
-                  <h1 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight">{course.title}</h1>
-                  <p className="text-[#b8b099] mt-1 text-sm font-medium">{course.tagline}</p>
+                  <h1 className="text-lg md:text-xl font-bold text-white tracking-tight leading-snug">{course.title}</h1>
+                  <p className="text-[#b8b099] mt-0.5 text-xs font-medium">{course.tagline}</p>
                 </div>
               </div>
 
@@ -204,6 +220,7 @@ export default function CoursePage() {
 
             {/* Right Column - Enrollment Form */}
             <motion.div
+              id="enroll"
               initial={{ opacity: 0, x: 40 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}

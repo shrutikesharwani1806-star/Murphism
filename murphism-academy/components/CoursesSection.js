@@ -189,7 +189,7 @@ function CourseCard({ course, idx, total, isMobile, parentScrollYProgress }) {
   if (isMobile) {
     return (
       <motion.div
-        onClick={() => router.push(`/courses/${course.slug}`)}
+        onClick={() => router.push(`/courses/${course.slug}#enroll`)}
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-5% 0px" }}
@@ -207,6 +207,7 @@ function CourseCard({ course, idx, total, isMobile, parentScrollYProgress }) {
           backfaceVisibility: 'hidden',
           WebkitBackfaceVisibility: 'hidden',
           backgroundClip: 'padding-box',
+          scale,
         }}
       >
         {/* Accent blur gradient glow */}
@@ -289,7 +290,7 @@ function CourseCard({ course, idx, total, isMobile, parentScrollYProgress }) {
             </div>
 
             {/* View Course Button */}
-            <Link href={`/courses/${course.slug}`}>
+            <Link href={`/courses/${course.slug}#enroll`}>
               <button
                 className={`px-5 py-2 rounded-full text-xs font-bold tracking-widest uppercase flex items-center gap-2 transition-all duration-300 ${styles.btnBg}`}
               >
@@ -340,9 +341,10 @@ function CourseCard({ course, idx, total, isMobile, parentScrollYProgress }) {
         backfaceVisibility: 'hidden',
         WebkitBackfaceVisibility: 'hidden',
         backgroundClip: 'padding-box',
+        scale,
       }}
       className={`w-full rounded-3xl ${styles.border} p-10 flex flex-row gap-8 items-center relative overflow-hidden cursor-pointer`}
-      onClick={() => router.push(`/courses/${course.slug}`)}
+      onClick={() => router.push(`/courses/${course.slug}#enroll`)}
     >
       {/* Accent blur gradient glow */}
       <div 
@@ -430,7 +432,7 @@ function CourseCard({ course, idx, total, isMobile, parentScrollYProgress }) {
           </div>
 
           {/* View Course Button */}
-          <Link href={`/courses/${course.slug}`}>
+          <Link href={`/courses/${course.slug}#enroll`}>
             <button
               className={`px-6 py-2 rounded-full text-xs font-bold tracking-widest uppercase flex items-center gap-2 transition-all duration-300 ${styles.btnBg}`}
             >
