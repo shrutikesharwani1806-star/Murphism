@@ -3,6 +3,7 @@ import { Outfit, Space_Grotesk, Playfair_Display } from 'next/font/google';
 import SmoothScroll from '@/components/SmoothScroll';
 import CustomCursor from '@/components/CustomCursor';
 import WelcomePopup from '@/components/WelcomePopup';
+import GlobalExposurePopup from '@/components/GlobalExposurePopup';
 import AIChatbot from '@/components/AIChatbot';
 import MotionBackground from '@/components/MotionBackground';
 
@@ -87,6 +88,7 @@ export default function RootLayout({ children }) {
         <SmoothScroll />
         <CustomCursor />
         <WelcomePopup />
+        <GlobalExposurePopup />
         <AIChatbot />
         <MotionBackground />
         {children}

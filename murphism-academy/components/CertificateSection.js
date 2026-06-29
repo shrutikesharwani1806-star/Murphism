@@ -221,7 +221,7 @@ export default function CertificateSection() {
           onMouseLeave={handleMouseLeaveContainer}
           onMouseMove={handleMouseMoveContainer}
           className="w-full overflow-x-auto flex px-6 py-16 no-scrollbar cursor-grab active:cursor-grabbing"
-          style={{ gap: '0px' }}
+          style={{ gap: '24px' }}
         >
           {containerCerts.map((cert, index) => {
             const isHovered = hoveredIndex === index;
@@ -243,7 +243,7 @@ export default function CertificateSection() {
                 }}
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
-                className="w-[290px] md:w-[320px] h-[350px] md:h-[380px] flex-shrink-0 rounded-2xl p-6 flex flex-col justify-between relative overflow-hidden transition-all duration-500 ease-out cursor-pointer block mx-[-8px] md:mx-[-14px]"
+                className="w-[290px] md:w-[320px] h-[350px] md:h-[380px] flex-shrink-0 rounded-2xl p-6 flex flex-col justify-between relative overflow-hidden transition-all duration-500 ease-out cursor-pointer block"
                 style={{
                   background: 'linear-gradient(165deg, #0d0c0a 0%, #050505 100%)',
                   border: isHovered 

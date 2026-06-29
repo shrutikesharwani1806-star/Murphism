@@ -3,20 +3,15 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Menu, X, LogOut, LayoutDashboard } from 'lucide-react';
-
-const navLinks = [
-  { label: 'Home',             href: '/' },
-  { label: 'Courses',          href: '/#courses' },
-  { label: 'About',            href: '/about' },
-  { label: 'Request Callback', href: '/contact' },
-];
+import { Menu, X, LogOut, LayoutDashboard, ChevronDown } from 'lucide-react';
 
 export default function Navbar() {
   const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen]         = useState(false);
   const [user, setUser]         = useState(null); // null = not loaded, false = guest
+  const [homeDropdownOpen, setHomeDropdownOpen] = useState(false);
+  const [mobileHomeOpen, setMobileHomeOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -114,20 +109,73 @@ export default function Navbar() {
 
           {/* ── CENTER: Nav links ── */}
           <div className="hidden md:flex flex-1 justify-center">
-            <div
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-md"
-            >
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="px-4 py-1.5 rounded text-xs font-semibold tracking-wide transition-all duration-300 whitespace-nowrap text-[#b8b099] hover:text-white"
-                  onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.03)'; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-md">
+              {/* Home Dropdown Trigger */}
+              <div 
+                className="relative"
+                onMouseEnter={() => setHomeDropdownOpen(true)}
+                onMouseLeave={() => setHomeDropdownOpen(false)}
+              >
+                <button
+                  className="px-4 py-1.5 rounded text-xs font-semibold tracking-wide transition-all duration-300 whitespace-nowrap text-[#b8b099] hover:text-white flex items-center gap-1 cursor-pointer"
+                  style={{ background: 'transparent', border: 'none' }}
                 >
-                  {link.label}
-                </Link>
-              ))}
+                  Home
+                  <ChevronDown size={12} className={`transition-transform duration-300 ${homeDropdownOpen ? 'rotate-180 text-white' : 'text-[#6b6459]'}`} />
+                </button>
+
+                {/* Dropdown Menu */}
+                {homeDropdownOpen && (
+                  <div 
+                    className="absolute top-full left-0 mt-1 w-56 rounded-xl border p-2 shadow-2xl transition-all duration-300 z-50"
+                    style={{
+                      background: '#ffffff',
+                      borderColor: 'rgba(201, 162, 39, 0.22)',
+                      boxShadow: '0 10px 30px rgba(0,0,0,0.15), 0 0 20px rgba(201,162,39,0.05)',
+                    }}
+                  >
+                    <Link
+                      href="/#courses"
+                      className="flex flex-col gap-0.5 p-2.5 rounded-lg text-left transition-all hover:bg-black/[0.03] group"
+                    >
+                      <span className="text-xs font-bold text-[#1e1c18] group-hover:text-[#c9a227] transition-colors">Courses</span>
+                      <span className="text-[10px] text-[#5c564c]">Explore our professional programs</span>
+                    </Link>
+                    <Link
+                      href="/#faq"
+                      className="flex flex-col gap-0.5 p-2.5 rounded-lg text-left transition-all hover:bg-black/[0.03] group"
+                    >
+                      <span className="text-xs font-bold text-[#1e1c18] group-hover:text-[#c9a227] transition-colors">FAQ</span>
+                      <span className="text-[10px] text-[#5c564c]">Got questions? We have answers</span>
+                    </Link>
+                    <Link
+                      href="/#foreign-exposure"
+                      className="flex flex-col gap-0.5 p-2.5 rounded-lg text-left transition-all hover:bg-black/[0.03] group"
+                    >
+                      <span className="text-xs font-bold text-[#1e1c18] group-hover:text-[#c9a227] transition-colors">Foreign Work Exposures</span>
+                      <span className="text-[10px] text-[#5c564c]">Global placement & project opportunities</span>
+                    </Link>
+                  </div>
+                )}
+              </div>
+
+              <Link
+                href="/about"
+                className="px-4 py-1.5 rounded text-xs font-semibold tracking-wide transition-all duration-300 whitespace-nowrap text-[#b8b099] hover:text-white"
+                onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.03)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
+              >
+                About
+              </Link>
+
+              <Link
+                href="/contact"
+                className="px-4 py-1.5 rounded text-xs font-semibold tracking-wide transition-all duration-300 whitespace-nowrap text-[#b8b099] hover:text-white"
+                onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.03)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
+              >
+                Request Callback
+              </Link>
             </div>
           </div>
 
@@ -231,16 +279,60 @@ export default function Navbar() {
               border: '1px solid rgba(168,85,247,0.15)',
             }}
           >
-            {navLinks.map((link) => (
+            {/* Mobile links list */}
+            <div className="flex flex-col gap-3">
+              {/* Home collapsible menu */}
+              <div>
+                <button
+                  onClick={() => setMobileHomeOpen(!mobileHomeOpen)}
+                  className="w-full flex items-center justify-between py-1 text-xs font-semibold tracking-widest uppercase transition-colors duration-300 text-[#b8b099] hover:text-white"
+                >
+                  <span>Home</span>
+                  <ChevronDown size={14} className={`transition-transform duration-300 ${mobileHomeOpen ? 'rotate-180 text-white' : 'text-[#6b6459]'}`} />
+                </button>
+                
+                {mobileHomeOpen && (
+                  <div className="pl-4 mt-2 flex flex-col gap-2 border-l border-white/5">
+                    <Link
+                      href="/#courses"
+                      onClick={() => setOpen(false)}
+                      className="py-1 text-[11px] font-semibold text-[#8c8476] hover:text-[#e8bf5a] uppercase tracking-wider"
+                    >
+                      Courses
+                    </Link>
+                    <Link
+                      href="/#faq"
+                      onClick={() => setOpen(false)}
+                      className="py-1 text-[11px] font-semibold text-[#8c8476] hover:text-[#e8bf5a] uppercase tracking-wider"
+                    >
+                      FAQ
+                    </Link>
+                    <Link
+                      href="/#foreign-exposure"
+                      onClick={() => setOpen(false)}
+                      className="py-1 text-[11px] font-semibold text-[#8c8476] hover:text-[#e8bf5a] uppercase tracking-wider"
+                    >
+                      Foreign Work Exposures
+                    </Link>
+                  </div>
+                )}
+              </div>
+
               <Link
-                key={link.href}
-                href={link.href}
+                href="/about"
                 onClick={() => setOpen(false)}
-                className="text-xs font-semibold tracking-widest uppercase transition-colors duration-300 text-[#b8b099] hover:text-white"
+                className="py-1 text-xs font-semibold tracking-widest uppercase transition-colors duration-300 text-[#b8b099] hover:text-white"
               >
-                {link.label}
+                About
               </Link>
-            ))}
+              <Link
+                href="/contact"
+                onClick={() => setOpen(false)}
+                className="py-1 text-xs font-semibold tracking-widest uppercase transition-colors duration-300 text-[#b8b099] hover:text-white"
+              >
+                Request Callback
+              </Link>
+            </div>
             <div className="h-px w-full mt-1" style={{ background: 'rgba(255,255,255,0.08)' }} />
             {user ? (
               <div className="flex flex-col gap-3">

@@ -56,6 +56,7 @@ export default function ForeignExposure() {
   return (
     <section
       ref={sectionRef}
+      id="foreign-exposure"
       className="section-pad relative overflow-hidden"
       style={{ background: 'rgba(10,9,7,0.45)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}
     >
