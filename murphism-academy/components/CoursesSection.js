@@ -56,18 +56,7 @@ export const courses = [
     description: 'Master 3D design and animation from scratch. Learn 3ds Max, Maya, ZBrush, Substance Painter, CMD, animation, and Character Creator (CC) to build stunning 3D visual assets.',
     image: '/courses/3d-modelling.png',
   },
-  {
-    slug: 'specialization',
-    emoji: '🌟',
-    title: 'Specialization',
-    tagline: 'Advanced Creative Specialization',
-    accentColor: '#a08030',
-    duration: '6 Months',
-    level: 'Advanced',
-    highlights: ['Portfolio Specialization', 'Advanced Production Tech', 'Industry Workflows', 'Mentorship Sessions', 'Studio Internship Prep', 'Final Demo Reel'],
-    description: 'A dedicated 6-month specialization program designed to refine your skills, focus on a specific creative domain, and build a world-class professional portfolio.',
-    image: '/courses/specialization.png',
-  },
+
   {
     slug: 'ai-courses',
     emoji: '🤖',

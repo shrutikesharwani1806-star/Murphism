@@ -14,7 +14,6 @@ const allCoursesList = [
   'Website Development',
   'Video Editing & VFX',
   '3D Design & Animation',
-  'Specialization',
   'AI Courses',
   'VFX',
   'B.Sc. in Animations & Multimedia',

@@ -234,19 +234,7 @@ export default function MotionBackground() {
         '--px-y': '50vh',
       }}
     >
-      {/* Blurry abstract background image from AI course card */}
-      <div 
-        className="absolute inset-0 w-full h-full select-none pointer-events-none transition-opacity duration-1000"
-        style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200&auto=format&fit=crop')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          filter: 'blur(90px) brightness(0.11) saturate(1.2)',
-          opacity: 0.42,
-          transform: 'scale(1.02) translate(calc(var(--mx) * -3px), calc(var(--my) * -3px))',
-          willChange: 'transform',
-        }}
-      />
+
 
       {/* Cursor spotlight glow */}
       <div 
@@ -260,7 +248,6 @@ export default function MotionBackground() {
       <canvas 
         ref={canvasRef}
         className="absolute inset-0 w-full h-full"
-        style={{ mixBlendMode: 'screen' }}
       />
 
       {/* Subtle moving radial glow 1 (Gold) */}

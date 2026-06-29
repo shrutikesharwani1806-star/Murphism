@@ -130,7 +130,7 @@ export default function GlobalExposurePopup() {
               >
                 <Sparkles size={11} style={{ color: '#c9a227' }} />
                 <span className="text-[10px] font-bold tracking-widest uppercase" style={{ color: '#c9a227' }}>
-                  Global Placement
+                  Foreign Clients
                 </span>
               </motion.div>
 
@@ -151,7 +151,7 @@ export default function GlobalExposurePopup() {
                 transition={{ delay: 0.3 }}
                 className="text-[#b8b099] text-xs md:text-sm leading-relaxed mb-6 max-w-sm mx-auto font-sans"
               >
-                Your creative career has no boundaries. Work on real briefs from international clients, learn global workflows, and secure overseas placement opportunities in design, development, and animation. Let's make your career truly global! ✈️
+                Your creative career has no boundaries. At Murphism, we connect you directly with real international clients — work on live briefs from the UK, UAE, Singapore, and beyond. Build a global portfolio and gain the experience that sets you apart. Let's take your career worldwide! ✈️
               </motion.p>
 
               {/* Action Buttons */}

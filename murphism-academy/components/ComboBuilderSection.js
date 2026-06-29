@@ -11,7 +11,6 @@ const COMBO_COURSES = [
   { id: 'td', name: '3D Design & Animation', emoji: '🧊', duration: '6 Months' },
   { id: 'vfx', name: 'VFX', emoji: '🌀', duration: '1 Month' },
   { id: 'ai', name: 'AI Courses', emoji: '🤖', duration: '2 Months' },
-  { id: 'sp', name: 'Specialization', emoji: '🌟', duration: '6 Months' },
 ];
 
 export default function ComboBuilderSection({ hideHeader = false }) {

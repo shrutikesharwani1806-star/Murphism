@@ -33,7 +33,7 @@ export default function EnrollmentSuccessPopup({ isOpen, onClose, studentName, c
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
-          style={{ background: 'rgba(0, 0, 0, 0.85)', backdropFilter: 'blur(12px)' }}
+          style={{ background: 'rgba(0, 0, 0, 0.85)', backdropFilter: 'blur(12px)', cursor: 'none' }}
           onClick={onClose}
         >
           <motion.div
@@ -46,6 +46,7 @@ export default function EnrollmentSuccessPopup({ isOpen, onClose, studentName, c
               background: 'linear-gradient(135deg, #0f0e0b 0%, #0a0907 100%)',
               border: '1px solid rgba(201, 162, 39, 0.2)',
               boxShadow: '0 40px 80px rgba(0,0,0,0.8), 0 0 60px rgba(201,162,39,0.08)',
+              cursor: 'none',
             }}
             onClick={(e) => e.stopPropagation()}
           >
