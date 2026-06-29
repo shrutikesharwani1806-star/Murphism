@@ -296,9 +296,6 @@ export default function CertificateSection() {
                   </div>
                 </div>
 
-                {/* Decorative divider */}
-                <div className="w-full h-px my-3 bg-gradient-to-r from-[#c9a227]/20 via-[#c9a227]/5 to-transparent" />
-
                 {/* Body Content */}
                 <div className="flex-1 flex flex-col justify-center z-10 my-2">
                   <span 
@@ -321,7 +318,7 @@ export default function CertificateSection() {
                 </div>
 
                 {/* Footer Section */}
-                <div className="flex flex-col gap-2.5 pt-3 border-t border-white/5 z-10">
+                <div className="flex flex-col gap-2.5 pt-3 z-10">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-1.5">
                       <ShieldCheck size={11} className="text-[#c9a227]" />
