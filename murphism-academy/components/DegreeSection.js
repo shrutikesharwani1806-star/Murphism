@@ -13,8 +13,6 @@ const syllabus = [
 export default function DegreeSection() {
   return (
     <section id="degree" className="section-pad relative" style={{ background: 'rgba(10,9,7,0.45)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}>
-      <div className="absolute top-0 left-0 right-0 h-px"
-        style={{ background: 'linear-gradient(90deg, transparent, rgba(201,162,39,0.12), transparent)' }} />
 
       <div className="max-w-7xl mx-auto px-6">
         {/* Centered Section Header */}
@@ -26,10 +24,9 @@ export default function DegreeSection() {
           className="mb-10 flex flex-col items-center text-center"
         >
           <div className="label-tag" style={{ margin: '0 auto 1.5rem auto' }}>Degree Program</div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-wide text-[#f0ece0] mx-auto" style={{ lineHeight: '1.25' }}>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-wide text-[#f0ece0] mx-auto mb-6" style={{ lineHeight: '1.25' }}>
             B.Sc. in Animations &amp; Multimedia
           </h2>
-          <div className="divider-gold" style={{ margin: '1.5rem auto', width: '48px' }} />
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-16 items-start">

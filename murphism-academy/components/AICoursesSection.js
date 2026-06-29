@@ -143,8 +143,6 @@ export default function AICoursesSection() {
         <div className="w-full flex flex-col py-10 px-6 gap-6 relative">
           {/* Glow backdrop */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full bg-[#c9a227]/3 blur-[80px] pointer-events-none" />
-          <div className="absolute top-0 left-0 right-0 h-px"
-            style={{ background: 'linear-gradient(90deg, transparent, rgba(201,162,39,0.08), transparent)' }} />
 
           {/* Section Header */}
           <div className="w-full flex flex-col items-center text-center relative z-10">
@@ -268,8 +266,6 @@ export default function AICoursesSection() {
         <div className="sticky top-0 left-0 w-full h-screen overflow-hidden flex flex-col justify-between py-6 md:py-10">
           {/* Glow backdrop */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-[#c9a227]/3 blur-[120px] pointer-events-none" />
-          <div className="absolute top-0 left-0 right-0 h-px"
-            style={{ background: 'linear-gradient(90deg, transparent, rgba(201,162,39,0.08), transparent)' }} />
 
           {/* Section Header */}
           <div className="w-full flex flex-col items-center text-center px-6 relative z-10">

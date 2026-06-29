@@ -58,15 +58,6 @@ export default function WhyMurphism() {
       className="section-pad relative overflow-hidden"
       style={{ background: 'rgba(10,9,7,0.45)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}
     >
-      {/* Top/Bottom Divider Rules to Highlight Section */}
-      <div
-        className="absolute top-0 left-0 right-0 h-px"
-        style={{ background: 'linear-gradient(90deg, transparent, rgba(201,162,39,0.25), transparent)' }}
-      />
-      <div
-        className="absolute bottom-0 left-0 right-0 h-px"
-        style={{ background: 'linear-gradient(90deg, transparent, rgba(201,162,39,0.25), transparent)' }}
-      />
 
       {/* Warm ambient radial glow in center */}
       <div
@@ -87,12 +78,11 @@ export default function WhyMurphism() {
           className="mb-10 flex flex-col items-center text-center"
         >
           <div className="label-tag">Why Choose Murphism</div>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-wide text-[#f0ece0] mx-auto" style={{ lineHeight: '1.25' }}>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-wide text-[#f0ece0] mx-auto mb-6" style={{ lineHeight: '1.25' }}>
             Why Students
             <br />
             <span className="text-gold">Choose Murphism</span>
           </h2>
-          <div className="divider-gold" style={{ margin: '1.5rem auto', width: '48px' }} />
           <p className="text-[#b8b099] text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
             Join the growing community of students building real-world creative and tech careers with Murphism.
           </p>

@@ -160,10 +160,6 @@ export default function CertificateSection() {
       style={{ background: 'rgba(5,5,8,0.45)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}
     >
       <div
-        className="absolute top-0 left-0 right-0 h-px"
-        style={{ background: 'linear-gradient(90deg, transparent, rgba(201,162,39,0.18), transparent)' }}
-      />
-      <div
         className="absolute inset-0 pointer-events-none"
         style={{ background: 'radial-gradient(ellipse 70% 50% at 50% 60%, rgba(201,162,39,0.04) 0%, transparent 70%)' }}
       />
@@ -188,8 +184,7 @@ export default function CertificateSection() {
             <br />
             <span className="text-gold">A Certificate. Always.</span>
           </h2>
-          <div className="divider-gold" style={{ margin: '1.5rem auto', width: '48px' }} />
-          <p className="text-[#b8b099] text-xs md:text-sm max-w-xl mx-auto leading-relaxed">
+          <p className="text-[#b8b099] text-xs md:text-sm max-w-xl mx-auto leading-relaxed mt-6">
             No traditional exams. No pressure. Every student who completes a Murphism program receives an
             industry-recognized certificate of accomplishment — proof you&apos;re built for the creative industry.
           </p>

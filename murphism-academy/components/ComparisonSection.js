@@ -55,10 +55,9 @@ export default function ComparisonSection() {
           <p className="text-lg md:text-xl font-bold italic tracking-wide text-gold font-serif">
             “They came, we shaped, they got placed.”
           </p>
-          <p className="text-[10px] md:text-xs tracking-widest text-[#8e8a7d] uppercase font-mono mt-2 mb-4">
+          <p className="text-[10px] md:text-xs tracking-widest text-[#8e8a7d] uppercase font-mono mt-2 mb-6">
             — The Murphism Promise
           </p>
-          <div className="divider-gold" style={{ margin: '0.5rem auto 1.5rem auto', width: '48px' }} />
         </motion.div>
 
         {/* Outer comparison box */}
