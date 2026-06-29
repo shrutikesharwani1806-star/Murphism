@@ -189,10 +189,10 @@ export default function Footer() {
             </div>
             <ul className="space-y-3">
               <li className="text-[#8c8c8c] text-[13px] leading-relaxed font-normal">
-                Online: 10am - 10pm <a href="tel:+919071433205" className="hover:text-white transition-colors text-[#8c8c8c] ml-0.5">+91 9071433205</a>
+                Online / Offline Classes
               </li>
               <li className="text-[#8c8c8c] text-[13px] leading-relaxed font-normal">
-                Offline: 11am - 8pm <a href="tel:+919691778470" className="hover:text-white transition-colors text-[#8c8c8c] ml-0.5">+91 9691778470</a>
+                Contact: <a href="tel:+911234567890" className="hover:text-white transition-colors text-[#8c8c8c] ml-0.5">+91 1234567890</a>
               </li>
               <li>
                 <a href="mailto:hello@murphism.com" className="text-[#58a6ff] hover:text-blue-400 transition-colors duration-300 text-[13px] font-normal">
@@ -200,7 +200,7 @@ export default function Footer() {
                 </a>
               </li>
               <li className="text-[#8c8c8c] text-[13px] leading-relaxed font-normal">
-                23-B, Sector C Indrapuri, Bhopal(MP), 462023
+                Location: Indore
               </li>
             </ul>
           </div>
