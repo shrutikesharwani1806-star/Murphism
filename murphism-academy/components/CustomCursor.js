@@ -4,29 +4,81 @@ import { useEffect, useRef } from 'react';
 export default function CustomCursor() {
   const dotRef = useRef(null);
   const ringRef = useRef(null);
+  
   const mousePos = useRef({ x: -100, y: -100 });
+  const dotPos = useRef({ x: -100, y: -100 });
   const ringPos = useRef({ x: -100, y: -100 });
-  const animRef = useRef(null);
+  const isLooping = useRef(false);
+  const firstMove = useRef(true);
 
   useEffect(() => {
     // Only register listeners on devices with fine pointer (mouse/trackpad support)
     const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
     if (!hasFinePointer) return;
 
+    const tick = () => {
+      // Lerp calculations for smooth lag
+      // Dot follows faster, ring trails smoothly
+      dotPos.current.x += (mousePos.current.x - dotPos.current.x) * 0.35;
+      dotPos.current.y += (mousePos.current.y - dotPos.current.y) * 0.35;
+
+      ringPos.current.x += (mousePos.current.x - ringPos.current.x) * 0.15;
+      ringPos.current.y += (mousePos.current.y - ringPos.current.y) * 0.15;
+
+      if (dotRef.current) {
+        dotRef.current.style.transform = `translate3d(${dotPos.current.x}px, ${dotPos.current.y}px, 0) translate(-50%, -50%)`;
+      }
+      if (ringRef.current) {
+        ringRef.current.style.transform = `translate3d(${ringPos.current.x}px, ${ringPos.current.y}px, 0) translate(-50%, -50%)`;
+      }
+
+      // Check if positions are close enough to stop looping and conserve CPU
+      const dx = mousePos.current.x - ringPos.current.x;
+      const dy = mousePos.current.y - ringPos.current.y;
+      const distSq = dx * dx + dy * dy;
+
+      if (distSq < 0.05) {
+        isLooping.current = false;
+        // Snap to exact target to avoid sub-pixel rendering gaps
+        dotPos.current = { ...mousePos.current };
+        ringPos.current = { ...mousePos.current };
+      } else {
+        requestAnimationFrame(tick);
+      }
+    };
+
     const handleMouseMove = (e) => {
       mousePos.current = { x: e.clientX, y: e.clientY };
+
+      if (firstMove.current) {
+        firstMove.current = false;
+        dotPos.current = { x: e.clientX, y: e.clientY };
+        ringPos.current = { x: e.clientX, y: e.clientY };
+        if (dotRef.current) dotRef.current.style.opacity = '1';
+        if (ringRef.current) ringRef.current.style.opacity = '1';
+      }
       
-      // Instantly reveal cursors on first movement
-      if (dotRef.current) dotRef.current.style.opacity = '1';
-      if (ringRef.current) ringRef.current.style.opacity = '1';
+      if (!isLooping.current) {
+        isLooping.current = true;
+        requestAnimationFrame(tick);
+      }
+
+      // Add active class to body to hide native cursor once mouse is moving
+      if (!document.body.classList.contains('custom-cursor-active')) {
+        document.body.classList.add('custom-cursor-active');
+        if (dotRef.current) dotRef.current.style.opacity = '1';
+        if (ringRef.current) ringRef.current.style.opacity = '1';
+      }
     };
 
     const handleMouseLeave = () => {
+      document.body.classList.remove('custom-cursor-active');
       if (dotRef.current) dotRef.current.style.opacity = '0';
       if (ringRef.current) ringRef.current.style.opacity = '0';
     };
 
     const handleMouseEnter = () => {
+      document.body.classList.add('custom-cursor-active');
       if (dotRef.current) dotRef.current.style.opacity = '1';
       if (ringRef.current) ringRef.current.style.opacity = '1';
     };
@@ -54,29 +106,12 @@ export default function CustomCursor() {
     document.addEventListener('mouseenter', handleMouseEnter);
     window.addEventListener('mouseover', handleMouseOver, { passive: true });
 
-    // Animation loop using translate3d for GPU acceleration
-    const animate = () => {
-      // Lerp position for smooth lagging trail
-      ringPos.current.x += (mousePos.current.x - ringPos.current.x) * 0.16;
-      ringPos.current.y += (mousePos.current.y - ringPos.current.y) * 0.16;
-
-      if (dotRef.current) {
-        dotRef.current.style.transform = `translate3d(${mousePos.current.x}px, ${mousePos.current.y}px, 0) translate(-50%, -50%)`;
-      }
-      if (ringRef.current) {
-        ringRef.current.style.transform = `translate3d(${ringPos.current.x}px, ${ringPos.current.y}px, 0) translate(-50%, -50%)`;
-      }
-
-      animRef.current = requestAnimationFrame(animate);
-    };
-    animRef.current = requestAnimationFrame(animate);
-
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseleave', handleMouseLeave);
       document.removeEventListener('mouseenter', handleMouseEnter);
       window.removeEventListener('mouseover', handleMouseOver);
-      cancelAnimationFrame(animRef.current);
+      document.body.classList.remove('custom-cursor-active');
     };
   }, []);
 
@@ -84,14 +119,10 @@ export default function CustomCursor() {
     <>
       {/* Global CSS overrides targeting pointer types to eliminate touch device glitches */}
       <style jsx global>{`
-        /* Hide native cursor on mouse-enabled devices */
-        @media (pointer: fine) {
-          *, *::before, *::after,
-          html, body, a, button, input, select, textarea, label,
-          [role="button"], [role="dialog"], [data-overlay],
-          .cursor-pointer {
-            cursor: none !important;
-          }
+        /* Hide native cursor ONLY when custom-cursor-active class is present on body */
+        .custom-cursor-active,
+        .custom-cursor-active * {
+          cursor: none !important;
         }
 
         /* Hide custom cursors entirely on touch devices */
@@ -166,7 +197,7 @@ export default function CustomCursor() {
         </svg>
       </div>
 
-      {/* Outer ring cursor */}
+      {/* Outer ring cursor with butter-smooth JS lerping and zero CSS transition lag */}
       <div
         ref={ringRef}
         className="custom-cursor-ring"

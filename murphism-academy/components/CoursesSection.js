@@ -472,6 +472,29 @@ export default function CoursesSection() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  useEffect(() => {
+    const checkLocation = () => {
+      if (window.location.hash === '#combo-builder' || window.location.search.includes('tab=combo')) {
+        setActiveTab('combo');
+        setTimeout(() => {
+          const el = document.getElementById('courses');
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 100);
+      } else if (window.location.hash === '#courses') {
+        setActiveTab('individual');
+      }
+    };
+    checkLocation();
+    window.addEventListener('hashchange', checkLocation);
+    window.addEventListener('popstate', checkLocation);
+    return () => {
+      window.removeEventListener('hashchange', checkLocation);
+      window.removeEventListener('popstate', checkLocation);
+    };
+  }, []);
+
   return (
     <section id="courses" className="section-pad relative" style={{ background: 'rgba(5,5,5,0.45)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', overflow: 'visible' }}>
       {/* Top rule separator */}

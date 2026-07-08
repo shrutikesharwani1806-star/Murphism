@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from 'react';
 export default function MotionBackground() {
   const [mounted, setMounted] = useState(false);
   const canvasRef = useRef(null);
-  const containerRef = useRef(null);
+  const spotlightRef = useRef(null);
   
   useEffect(() => {
     setMounted(true);
@@ -47,8 +47,8 @@ export default function MotionBackground() {
       targetMousePxY = window.innerHeight / 2;
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    window.addEventListener('resize', handleResize, { passive: true });
 
     // Particle class
     class Particle {
@@ -82,7 +82,7 @@ export default function MotionBackground() {
       }
     }
 
-    const particleCount = 120;
+    const particleCount = window.innerWidth < 768 ? 35 : (window.innerWidth < 1200 ? 55 : 70);
     const particles = Array.from({ length: particleCount }, () => new Particle());
 
     // 3D rotation function
@@ -166,6 +166,7 @@ export default function MotionBackground() {
 
       // Draw connections
       const maxDistance = 110;
+      const maxDistanceSq = maxDistance * maxDistance;
       ctx.lineWidth = 0.5;
 
       for (let i = 0; i < projectedParticles.length; i++) {
@@ -174,9 +175,10 @@ export default function MotionBackground() {
           const p2 = projectedParticles[j];
           const dx = p1.x - p2.x;
           const dy = p1.y - p2.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
+          const distSq = dx * dx + dy * dy;
 
-          if (dist < maxDistance) {
+          if (distSq < maxDistanceSq) {
+            const dist = Math.sqrt(distSq);
             // Opacity is higher for closer connections, and lower for deep/faded particles
             const connectionAlpha = (1 - dist / maxDistance) * 0.12 * Math.min(p1.alpha, p2.alpha);
             ctx.strokeStyle = `rgba(201, 162, 39, ${connectionAlpha})`;
@@ -201,12 +203,9 @@ export default function MotionBackground() {
       }
       ctx.globalAlpha = 1.0;
 
-      // Draw original floating ambient glows (but simplified & CSS based for performance/smoothness)
-      if (containerRef.current) {
-        containerRef.current.style.setProperty('--mx', mouseX.toFixed(4));
-        containerRef.current.style.setProperty('--my', mouseY.toFixed(4));
-        containerRef.current.style.setProperty('--px-x', `${mousePxX.toFixed(1)}px`);
-        containerRef.current.style.setProperty('--px-y', `${mousePxY.toFixed(1)}px`);
+      // Position the spotlight glow using transform translate3d (GPU accelerated, avoids style invalidation)
+      if (spotlightRef.current) {
+        spotlightRef.current.style.transform = `translate3d(${mousePxX - 260}px, ${mousePxY - 260}px, 0)`;
       }
 
       animationFrameId = requestAnimationFrame(render);
@@ -225,22 +224,18 @@ export default function MotionBackground() {
 
   return (
     <div 
-      ref={containerRef}
       className="fixed inset-0 w-full h-full pointer-events-none overflow-hidden z-[-1] bg-[#050505]"
-      style={{
-        '--mx': '0',
-        '--my': '0',
-        '--px-x': '50vw',
-        '--px-y': '50vh',
-      }}
     >
-
-
-      {/* Cursor spotlight glow */}
+      {/* Cursor spotlight glow (positioned via translate3d for max performance) */}
       <div 
-        className="absolute inset-0 pointer-events-none mix-blend-screen"
+        ref={spotlightRef}
+        className="absolute w-[520px] h-[520px] rounded-full pointer-events-none mix-blend-screen"
         style={{
-          background: 'radial-gradient(circle 260px at var(--px-x) var(--px-y), rgba(201, 162, 39, 0.08) 0%, rgba(201, 162, 39, 0.02) 50%, transparent 100%)',
+          background: 'radial-gradient(circle, rgba(201, 162, 39, 0.08) 0%, rgba(201, 162, 39, 0.02) 50%, transparent 100%)',
+          top: 0,
+          left: 0,
+          willChange: 'transform',
+          transform: 'translate3d(-999px, -999px, 0)',
         }}
       />
 
@@ -257,7 +252,6 @@ export default function MotionBackground() {
           background: 'radial-gradient(circle, #c9a227 0%, transparent 70%)',
           top: '-10%',
           left: '10%',
-          transform: 'translate(calc(var(--mx) * 50px), calc(var(--my) * 50px))',
           animation: 'float-slow 28s ease-in-out infinite alternate',
         }}
       />
@@ -269,7 +263,6 @@ export default function MotionBackground() {
           background: 'radial-gradient(circle, #e8bf5a 0%, transparent 70%)',
           bottom: '5%',
           right: '5%',
-          transform: 'translate(calc(var(--mx) * -40px), calc(var(--my) * -40px))',
           animation: 'float-slow-reverse 32s ease-in-out infinite alternate',
         }}
       />
@@ -281,7 +274,6 @@ export default function MotionBackground() {
           background: 'radial-gradient(circle, #8B6914 0%, transparent 70%)',
           top: '35%',
           right: '25%',
-          transform: 'translate(calc(var(--mx) * 30px), calc(var(--my) * -30px))',
           animation: 'float-slow-diagonal 30s ease-in-out infinite alternate',
         }}
       />
@@ -290,35 +282,35 @@ export default function MotionBackground() {
       <style jsx global>{`
         @keyframes float-slow {
           0% {
-            transform: translate(calc(var(--mx) * 50px), calc(var(--my) * 50px)) scale(1);
+            transform: translate(0px, 0px) scale(1);
           }
           50% {
-            transform: translate(calc(var(--mx) * 50px + 80px), calc(var(--my) * 50px + 60px)) scale(1.08);
+            transform: translate(80px, 60px) scale(1.08);
           }
           100% {
-            transform: translate(calc(var(--mx) * 50px - 40px), calc(var(--my) * 50px + 120px)) scale(0.95);
+            transform: translate(-40px, 120px) scale(0.95);
           }
         }
         @keyframes float-slow-reverse {
           0% {
-            transform: translate(calc(var(--mx) * -40px), calc(var(--my) * -40px)) scale(1.05);
+            transform: translate(0px, 0px) scale(1.05);
           }
           50% {
-            transform: translate(calc(var(--mx) * -40px - 100px), calc(var(--my) * -40px - 80px)) scale(0.9);
+            transform: translate(-100px, -80px) scale(0.9);
           }
           100% {
-            transform: translate(calc(var(--mx) * -40px + 50px), calc(var(--my) * -40px - 110px)) scale(1.1);
+            transform: translate(50px, -110px) scale(1.1);
           }
         }
         @keyframes float-slow-diagonal {
           0% {
-            transform: translate(calc(var(--mx) * 30px), calc(var(--my) * -30px)) scale(0.95);
+            transform: translate(0px, 0px) scale(0.95);
           }
           50% {
-            transform: translate(calc(var(--mx) * 30px + 60px), calc(var(--my) * -30px - 90px)) scale(1.05);
+            transform: translate(60px, -90px) scale(1.05);
           }
           100% {
-            transform: translate(calc(var(--mx) * 30px - 70px), calc(var(--my) * -30px + 50px)) scale(1.0);
+            transform: translate(-70px, 50px) scale(1.0);
           }
         }
       `}</style>

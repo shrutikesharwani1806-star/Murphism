@@ -29,6 +29,10 @@ export default function ComparisonSection() {
       left: '100% placement assistance',
       right: 'Limited Career Support & Local Placements',
     },
+    {
+      left: 'Foreign Work Exposures Provided',
+      right: 'No International Client Connection or Exposure',
+    },
   ];
 
   return (

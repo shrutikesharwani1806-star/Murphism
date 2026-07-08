@@ -142,6 +142,13 @@ export default function Navbar() {
                       <span className="text-[10px] text-[#5c564c]">Explore our professional programs</span>
                     </Link>
                     <Link
+                      href="/#combo-builder"
+                      className="flex flex-col gap-0.5 p-2.5 rounded-lg text-left transition-all hover:bg-black/[0.03] group"
+                    >
+                      <span className="text-xs font-bold text-[#1e1c18] group-hover:text-[#c9a227] transition-colors">Custom Career Builder</span>
+                      <span className="text-[10px] text-[#5c564c]">Design your own learning path</span>
+                    </Link>
+                    <Link
                       href="/#faq"
                       className="flex flex-col gap-0.5 p-2.5 rounded-lg text-left transition-all hover:bg-black/[0.03] group"
                     >
@@ -301,6 +308,13 @@ export default function Navbar() {
                       className="py-1 text-[11px] font-semibold text-[#8c8476] hover:text-[#e8bf5a] uppercase tracking-wider"
                     >
                       Courses
+                    </Link>
+                    <Link
+                      href="/#combo-builder"
+                      onClick={() => setOpen(false)}
+                      className="py-1 text-[11px] font-semibold text-[#8c8476] hover:text-[#e8bf5a] uppercase tracking-wider"
+                    >
+                      Custom Career Builder
                     </Link>
                     <Link
                       href="/#faq"
