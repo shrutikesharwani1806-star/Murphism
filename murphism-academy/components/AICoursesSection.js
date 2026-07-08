@@ -189,6 +189,7 @@ export default function AICoursesSection() {
                     <img 
                       src={mod.image} 
                       alt={mod.title} 
+                      loading="lazy"
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
                     />
                     {/* Dark gradient overlay to ensure text legibility */}
@@ -312,6 +313,7 @@ export default function AICoursesSection() {
                     <img 
                       src={mod.image} 
                       alt={mod.title} 
+                      loading="lazy"
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
                     />
                     {/* Dark gradient overlay to ensure text legibility */}

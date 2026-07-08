@@ -69,38 +69,38 @@ export default function RegisterPage() {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7 }}
-        className="w-full max-w-md relative"
+        className="w-full max-w-[370px] relative"
       >
         {/* Logo / Brand */}
-        <div className="text-center mb-10">
+        <div className="text-center mb-6">
           <Link href="/">
-            <span className="text-3xl font-black tracking-wider" style={{ color: '#c9a227', fontFamily: 'Space Grotesk, sans-serif' }}>
+            <span className="text-xl font-extrabold tracking-[0.2em]" style={{ color: '#c9a227', fontFamily: 'Space Grotesk, sans-serif' }}>
               MURPHISM
             </span>
           </Link>
-          <p className="text-[#6b6459] text-xs tracking-widest uppercase mt-1">Academy</p>
+          <p className="text-[#6b6459] text-[9px] tracking-widest uppercase mt-0.5">Academy</p>
         </div>
 
         {/* Card */}
         <div
-          className="rounded-2xl p-8"
+          className="rounded-xl p-6"
           style={{
             background: 'linear-gradient(145deg, #0f0e0b 0%, #0a0908 100%)',
             border: '1px solid rgba(201,162,39,0.15)',
-            boxShadow: '0 30px 80px rgba(0,0,0,0.7)',
+            boxShadow: '0 25px 60px rgba(0,0,0,0.7)',
           }}
         >
-          <h1 className="text-white text-2xl font-bold mb-1" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+          <h1 className="text-white text-lg font-bold mb-0.5" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
             Create Account
           </h1>
-          <p className="text-[#6b6459] text-sm mb-7">Join Murphism — start your creative journey.</p>
+          <p className="text-[#6b6459] text-xs mb-5">Join Murphism — start your creative journey.</p>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-3.5">
             {fields.map(({ name, label, type, icon: Icon, placeholder }) => (
               <div key={name}>
-                <label className="block text-[10px] font-bold tracking-widest uppercase text-[#6b6459] mb-1.5">{label}</label>
+                <label className="block text-[9px] font-bold tracking-widest uppercase text-[#6b6459] mb-1">{label}</label>
                 <div className="relative">
-                  <Icon size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#4a4540]" />
+                  <Icon size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#4a4540]" />
                   <input
                     name={name}
                     type={type}
@@ -108,7 +108,7 @@ export default function RegisterPage() {
                     onChange={handleChange}
                     required
                     placeholder={placeholder}
-                    className="w-full pl-10 pr-4 py-3 rounded-xl text-sm text-white placeholder:text-[#2e2c28] transition-colors focus:outline-none"
+                    className="w-full pl-9 pr-4 py-2.5 rounded-lg text-xs text-white placeholder:text-[#2e2c28] transition-colors focus:outline-none"
                     style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(201,162,39,0.1)' }}
                     onFocus={e => (e.target.style.borderColor = 'rgba(201,162,39,0.4)')}
                     onBlur={e => (e.target.style.borderColor = 'rgba(201,162,39,0.1)')}
@@ -119,9 +119,9 @@ export default function RegisterPage() {
 
             {/* Password */}
             <div>
-              <label className="block text-[10px] font-bold tracking-widest uppercase text-[#6b6459] mb-1.5">Password</label>
+              <label className="block text-[9px] font-bold tracking-widest uppercase text-[#6b6459] mb-1">Password</label>
               <div className="relative">
-                <Lock size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#4a4540]" />
+                <Lock size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#4a4540]" />
                 <input
                   name="password"
                   type={showPass ? 'text' : 'password'}
@@ -129,7 +129,7 @@ export default function RegisterPage() {
                   onChange={handleChange}
                   required
                   placeholder="Min 6 characters"
-                  className="w-full pl-10 pr-10 py-3 rounded-xl text-sm text-white placeholder:text-[#2e2c28] transition-colors focus:outline-none"
+                  className="w-full pl-9 pr-9 py-2.5 rounded-lg text-xs text-white placeholder:text-[#2e2c28] transition-colors focus:outline-none"
                   style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(201,162,39,0.1)' }}
                   onFocus={e => (e.target.style.borderColor = 'rgba(201,162,39,0.4)')}
                   onBlur={e => (e.target.style.borderColor = 'rgba(201,162,39,0.1)')}
@@ -137,29 +137,29 @@ export default function RegisterPage() {
                 <button
                   type="button"
                   onClick={() => setShowPass(!showPass)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#4a4540] hover:text-[#c9a227] transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#4a4540] hover:text-[#c9a227] transition-colors"
                 >
-                  {showPass ? <EyeOff size={15} /> : <Eye size={15} />}
+                  {showPass ? <EyeOff size={14} /> : <Eye size={14} />}
                 </button>
               </div>
             </div>
 
             {error && (
-              <p className="text-red-400 text-xs bg-red-400/10 rounded-lg px-3 py-2">{error}</p>
+              <p className="text-red-400 text-[11px] bg-red-400/10 rounded-lg px-3 py-2">{error}</p>
             )}
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 rounded-xl font-bold text-sm tracking-wider flex items-center justify-center gap-2 transition-all duration-300 disabled:opacity-60"
+              className="w-full py-2.5 rounded-lg font-bold text-xs tracking-wider flex items-center justify-center gap-1.5 transition-all duration-300 disabled:opacity-60"
               style={{ background: 'linear-gradient(135deg, #c9a227 0%, #e8bf5a 100%)', color: '#050508' }}
             >
-              {loading ? <><Loader size={16} className="animate-spin" /><span>Creating Account...</span></> : <><span>Create Account</span><ArrowRight size={16} /></>}
+              {loading ? <><Loader size={14} className="animate-spin" /><span>Creating Account...</span></> : <><span>Create Account</span><ArrowRight size={14} /></>}
             </button>
           </form>
 
-          <div className="mt-6 text-center space-y-2">
-            <p className="text-[#6b6459] text-xs">
+          <div className="mt-5 text-center">
+            <p className="text-[#6b6459] text-[11px]">
               Already have an account?{' '}
               <Link href="/auth/login" className="text-[#c9a227] hover:underline font-semibold">Sign In</Link>
             </p>

@@ -1,11 +1,6 @@
 import './globals.css';
 import { Outfit, Space_Grotesk, Playfair_Display } from 'next/font/google';
-import SmoothScroll from '@/components/SmoothScroll';
-import CustomCursor from '@/components/CustomCursor';
-import WelcomePopup from '@/components/WelcomePopup';
-import GlobalExposurePopup from '@/components/GlobalExposurePopup';
-import AIChatbot from '@/components/AIChatbot';
-import MotionBackground from '@/components/MotionBackground';
+import ClientWidgets from '@/components/ClientWidgets';
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -85,12 +80,7 @@ export default function RootLayout({ children }) {
         <link rel="apple-touch-icon" href="/logo.png" />
       </head>
       <body className="antialiased overflow-x-hidden font-sans" suppressHydrationWarning>
-        <SmoothScroll />
-        <CustomCursor />
-        <WelcomePopup />
-        <GlobalExposurePopup />
-        <AIChatbot />
-        <MotionBackground />
+        <ClientWidgets />
         {children}
       </body>
     </html>

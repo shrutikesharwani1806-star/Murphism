@@ -86,9 +86,27 @@ export default function DegreeSection() {
             {syllabus.map((yr, i) => (
               <div
                 key={yr.year}
-                className="p-6 rounded-sm"
+                className="relative group p-6 rounded-sm overflow-hidden transition-shadow duration-300 hover:shadow-[0_0_25px_rgba(201,162,39,0.04)]"
                 style={{ background: '#050505', border: '1px solid rgba(201,162,39,0.1)' }}
               >
+                {/* Sequential Golden Border Tracing */}
+                <span 
+                  className="absolute top-0 left-0 h-[1.5px] bg-[#c9a227] w-0 group-hover:w-full transition-all ease-out"
+                  style={{ transitionDuration: '150ms' }}
+                />
+                <span 
+                  className="absolute top-0 right-0 w-[1.5px] bg-[#c9a227] h-0 group-hover:h-full transition-all ease-out"
+                  style={{ transitionDuration: '150ms', transitionDelay: '150ms' }}
+                />
+                <span 
+                  className="absolute bottom-0 right-0 h-[1.5px] bg-[#c9a227] w-0 group-hover:w-full transition-all ease-out"
+                  style={{ transitionDuration: '150ms', transitionDelay: '300ms' }}
+                />
+                <span 
+                  className="absolute bottom-0 left-0 w-[1.5px] bg-[#c9a227] h-0 group-hover:h-full transition-all ease-out"
+                  style={{ transitionDuration: '150ms', transitionDelay: '450ms' }}
+                />
+
                 <div className="flex items-center gap-3 mb-4">
                   <div
                     className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-black"

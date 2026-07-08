@@ -206,6 +206,7 @@ export default function StatsSection() {
                         key={idx} 
                         src={url} 
                         alt="Student" 
+                        loading="lazy"
                         className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-[#0a0a0f] object-cover" 
                       />
                     ))}

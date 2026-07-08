@@ -147,6 +147,7 @@ export default function CircularReasons() {
                   <img 
                     src={r.image} 
                     alt={r.title} 
+                    loading="lazy"
                     className="w-full h-full object-cover filter brightness-75 group-hover:brightness-95 transition-all duration-300" 
                   />
                   {/* Subtle tint border overlay */}
@@ -212,6 +213,7 @@ export default function CircularReasons() {
                     <img 
                       src={activeReason.image} 
                       alt={activeReason.title} 
+                      loading="lazy"
                       className="w-full h-full object-cover" 
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />

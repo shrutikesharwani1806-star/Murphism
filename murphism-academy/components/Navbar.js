@@ -15,7 +15,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', onScroll);
+    window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
@@ -117,10 +117,10 @@ export default function Navbar() {
                 onMouseLeave={() => setHomeDropdownOpen(false)}
               >
                 <button
-                  className="px-4 py-1.5 rounded text-xs font-semibold tracking-wide transition-all duration-300 whitespace-nowrap text-[#b8b099] hover:text-white flex items-center gap-1 cursor-pointer"
+                  className="px-4 py-1.5 rounded text-xs font-semibold tracking-wide transition-all duration-300 whitespace-nowrap text-[#b8b099] hover:text-white flex items-center gap-1 cursor-pointer nav-link-bounce"
                   style={{ background: 'transparent', border: 'none' }}
                 >
-                  Home
+                  <span className="word-bounce">Home</span>
                   <ChevronDown size={12} className={`transition-transform duration-300 ${homeDropdownOpen ? 'rotate-180 text-white' : 'text-[#6b6459]'}`} />
                 </button>
 
@@ -161,20 +161,21 @@ export default function Navbar() {
 
               <Link
                 href="/about"
-                className="px-4 py-1.5 rounded text-xs font-semibold tracking-wide transition-all duration-300 whitespace-nowrap text-[#b8b099] hover:text-white"
+                className="inline-block px-4 py-1.5 rounded text-xs font-semibold tracking-wide transition-all duration-300 whitespace-nowrap text-[#b8b099] hover:text-white nav-link-bounce"
                 onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.03)'; }}
                 onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
               >
-                About
+                <span className="word-bounce">About</span>
               </Link>
 
               <Link
                 href="/contact"
-                className="px-4 py-1.5 rounded text-xs font-semibold tracking-wide transition-all duration-300 whitespace-nowrap text-[#b8b099] hover:text-white"
+                className="inline-block px-4 py-1.5 rounded text-xs font-semibold tracking-wide transition-all duration-300 whitespace-nowrap text-[#b8b099] hover:text-white nav-link-bounce"
                 onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.03)'; }}
                 onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
               >
-                Request Callback
+                <span className="word-bounce">Request</span>{' '}
+                <span className="word-bounce">Callback</span>
               </Link>
             </div>
           </div>
@@ -237,12 +238,13 @@ export default function Navbar() {
                 // Guest
                 <Link
                   href="/auth/login"
-                  className="text-sm font-semibold tracking-widest uppercase transition-all duration-300 relative group"
+                  className="inline-block text-sm font-semibold tracking-widest uppercase transition-all duration-300 relative group nav-link-bounce"
                   style={{ color: '#b8b099' }}
                   onMouseEnter={e => (e.currentTarget.style.color = '#e8bf5a')}
                   onMouseLeave={e => (e.currentTarget.style.color = '#b8b099')}
                 >
-                  Sign In
+                  <span className="word-bounce">Sign</span>{' '}
+                  <span className="word-bounce">In</span>
                   <span
                     className="absolute -bottom-0.5 left-0 h-[2px] w-0 transition-all duration-300 group-hover:w-full"
                     style={{ background: 'linear-gradient(90deg, #c9a227, #a855f7)' }}
