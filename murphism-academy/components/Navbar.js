@@ -135,7 +135,7 @@ export default function Navbar() {
                     }}
                   >
                     <Link
-                      href="/#courses"
+                      href="/courses"
                       className="flex flex-col gap-0.5 p-2.5 rounded-lg text-left transition-all hover:bg-black/[0.03] group"
                     >
                       <span className="text-xs font-bold text-[#1e1c18] group-hover:text-[#c9a227] transition-colors">Courses</span>
@@ -303,7 +303,7 @@ export default function Navbar() {
                 {mobileHomeOpen && (
                   <div className="pl-4 mt-2 flex flex-col gap-2 border-l border-white/5">
                     <Link
-                      href="/#courses"
+                      href="/courses"
                       onClick={() => setOpen(false)}
                       className="py-1 text-[11px] font-semibold text-[#8c8476] hover:text-[#e8bf5a] uppercase tracking-wider"
                     >
