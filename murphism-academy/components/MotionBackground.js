@@ -3,15 +3,24 @@ import { useEffect, useState, useRef } from 'react';
 
 export default function MotionBackground() {
   const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const canvasRef = useRef(null);
   const spotlightRef = useRef(null);
   
   useEffect(() => {
     setMounted(true);
+    const checkMobile = () => {
+      const coarsePointer = window.matchMedia('(pointer: coarse)').matches;
+      const smallScreen = window.innerWidth < 1024;
+      setIsMobile(coarsePointer || smallScreen);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   useEffect(() => {
-    if (!mounted) return;
+    if (!mounted || isMobile) return;
 
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -218,7 +227,7 @@ export default function MotionBackground() {
       window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(animationFrameId);
     };
-  }, [mounted]);
+  }, [mounted, isMobile]);
 
   if (!mounted) return null;
 
@@ -227,23 +236,27 @@ export default function MotionBackground() {
       className="fixed inset-0 w-full h-full pointer-events-none overflow-hidden z-[-1] bg-[#050505]"
     >
       {/* Cursor spotlight glow (positioned via translate3d for max performance) */}
-      <div 
-        ref={spotlightRef}
-        className="absolute w-[520px] h-[520px] rounded-full pointer-events-none mix-blend-screen"
-        style={{
-          background: 'radial-gradient(circle, rgba(201, 162, 39, 0.08) 0%, rgba(201, 162, 39, 0.02) 50%, transparent 100%)',
-          top: 0,
-          left: 0,
-          willChange: 'transform',
-          transform: 'translate3d(-999px, -999px, 0)',
-        }}
-      />
+      {!isMobile && (
+        <div 
+          ref={spotlightRef}
+          className="absolute w-[520px] h-[520px] rounded-full pointer-events-none mix-blend-screen"
+          style={{
+            background: 'radial-gradient(circle, rgba(201, 162, 39, 0.08) 0%, rgba(201, 162, 39, 0.02) 50%, transparent 100%)',
+            top: 0,
+            left: 0,
+            willChange: 'transform',
+            transform: 'translate3d(-999px, -999px, 0)',
+          }}
+        />
+      )}
 
       {/* Live 3D Particle Canvas */}
-      <canvas 
-        ref={canvasRef}
-        className="absolute inset-0 w-full h-full"
-      />
+      {!isMobile && (
+        <canvas 
+          ref={canvasRef}
+          className="absolute inset-0 w-full h-full"
+        />
+      )}
 
       {/* Subtle moving radial glow 1 (Gold) */}
       <div 

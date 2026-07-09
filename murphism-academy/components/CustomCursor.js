@@ -1,7 +1,9 @@
 'use client';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function CustomCursor() {
+  const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const dotRef = useRef(null);
   const ringRef = useRef(null);
   const canvasRef = useRef(null);
@@ -16,6 +18,12 @@ export default function CustomCursor() {
   const particles = useRef([]);
   const isCanvasAnimating = useRef(false);
   const lastSpawn = useRef({ x: 0, y: 0 });
+
+  useEffect(() => {
+    setMounted(true);
+    const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
+    setIsMobile(!hasFinePointer);
+  }, []);
 
   useEffect(() => {
     // Only register listeners on devices with fine pointer (mouse/trackpad support)
@@ -225,6 +233,8 @@ export default function CustomCursor() {
       document.body.classList.remove('custom-cursor-active');
     };
   }, []);
+
+  if (!mounted || isMobile) return null;
 
   return (
     <>
