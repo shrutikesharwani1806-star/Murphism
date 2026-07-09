@@ -22,12 +22,14 @@ export default function Navbar() {
   // Fetch current user session
   useEffect(() => {
     // Check local storage for quick initial load
-    const cachedUser = localStorage.getItem('murphism_user');
-    if (cachedUser) {
-      try {
+    try {
+      const cachedUser = localStorage.getItem('murphism_user');
+      if (cachedUser) {
         const parsed = JSON.parse(cachedUser);
         setTimeout(() => setUser(parsed), 0);
-      } catch (e) {}
+      }
+    } catch (e) {
+      console.warn('LocalStorage access failed:', e);
     }
 
     fetch('/api/auth/me')
@@ -35,15 +37,27 @@ export default function Navbar() {
       .then(data => {
         if (data.success) {
           setUser(data.user);
-          localStorage.setItem('murphism_user', JSON.stringify(data.user));
+          try {
+            localStorage.setItem('murphism_user', JSON.stringify(data.user));
+          } catch (e) {
+            console.warn('LocalStorage write failed:', e);
+          }
         } else {
           setUser(false);
-          localStorage.removeItem('murphism_user');
+          try {
+            localStorage.removeItem('murphism_user');
+          } catch (e) {
+            console.warn('LocalStorage remove failed:', e);
+          }
         }
       })
       .catch(() => {
         setUser(false);
-        localStorage.removeItem('murphism_user');
+        try {
+          localStorage.removeItem('murphism_user');
+        } catch (e) {
+          console.warn('LocalStorage remove failed:', e);
+        }
       });
   }, []);
 

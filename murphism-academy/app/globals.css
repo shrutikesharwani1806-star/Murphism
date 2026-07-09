@@ -21,7 +21,16 @@
 }
 
 /* ─── Base ─── */
-html, body, #__next, [data-reactroot] {
+html {
+  margin: 0 !important;
+  padding: 0 !important;
+  max-width: 100% !important;
+  width: 100% !important;
+  background: #050505 !important;
+  scroll-behavior: smooth;
+}
+
+body, #__next, [data-reactroot] {
   margin: 0 !important;
   padding: 0 !important;
   border: 0 !important;
@@ -29,10 +38,14 @@ html, body, #__next, [data-reactroot] {
   box-shadow: none !important;
   max-width: 100% !important;
   width: 100% !important;
-  overflow-x: clip !important;
+  overflow-x: hidden;
   background: transparent !important;
   scrollbar-width: thin;
   scrollbar-color: var(--gold-primary) #050505;
+}
+
+.no-scroll {
+  overflow: hidden !important;
 }
 
 main {
@@ -44,7 +57,6 @@ main {
   max-width: 100% !important;
   width: 100% !important;
 }
-html { scroll-behavior: smooth; }
 
 /* ─── Global Heading Typography resets ─── */
 h1, .h1 {

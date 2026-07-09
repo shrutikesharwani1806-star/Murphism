@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Preloader from './Preloader';
 
 export default function HomeClientWrapper({ children }) {
@@ -16,21 +16,25 @@ export default function HomeClientWrapper({ children }) {
   // Disable scrollbar / scrolling during preloading to prevent glitchy side borders
   useEffect(() => {
     if (loading) {
-      document.documentElement.style.overflow = 'hidden';
-      document.body.style.overflow = 'hidden';
+      document.documentElement.classList.add('no-scroll');
+      document.body.classList.add('no-scroll');
     } else {
-      document.documentElement.style.overflow = '';
-      document.body.style.overflow = '';
+      document.documentElement.classList.remove('no-scroll');
+      document.body.classList.remove('no-scroll');
     }
     return () => {
-      document.documentElement.style.overflow = '';
-      document.body.style.overflow = '';
+      document.documentElement.classList.remove('no-scroll');
+      document.body.classList.remove('no-scroll');
     };
   }, [loading]);
 
+  const handleComplete = useCallback(() => {
+    setLoading(false);
+  }, []);
+
   return (
     <>
-      {loading && <Preloader onComplete={() => setLoading(false)} />}
+      {loading && <Preloader onComplete={handleComplete} />}
       <div className={loading ? "pointer-events-none select-none" : ""}>
         {children}
       </div>

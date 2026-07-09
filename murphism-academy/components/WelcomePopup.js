@@ -8,13 +8,21 @@ export default function WelcomePopup() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    // Check if already shown this session
-    const alreadyShown = sessionStorage.getItem('murphism_welcome_shown');
-    if (alreadyShown) return;
+    try {
+      // Check if already shown this session
+      const alreadyShown = sessionStorage.getItem('murphism_welcome_shown');
+      if (alreadyShown) return;
+    } catch (e) {
+      console.warn('SessionStorage access failed:', e);
+    }
 
     const timer = setTimeout(() => {
       setIsOpen(true);
-      sessionStorage.setItem('murphism_welcome_shown', 'true');
+      try {
+        sessionStorage.setItem('murphism_welcome_shown', 'true');
+      } catch (e) {
+        console.warn('SessionStorage write failed:', e);
+      }
     }, 5000); // 5 seconds delay
 
     return () => clearTimeout(timer);
@@ -30,7 +38,7 @@ export default function WelcomePopup() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
-          className="fixed inset-0 z-[9998] flex items-center justify-center p-4"
+          className="fixed inset-0 z-[9998] flex items-center justify-center p-4 cursor-pointer"
           style={{ background: 'rgba(0, 0, 0, 0.8)', backdropFilter: 'blur(10px)' }}
           onClick={handleClose}
         >
@@ -39,7 +47,7 @@ export default function WelcomePopup() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.85, y: 50 }}
             transition={{ type: 'spring', damping: 22, stiffness: 280 }}
-            className="relative w-full max-w-lg rounded-3xl overflow-hidden"
+            className="relative w-full max-w-lg rounded-3xl overflow-hidden cursor-default"
             style={{
               background: 'linear-gradient(135deg, #0f0e0b 0%, #0a0907 100%)',
               border: '1px solid rgba(201, 162, 39, 0.2)',

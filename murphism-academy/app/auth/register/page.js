@@ -26,7 +26,11 @@ export default function RegisterPage() {
       });
       const data = await res.json();
       if (data.success) {
-        localStorage.setItem('murphism_user', JSON.stringify(data.user));
+        try {
+          localStorage.setItem('murphism_user', JSON.stringify(data.user));
+        } catch (e) {
+          console.warn('LocalStorage write failed:', e);
+        }
         // Normal users → home page; admins → dashboard (middleware handles redirect)
         router.push(data.user.isAdmin ? '/admin' : '/');
       } else {

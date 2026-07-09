@@ -1,11 +1,16 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Preloader({ onComplete }) {
   const fullText = "MURPHISM";
   const [displayedText, setDisplayedText] = useState("");
   const [isFadingOut, setIsFadingOut] = useState(false);
+
+  const onCompleteRef = useRef(onComplete);
+  useEffect(() => {
+    onCompleteRef.current = onComplete;
+  }, [onComplete]);
 
   useEffect(() => {
     let intervalId;
@@ -27,7 +32,7 @@ export default function Preloader({ onComplete }) {
           setTimeout(() => {
             setIsFadingOut(true);
             setTimeout(() => {
-              if (onComplete) onComplete();
+              if (onCompleteRef.current) onCompleteRef.current();
             }, 400); // exit animation
           }, 500); // hold time after typing
         }
@@ -38,7 +43,7 @@ export default function Preloader({ onComplete }) {
       clearTimeout(startTimeout);
       if (intervalId) clearInterval(intervalId);
     };
-  }, [onComplete]);
+  }, []);
 
   return (
     <AnimatePresence>

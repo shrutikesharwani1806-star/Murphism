@@ -26,7 +26,11 @@ export default function LoginPage() {
       });
       const data = await res.json();
       if (data.success) {
-        localStorage.setItem('murphism_user', JSON.stringify(data.user));
+        try {
+          localStorage.setItem('murphism_user', JSON.stringify(data.user));
+        } catch (e) {
+          console.warn('LocalStorage write failed:', e);
+        }
         router.push(data.user.isAdmin ? '/admin' : '/');
         router.refresh();
       } else {

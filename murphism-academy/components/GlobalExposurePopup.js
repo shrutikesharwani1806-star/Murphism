@@ -8,14 +8,22 @@ export default function GlobalExposurePopup() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    // Check if already shown this session
-    const alreadyShown = sessionStorage.getItem('murphism_foreign_popup_shown');
-    if (alreadyShown) return;
+    try {
+      // Check if already shown this session
+      const alreadyShown = sessionStorage.getItem('murphism_foreign_popup_shown');
+      if (alreadyShown) return;
+    } catch (e) {
+      console.warn('SessionStorage access failed:', e);
+    }
 
     // Show after 1 minute (60,000 milliseconds)
     const timer = setTimeout(() => {
       setIsOpen(true);
-      sessionStorage.setItem('murphism_foreign_popup_shown', 'true');
+      try {
+        sessionStorage.setItem('murphism_foreign_popup_shown', 'true');
+      } catch (e) {
+        console.warn('SessionStorage write failed:', e);
+      }
     }, 60000);
 
     return () => clearTimeout(timer);
@@ -31,7 +39,7 @@ export default function GlobalExposurePopup() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
-          className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
+          className="fixed inset-0 z-[9999] flex items-center justify-center p-4 cursor-pointer"
           style={{ background: 'rgba(0, 0, 0, 0.82)', backdropFilter: 'blur(12px)' }}
           onClick={handleClose}
         >
@@ -40,7 +48,7 @@ export default function GlobalExposurePopup() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.85, y: 50 }}
             transition={{ type: 'spring', damping: 22, stiffness: 280 }}
-            className="relative w-full max-w-md rounded-3xl overflow-hidden"
+            className="relative w-full max-w-md rounded-3xl overflow-hidden cursor-default"
             style={{
               background: 'linear-gradient(135deg, #0d0c0a 0%, #050505 100%)',
               border: '1px solid rgba(201, 162, 39, 0.22)',
