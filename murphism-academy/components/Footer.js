@@ -88,9 +88,10 @@ export default function Footer() {
           <div className="md:col-span-5 flex flex-col justify-start">
             <Link href="/" className="block mb-10 w-fit">
               <img
-                src="/logo.png"
+                src="/new-logo.jpeg"
                 alt="MURPHISM Logo"
-                className="h-[140px] w-auto object-contain"
+                className="h-[90px] w-auto object-contain"
+                style={{ mixBlendMode: 'screen' }}
               />
             </Link>
             
@@ -190,14 +191,6 @@ export default function Footer() {
             <ul className="space-y-3">
               <li className="text-[#8c8c8c] text-[13px] leading-relaxed font-normal">
                 Online / Offline Classes
-              </li>
-              <li className="text-[#8c8c8c] text-[13px] leading-relaxed font-normal">
-                Contact: <a href="tel:+911234567890" className="hover:text-white transition-colors text-[#8c8c8c] ml-0.5">+91 1234567890</a>
-              </li>
-              <li>
-                <a href="mailto:hello@murphism.com" className="text-[#58a6ff] hover:text-blue-400 transition-colors duration-300 text-[13px] font-normal">
-                  hello@murphism.com
-                </a>
               </li>
               <li className="text-[#8c8c8c] text-[13px] leading-relaxed font-normal">
                 Location: Indore

@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 export default function CustomCursor() {
   const dotRef = useRef(null);
   const ringRef = useRef(null);
+  const canvasRef = useRef(null);
   
   const mousePos = useRef({ x: -100, y: -100 });
   const dotPos = useRef({ x: -100, y: -100 });
@@ -11,10 +12,90 @@ export default function CustomCursor() {
   const isLooping = useRef(false);
   const firstMove = useRef(true);
 
+  // Sparkles particle system references
+  const particles = useRef([]);
+  const isCanvasAnimating = useRef(false);
+  const lastSpawn = useRef({ x: 0, y: 0 });
+
   useEffect(() => {
     // Only register listeners on devices with fine pointer (mouse/trackpad support)
     const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
     if (!hasFinePointer) return;
+
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    const drawStar = (ctx, cx, cy, spikes, outerRadius, innerRadius, color, alpha) => {
+      let rot = Math.PI / 2 * 3;
+      let x = cx;
+      let y = cy;
+      let step = Math.PI / spikes;
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(cx, cy - outerRadius);
+      for (let i = 0; i < spikes; i++) {
+        x = cx + Math.cos(rot) * outerRadius;
+        y = cy + Math.sin(rot) * outerRadius;
+        ctx.lineTo(x, y);
+        rot += step;
+
+        x = cx + Math.cos(rot) * innerRadius;
+        y = cy + Math.sin(rot) * innerRadius;
+        ctx.lineTo(x, y);
+        rot += step;
+      }
+      ctx.lineTo(cx, cy - outerRadius);
+      ctx.closePath();
+      ctx.fillStyle = color;
+      ctx.globalAlpha = alpha;
+      ctx.fill();
+      ctx.restore();
+    };
+
+    const animateParticles = () => {
+      if (particles.current.length === 0) {
+        isCanvasAnimating.current = false;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        return;
+      }
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (let i = particles.current.length - 1; i >= 0; i--) {
+        const p = particles.current[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += p.gravity;
+        p.rotation += p.rotationSpeed;
+        p.alpha -= p.decay;
+        p.size -= p.decay * 3;
+
+        if (p.alpha <= 0 || p.size <= 0) {
+          particles.current.splice(i, 1);
+          continue;
+        }
+
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rotation);
+        
+        drawStar(ctx, 0, 0, 4, p.size, p.size * 0.25, p.color, p.alpha);
+        // Draw a tiny bright core star to simulate glow without using expensive drop-shadow filters
+        drawStar(ctx, 0, 0, 4, p.size * 0.4, p.size * 0.1, '#ffffff', p.alpha);
+        ctx.restore();
+      }
+
+      requestAnimationFrame(animateParticles);
+    };
 
     const tick = () => {
       // Lerp calculations for smooth lag
@@ -63,6 +144,35 @@ export default function CustomCursor() {
         requestAnimationFrame(tick);
       }
 
+      // Sparkle spawn logic on movement
+      const dist = Math.hypot(e.clientX - lastSpawn.current.x, e.clientY - lastSpawn.current.y);
+      if (dist > 25 && particles.current.length < 10) {
+        lastSpawn.current = { x: e.clientX, y: e.clientY };
+        
+        // Premium golden shades only
+        const colors = ['#e8bf5a', '#f5d97a', '#ffdd77', '#f3c64f'];
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        
+        particles.current.push({
+          x: e.clientX + (Math.random() - 0.5) * 4,
+          y: e.clientY + (Math.random() - 0.5) * 4,
+          vx: (Math.random() - 0.5) * 1.2,
+          vy: (Math.random() - 0.2) * 0.4, // subtle initial drift
+          gravity: 0.04 + Math.random() * 0.04, // gentle downward drift
+          size: 3 + Math.random() * 3, // small elegant sparkles
+          color: randomColor,
+          alpha: 1.0,
+          decay: 0.025 + Math.random() * 0.015, // decay faster to keep it brief and minimal
+          rotation: Math.random() * Math.PI * 2,
+          rotationSpeed: (Math.random() - 0.5) * 0.05
+        });
+
+        if (!isCanvasAnimating.current) {
+          isCanvasAnimating.current = true;
+          requestAnimationFrame(animateParticles);
+        }
+      }
+
       // Add active class to body to hide native cursor once mouse is moving
       if (!document.body.classList.contains('custom-cursor-active')) {
         document.body.classList.add('custom-cursor-active');
@@ -107,6 +217,7 @@ export default function CustomCursor() {
     window.addEventListener('mouseover', handleMouseOver, { passive: true });
 
     return () => {
+      window.removeEventListener('resize', resizeCanvas);
       window.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseleave', handleMouseLeave);
       document.removeEventListener('mouseenter', handleMouseEnter);
@@ -128,7 +239,8 @@ export default function CustomCursor() {
         /* Hide custom cursors entirely on touch devices */
         @media (pointer: coarse) {
           .custom-cursor-dot,
-          .custom-cursor-ring {
+          .custom-cursor-ring,
+          .custom-cursor-canvas {
             display: none !important;
           }
         }
@@ -164,6 +276,21 @@ export default function CustomCursor() {
           box-shadow: 0 0 20px rgba(201,162,39,0.25), inset 0 0 8px rgba(201,162,39,0.08) !important;
         }
       `}</style>
+
+      {/* Canvas for rendering magical falling star sparkle trails */}
+      <canvas
+        ref={canvasRef}
+        className="custom-cursor-canvas"
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          pointerEvents: 'none',
+          zIndex: 2147483645,
+        }}
+      />
 
       {/* Inner star cursor */}
       <div

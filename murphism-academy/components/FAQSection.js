@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, Sparkles } from 'lucide-react';
 
@@ -28,6 +28,50 @@ const faqs = [
 
 export default function FAQSection() {
   const [openIndex, setOpenIndex] = useState(null);
+
+  useEffect(() => {
+    const checkHash = () => {
+      const hash = typeof window !== 'undefined' ? window.location.hash : '';
+      if (hash.includes('#faq')) {
+        const tryScroll = (attempts = 0) => {
+          if (attempts > 50) return;
+          const isScrollLocked = 
+            document.documentElement.style.overflow === 'hidden' || 
+            document.body.style.overflow === 'hidden';
+          if (isScrollLocked) {
+            setTimeout(() => tryScroll(attempts + 1), 100);
+          } else {
+            const el = document.getElementById('faq');
+            if (el) {
+              el.scrollIntoView({ behavior: 'smooth' });
+            }
+          }
+        };
+        tryScroll();
+      }
+    };
+
+    checkHash();
+    window.addEventListener('hashchange', checkHash);
+    window.addEventListener('popstate', checkHash);
+
+    // Poll for hash changes since Next.js client-side routing does not always fire native hashchange events
+    let lastHash = typeof window !== 'undefined' ? window.location.hash : '';
+    const interval = setInterval(() => {
+      if (typeof window !== 'undefined') {
+        if (window.location.hash !== lastHash) {
+          lastHash = window.location.hash;
+          checkHash();
+        }
+      }
+    }, 200);
+
+    return () => {
+      window.removeEventListener('hashchange', checkHash);
+      window.removeEventListener('popstate', checkHash);
+      clearInterval(interval);
+    };
+  }, []);
 
   const toggleFAQ = (index) => {
     setOpenIndex(openIndex === index ? null : index);

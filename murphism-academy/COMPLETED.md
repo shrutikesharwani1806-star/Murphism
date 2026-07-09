@@ -92,6 +92,19 @@
 
 ---
 
+## 🎨 Branding, Navigation & Magical Cursor Upgrades (July 2026)
+
+| Feature | Description | Status |
+|---------|-------------|--------|
+| **Magical Golden Sparkle Cursor Trail** | Added a canvas-powered, highly optimized sparkle trail. Spawns elegant 4-pointed golden stars on cursor movement that drift downwards (falling stars) and fade out cleanly. | ✅ Done |
+| **Buttery Smooth Performance** | Optimized the cursor sparkle trail by removing expensive GPU drop-shadow/blur filters (which lag on large screens), using layered double-drawing, and reducing density. | ✅ Done |
+| **Branding Layout & Spacing** | Arranged the new wing logo, gradient divider line, and "MURPHISM" brand name with pixel-perfect visual symmetry in the Navbar. | ✅ Done |
+| **Sticky Cards & Section Integrity** | Kept the scroll-linked sticky cards animations and existing syllabus logic fully intact and untouched. | ✅ Done |
+| **Desktop Dropdown Toggle** | Modified Home navbar dropdown to toggle on click rather than hover, staying open until clicked again or navigation is completed. | ✅ Done |
+| **Cross-Device Compatibility** | Enabled native capability and media query checks to hide custom cursors and the sparkle canvas on touch/mobile devices for peak performance. | ✅ Done |
+
+---
+
 ## 📱 Responsiveness Optimization
 - Replaced custom viewport units (`vw` / `vh`) inside `HeroSection.js`, `StatsSection.js`, and `Navbar.js` with responsive Tailwind classes to guarantee site-wide layout scaling on mobile, tablet, and widescreen viewports.
 
@@ -106,4 +119,6 @@ Middleware:   ✅ Enforced 307 Redirects via proxy.js
 Build Test:   ✓ Compiled successfully (0 compile/lint errors)
 Deploy:       ✓ Fully configured for Vercel (Front + Backend Serverless)
 Chatbot:      ✓ Live Gemini API-powered chat widget integrated
+Sparkles:     ✓ Golden-only, low particle count, lag-free canvas loop
 ```
+

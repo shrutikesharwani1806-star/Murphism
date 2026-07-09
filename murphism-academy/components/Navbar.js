@@ -86,15 +86,15 @@ export default function Navbar() {
                 }}
               />
               <Image
-                src="/logo.png"
+                src="/new-logo.jpeg"
                 alt="MURPHISM Logo"
                 width={80}
                 height={80}
                 priority
-                className="h-12 md:h-16 w-auto object-contain transition-all duration-300 relative z-10 -ml-2.5 -mr-2.5 md:-ml-4 md:-mr-4"
-                style={{ filter: 'brightness(1.9) contrast(1.15) drop-shadow(0 0 6px rgba(232, 191, 90, 0.25))' }}
+                className="h-9 md:h-12 w-auto object-contain transition-all duration-300 relative z-10 -ml-2 -mr-0.5 md:-ml-3 md:-mr-1"
+                style={{ mixBlendMode: 'screen' }}
               />
-              <div className="h-9 md:h-11 w-px bg-gradient-to-b from-[#be5232]/20 via-[#be5232]/60 to-[#be5232]/20 self-center relative z-10 mx-0.5 md:mx-1" />
+              <div className="h-9 md:h-11 w-px bg-gradient-to-b from-[#be5232]/20 via-[#be5232]/75 to-[#be5232]/20 self-center relative z-10 mx-0.5 md:mx-1" />
               <Image
                 src="/name.png"
                 alt="MURPHISM"
@@ -111,12 +111,9 @@ export default function Navbar() {
           <div className="hidden md:flex flex-1 justify-center">
             <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-md">
               {/* Home Dropdown Trigger */}
-              <div 
-                className="relative"
-                onMouseEnter={() => setHomeDropdownOpen(true)}
-                onMouseLeave={() => setHomeDropdownOpen(false)}
-              >
+              <div className="relative">
                 <button
+                  onClick={() => setHomeDropdownOpen(!homeDropdownOpen)}
                   className="px-4 py-1.5 rounded text-xs font-semibold tracking-wide transition-all duration-300 whitespace-nowrap text-[#b8b099] hover:text-white flex items-center gap-1 cursor-pointer nav-link-bounce"
                   style={{ background: 'transparent', border: 'none' }}
                 >
@@ -136,6 +133,7 @@ export default function Navbar() {
                   >
                     <Link
                       href="/courses"
+                      onClick={() => setHomeDropdownOpen(false)}
                       className="flex flex-col gap-0.5 p-2.5 rounded-lg text-left transition-all hover:bg-black/[0.03] group"
                     >
                       <span className="text-xs font-bold text-[#1e1c18] group-hover:text-[#c9a227] transition-colors">Courses</span>
@@ -143,6 +141,7 @@ export default function Navbar() {
                     </Link>
                     <Link
                       href="/#combo-builder"
+                      onClick={() => setHomeDropdownOpen(false)}
                       className="flex flex-col gap-0.5 p-2.5 rounded-lg text-left transition-all hover:bg-black/[0.03] group"
                     >
                       <span className="text-xs font-bold text-[#1e1c18] group-hover:text-[#c9a227] transition-colors">Custom Career Builder</span>
@@ -150,6 +149,7 @@ export default function Navbar() {
                     </Link>
                     <Link
                       href="/#faq"
+                      onClick={() => setHomeDropdownOpen(false)}
                       className="flex flex-col gap-0.5 p-2.5 rounded-lg text-left transition-all hover:bg-black/[0.03] group"
                     >
                       <span className="text-xs font-bold text-[#1e1c18] group-hover:text-[#c9a227] transition-colors">FAQ</span>
@@ -157,6 +157,7 @@ export default function Navbar() {
                     </Link>
                     <Link
                       href="/#foreign-exposure"
+                      onClick={() => setHomeDropdownOpen(false)}
                       className="flex flex-col gap-0.5 p-2.5 rounded-lg text-left transition-all hover:bg-black/[0.03] group"
                     >
                       <span className="text-xs font-bold text-[#1e1c18] group-hover:text-[#c9a227] transition-colors">Foreign Work Exposures</span>

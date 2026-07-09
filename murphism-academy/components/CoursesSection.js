@@ -474,24 +474,65 @@ export default function CoursesSection() {
 
   useEffect(() => {
     const checkLocation = () => {
-      if (window.location.hash === '#combo-builder' || window.location.search.includes('tab=combo')) {
+      const hash = typeof window !== 'undefined' ? window.location.hash : '';
+      if (hash.includes('#combo-builder') || window.location.search.includes('tab=combo')) {
         setActiveTab('combo');
-        setTimeout(() => {
-          const el = document.getElementById('courses');
-          if (el) {
-            el.scrollIntoView({ behavior: 'smooth' });
+        const tryScroll = (attempts = 0) => {
+          if (attempts > 50) return;
+          const isScrollLocked = 
+            document.documentElement.style.overflow === 'hidden' || 
+            document.body.style.overflow === 'hidden';
+          if (isScrollLocked) {
+            setTimeout(() => tryScroll(attempts + 1), 100);
+          } else {
+            const el = document.getElementById('courses');
+            if (el) {
+              el.scrollIntoView({ behavior: 'smooth' });
+            }
           }
-        }, 100);
-      } else if (window.location.hash === '#courses') {
+        };
+        tryScroll();
+      } else if (hash.includes('#courses')) {
         setActiveTab('individual');
+        const tryScroll = (attempts = 0) => {
+          if (attempts > 50) return;
+          const isScrollLocked = 
+            document.documentElement.style.overflow === 'hidden' || 
+            document.body.style.overflow === 'hidden';
+          if (isScrollLocked) {
+            setTimeout(() => tryScroll(attempts + 1), 100);
+          } else {
+            const el = document.getElementById('courses');
+            if (el) {
+              el.scrollIntoView({ behavior: 'smooth' });
+            }
+          }
+        };
+        tryScroll();
       }
     };
+
     checkLocation();
     window.addEventListener('hashchange', checkLocation);
     window.addEventListener('popstate', checkLocation);
+
+    // Poll for hash changes since Next.js client-side routing does not always fire native hashchange events
+    let lastHash = typeof window !== 'undefined' ? window.location.hash : '';
+    let lastSearch = typeof window !== 'undefined' ? window.location.search : '';
+    const interval = setInterval(() => {
+      if (typeof window !== 'undefined') {
+        if (window.location.hash !== lastHash || window.location.search !== lastSearch) {
+          lastHash = window.location.hash;
+          lastSearch = window.location.search;
+          checkLocation();
+        }
+      }
+    }, 200);
+
     return () => {
       window.removeEventListener('hashchange', checkLocation);
       window.removeEventListener('popstate', checkLocation);
+      clearInterval(interval);
     };
   }, []);
 
