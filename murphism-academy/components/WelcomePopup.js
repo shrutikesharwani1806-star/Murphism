@@ -50,15 +50,15 @@ export default function WelcomePopup() {
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          initial={{ opacity: 0, y: 50, scale: 0.95 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 50, scale: 0.95 }}
+          initial={{ opacity: 0, scale: 0.95, x: '-50%', y: '-40%' }}
+          animate={{ opacity: 1, scale: 1, x: '-50%', y: '-50%' }}
+          exit={{ opacity: 0, scale: 0.95, x: '-50%', y: '-40%' }}
           transition={{ type: 'spring', damping: 25, stiffness: 220 }}
-          className="fixed bottom-6 left-6 z-[9998] w-[calc(100vw-3rem)] sm:w-[360px] rounded-2xl overflow-hidden p-5 text-left"
+          className="fixed top-1/2 left-1/2 z-[9998] w-[calc(100vw-2.5rem)] sm:w-[400px] rounded-2xl overflow-hidden p-6 text-center"
           style={{
             background: 'linear-gradient(135deg, #0f0e0b 0%, #050505 100%)',
-            border: '1px solid rgba(201, 162, 39, 0.22)',
-            boxShadow: '0 20px 50px rgba(0,0,0,0.85), 0 0 40px rgba(201,162,39,0.05)',
+            border: '1px solid rgba(201, 162, 39, 0.25)',
+            boxShadow: '0 30px 70px rgba(0,0,0,0.9), 0 0 60px rgba(201,162,39,0.08)',
           }}
         >
           {/* Top Gold Gradient Line */}
@@ -70,52 +70,52 @@ export default function WelcomePopup() {
           {/* Close Button */}
           <button
             onClick={handleClose}
-            className="absolute top-3.5 right-3.5 z-20 p-1.5 rounded-full transition-all hover:bg-white/5"
+            className="absolute top-4 right-4 z-20 p-1.5 rounded-full transition-all hover:bg-white/5"
             style={{ color: '#6b6459' }}
           >
-            <X size={15} />
+            <X size={16} />
           </button>
 
           {/* Content */}
-          <div className="relative z-10 flex flex-col items-start">
+          <div className="relative z-10 flex flex-col items-center text-center">
             {/* Header row with Sparkles */}
-            <div className="flex items-center gap-2.5 mb-3">
-              <div
-                className="w-9 h-9 rounded-full flex items-center justify-center relative"
-                style={{
-                  background: 'rgba(201,162,39,0.06)',
-                  border: '1px solid rgba(201,162,39,0.18)',
-                }}
-              >
-                <Sparkles size={16} style={{ color: '#e8bf5a' }} />
-              </div>
-              <span className="text-[9px] font-bold tracking-widest uppercase px-2.5 py-0.5 rounded-full"
-                style={{
-                  background: 'rgba(201,162,39,0.08)',
-                  border: '1px solid rgba(201,162,39,0.15)',
-                  color: '#c9a227',
-                }}
-              >
-                ✨ Secure Your Spot
-              </span>
+            <div
+              className="w-11 h-11 rounded-full flex items-center justify-center mb-3.5 relative"
+              style={{
+                background: 'rgba(201,162,39,0.06)',
+                border: '1px solid rgba(201,162,39,0.18)',
+              }}
+            >
+              <Sparkles size={18} style={{ color: '#e8bf5a' }} />
             </div>
 
+            {/* Badge */}
+            <span className="text-[10px] font-bold tracking-widest uppercase mb-2 px-3 py-1 rounded-full"
+              style={{
+                background: 'rgba(201,162,39,0.08)',
+                border: '1px solid rgba(201,162,39,0.15)',
+                color: '#c9a227',
+              }}
+            >
+              ✨ Secure Your Spot
+            </span>
+
             {/* Title */}
-            <h3 className="text-sm font-extrabold text-[#f0ece0] mb-1.5 tracking-tight">
+            <h3 className="text-base font-extrabold text-[#f0ece0] mb-2 tracking-tight">
               Secure Your Seats Now
             </h3>
 
             {/* Message */}
-            <p className="text-[#b8b099] text-[11px] leading-relaxed mb-4">
+            <p className="text-[#b8b099] text-xs leading-relaxed mb-5 max-w-[320px]">
               Unlock your bright future with Murphism. Register today and take the first step towards a professional career! 🚀
             </p>
 
             {/* CTA Buttons */}
-            <div className="flex gap-2 w-full mt-0.5">
+            <div className="flex gap-3 w-full">
               <Link
                 href="/auth/register"
                 onClick={handleClose}
-                className="flex-1 py-2 rounded-xl font-bold text-[10px] tracking-wider uppercase transition-all duration-300 text-center block"
+                className="flex-1 py-3 rounded-xl font-bold text-xs tracking-wider uppercase transition-all duration-300 text-center block"
                 style={{
                   background: 'linear-gradient(135deg, #c9a227 0%, #e8bf5a 100%)',
                   color: '#050505',
@@ -126,7 +126,7 @@ export default function WelcomePopup() {
               </Link>
               <button
                 onClick={handleClose}
-                className="px-4 py-2 rounded-xl font-bold text-[10px] tracking-wider uppercase transition-all duration-300"
+                className="px-5 py-3 rounded-xl font-bold text-xs tracking-wider uppercase transition-all duration-300"
                 style={{
                   background: 'transparent',
                   color: '#8c8476',

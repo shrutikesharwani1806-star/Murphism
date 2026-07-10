@@ -51,15 +51,15 @@ export default function GlobalExposurePopup() {
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          initial={{ opacity: 0, y: 50, scale: 0.95 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 50, scale: 0.95 }}
+          initial={{ opacity: 0, scale: 0.95, x: '-50%', y: '-40%' }}
+          animate={{ opacity: 1, scale: 1, x: '-50%', y: '-50%' }}
+          exit={{ opacity: 0, scale: 0.95, x: '-50%', y: '-40%' }}
           transition={{ type: 'spring', damping: 25, stiffness: 220 }}
-          className="fixed bottom-6 left-6 z-[9998] w-[calc(100vw-3rem)] sm:w-[360px] rounded-2xl overflow-hidden p-5 text-left"
+          className="fixed top-1/2 left-1/2 z-[9998] w-[calc(100vw-2.5rem)] sm:w-[400px] rounded-2xl overflow-hidden p-6 text-center"
           style={{
             background: 'linear-gradient(135deg, #0d0c0a 0%, #050505 100%)',
-            border: '1px solid rgba(201, 162, 39, 0.22)',
-            boxShadow: '0 20px 50px rgba(0,0,0,0.85), 0 0 40px rgba(201,162,39,0.05)',
+            border: '1px solid rgba(201, 162, 39, 0.25)',
+            boxShadow: '0 30px 70px rgba(0,0,0,0.9), 0 0 60px rgba(201,162,39,0.08)',
           }}
         >
           {/* Top Gold Gradient Line */}
@@ -71,31 +71,31 @@ export default function GlobalExposurePopup() {
           {/* Close Button */}
           <button
             onClick={handleClose}
-            className="absolute top-3.5 right-3.5 z-20 p-1.5 rounded-full transition-all hover:bg-white/5"
+            className="absolute top-4 right-4 z-20 p-1.5 rounded-full transition-all hover:bg-white/5"
             style={{ color: '#6b6459' }}
           >
-            <X size={15} />
+            <X size={16} />
           </button>
 
           {/* Content */}
-          <div className="relative z-10 flex flex-col items-start">
+          <div className="relative z-10 flex flex-col items-center text-center">
             {/* Header row with Globe orbit */}
-            <div className="flex items-center gap-2.5 mb-3.5 w-full">
+            <div className="flex flex-col items-center mb-3">
               {/* Mini orbiting orbit */}
-              <div className="relative w-10 h-10 flex items-center justify-center flex-shrink-0">
+              <div className="relative w-12 h-12 flex items-center justify-center mb-2">
                 <div 
-                  className="absolute w-8 h-8 rounded-full blur-md opacity-25 pointer-events-none"
+                  className="absolute w-10 h-10 rounded-full blur-md opacity-25 pointer-events-none"
                   style={{ background: 'radial-gradient(circle, #c9a227 0%, transparent 70%)' }}
                 />
-                <svg className="absolute w-10 h-10 pointer-events-none animate-[spin_10s_linear_infinite]" viewBox="0 0 100 100">
+                <svg className="absolute w-12 h-12 pointer-events-none animate-[spin_10s_linear_infinite]" viewBox="0 0 100 100">
                   <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(201, 162, 39, 0.25)" strokeWidth="2" strokeDasharray="5 5" />
                 </svg>
-                <motion.div animate={{ rotate: 360 }} transition={{ duration: 5, repeat: Infinity, ease: 'linear' }} className="absolute w-10 h-10 pointer-events-none">
+                <motion.div animate={{ rotate: 360 }} transition={{ duration: 5, repeat: Infinity, ease: 'linear' }} className="absolute w-12 h-12 pointer-events-none">
                   <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 rotate-[55deg] filter drop-shadow(0 0 4px #e8bf5a)">
-                    <Navigation size={6} className="text-[#e8bf5a] fill-[#e8bf5a]" />
+                    <Navigation size={8} className="text-[#e8bf5a] fill-[#e8bf5a]" />
                   </div>
                 </motion.div>
-                <Globe size={16} className="text-[#c9a227] relative z-10" />
+                <Globe size={20} className="text-[#c9a227] relative z-10" />
               </div>
 
               <span className="text-[9px] font-bold tracking-widest uppercase px-2.5 py-0.5 rounded-full"
@@ -110,21 +110,21 @@ export default function GlobalExposurePopup() {
             </div>
 
             {/* Title */}
-            <h3 className="text-sm font-extrabold text-[#f0ece0] mb-1.5 tracking-tight">
+            <h3 className="text-base font-extrabold text-[#f0ece0] mb-2 tracking-tight">
               Unlock Your First Foreign Work
             </h3>
 
             {/* Message */}
-            <p className="text-[#b8b099] text-[11px] leading-relaxed mb-4">
+            <p className="text-[#b8b099] text-xs leading-relaxed mb-5 max-w-[320px]">
               At Murphism, we connect you directly with real international clients — work on live briefs from UK, UAE, and beyond. Build a global portfolio! ✈️
             </p>
 
             {/* Action Buttons */}
-            <div className="flex gap-2 w-full mt-0.5">
+            <div className="flex gap-3 w-full">
               <Link
                 href="/#foreign-exposure"
                 onClick={handleClose}
-                className="flex-1 py-2 rounded-xl font-bold text-[10px] tracking-wider uppercase transition-all duration-300 text-center block"
+                className="flex-1 py-3 rounded-xl font-bold text-xs tracking-wider uppercase transition-all duration-300 text-center block"
                 style={{
                   background: 'linear-gradient(135deg, #c9a227 0%, #e8bf5a 100%)',
                   color: '#050505',
@@ -135,7 +135,7 @@ export default function GlobalExposurePopup() {
               </Link>
               <button
                 onClick={handleClose}
-                className="px-4 py-2 rounded-xl font-bold text-[10px] tracking-wider uppercase transition-all duration-300"
+                className="px-5 py-3 rounded-xl font-bold text-xs tracking-wider uppercase transition-all duration-300"
                 style={{
                   background: 'transparent',
                   color: '#8c8476',
