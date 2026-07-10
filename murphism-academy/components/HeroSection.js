@@ -1,5 +1,5 @@
 'use client';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
@@ -15,9 +15,21 @@ const studentAvatars = [
 export default function HeroSection() {
   const containerRef = useRef(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      const coarsePointer = window.matchMedia('(pointer: coarse)').matches;
+      const smallScreen = window.innerWidth < 1024;
+      setIsMobile(coarsePointer || smallScreen);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const handleMouseMove = (e) => {
-    if (!containerRef.current) return;
+    if (isMobile || !containerRef.current) return;
     const { clientWidth, clientHeight } = containerRef.current;
     // Calculate normalized offset from center (-0.5 to 0.5)
     const x = (e.clientX / clientWidth) - 0.5;
@@ -37,7 +49,7 @@ export default function HeroSection() {
         {/* Futuristic 3D Computer Workstation with parallax mouse interaction */}
         <motion.div 
           className="absolute inset-0 flex items-center justify-center z-0"
-          animate={{
+          animate={isMobile ? { x: 0, y: 0 } : {
             x: `${mousePos.x * 2.5}vw`,
             y: `${mousePos.y * 2.5}vh`,
           }}

@@ -4,8 +4,9 @@ import Lenis from 'lenis';
 
 export default function SmoothScroll() {
   useEffect(() => {
-    // Disable smooth scroll on touch devices to use native momentum scroll
-    if (window.matchMedia('(pointer: coarse)').matches) return;
+    // Disable smooth scroll on touch devices or smaller screens to use native momentum scroll
+    const isMobile = window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 1024;
+    if (isMobile) return;
 
     const lenis = new Lenis({
       duration: 1.2,

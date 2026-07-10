@@ -259,37 +259,43 @@ export default function MotionBackground() {
       )}
 
       {/* Subtle moving radial glow 1 (Gold) */}
-      <div 
-        className="absolute w-[700px] h-[700px] rounded-full blur-[160px] opacity-[0.03] mix-blend-screen"
-        style={{
-          background: 'radial-gradient(circle, #c9a227 0%, transparent 70%)',
-          top: '-10%',
-          left: '10%',
-          animation: 'float-slow 28s ease-in-out infinite alternate',
-        }}
-      />
+      {!isMobile && (
+        <div 
+          className="absolute w-[700px] h-[700px] rounded-full blur-[160px] opacity-[0.03] mix-blend-screen"
+          style={{
+            background: 'radial-gradient(circle, #c9a227 0%, transparent 70%)',
+            top: '-10%',
+            left: '10%',
+            animation: 'float-slow 28s ease-in-out infinite alternate',
+          }}
+        />
+      )}
 
       {/* Subtle moving radial glow 2 (Warm Amber Gold) */}
-      <div 
-        className="absolute w-[800px] h-[800px] rounded-full blur-[180px] opacity-[0.03] mix-blend-screen"
-        style={{
-          background: 'radial-gradient(circle, #e8bf5a 0%, transparent 70%)',
-          bottom: '5%',
-          right: '5%',
-          animation: 'float-slow-reverse 32s ease-in-out infinite alternate',
-        }}
-      />
+      {!isMobile && (
+        <div 
+          className="absolute w-[800px] h-[800px] rounded-full blur-[180px] opacity-[0.03] mix-blend-screen"
+          style={{
+            background: 'radial-gradient(circle, #e8bf5a 0%, transparent 70%)',
+            bottom: '5%',
+            right: '5%',
+            animation: 'float-slow-reverse 32s ease-in-out infinite alternate',
+          }}
+        />
+      )}
 
       {/* Subtle moving radial glow 3 (Warm Bronze) */}
-      <div 
-        className="absolute w-[600px] h-[600px] rounded-full blur-[150px] opacity-[0.02] mix-blend-screen"
-        style={{
-          background: 'radial-gradient(circle, #8B6914 0%, transparent 70%)',
-          top: '35%',
-          right: '25%',
-          animation: 'float-slow-diagonal 30s ease-in-out infinite alternate',
-        }}
-      />
+      {!isMobile && (
+        <div 
+          className="absolute w-[600px] h-[600px] rounded-full blur-[150px] opacity-[0.02] mix-blend-screen"
+          style={{
+            background: 'radial-gradient(circle, #8B6914 0%, transparent 70%)',
+            top: '35%',
+            right: '25%',
+            animation: 'float-slow-diagonal 30s ease-in-out infinite alternate',
+          }}
+        />
+      )}
 
       {/* CSS Styles for animations */}
       <style jsx global>{`

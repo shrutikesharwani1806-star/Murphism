@@ -174,7 +174,6 @@ function CourseCard({ course, idx, total, isMobile, parentScrollYProgress }) {
       )
     : 1;
 
-  // On Mobile/Tablet: Render as a sticky stacking list that works beautifully on small screens
   if (isMobile) {
     return (
       <motion.div
@@ -187,16 +186,10 @@ function CourseCard({ course, idx, total, isMobile, parentScrollYProgress }) {
         style={{
           position: 'sticky',
           top: `calc(8vh + ${idx * 32}px)`,
-          willChange: 'transform',
-          transformOrigin: 'top center',
           background: styles.bg,
           boxShadow: '0 15px 35px rgba(0, 0, 0, 0.7), inset 0 1px 2px rgba(255, 255, 255, 0.05)',
           marginBottom: '3vh',
           isolation: 'isolate',
-          backfaceVisibility: 'hidden',
-          WebkitBackfaceVisibility: 'hidden',
-          backgroundClip: 'padding-box',
-          scale,
         }}
       >
         {/* Accent blur gradient glow */}
@@ -295,6 +288,7 @@ function CourseCard({ course, idx, total, isMobile, parentScrollYProgress }) {
             className="relative rounded-xl overflow-hidden border border-white/5 shadow-2xl w-full aspect-[4/3] group"
             style={{
               background: 'rgba(0,0,0,0.4)',
+              minHeight: '220px',
             }}
           >
             <img
@@ -439,6 +433,7 @@ function CourseCard({ course, idx, total, isMobile, parentScrollYProgress }) {
           style={{
             background: 'rgba(0,0,0,0.4)',
             boxShadow: '0 20px 45px -10px rgba(0,0,0,0.9)',
+            minHeight: '220px',
           }}
         >
           <img
@@ -587,29 +582,27 @@ export default function CoursesSection() {
         </motion.div>
       </div>
  
-      {activeTab === 'individual' ? (
-        /* Cards Stacking Container */
-        <div 
-          ref={parentRef}
-          className="max-w-[1360px] mx-auto px-6 flex flex-col relative" 
-          style={{ overflow: 'visible' }}
-        >
-          {courses.map((course, idx) => (
-            <CourseCard
-              key={course.slug}
-              course={course}
-              idx={idx}
-              total={courses.length}
-              isMobile={isMobile}
-              parentScrollYProgress={scrollYProgress}
-            />
-          ))}
-        </div>
-      ) : (
-        <div className="max-w-[1360px] mx-auto px-6 relative">
-          <ComboBuilderSection hideHeader={true} />
-        </div>
-      )}
+      {/* Cards Stacking Container */}
+      <div 
+        ref={parentRef}
+        className={`max-w-[1360px] mx-auto px-6 flex flex-col relative ${activeTab === 'individual' ? '' : 'hidden'}`} 
+        style={{ overflow: 'visible' }}
+      >
+        {courses.map((course, idx) => (
+          <CourseCard
+            key={course.slug}
+            course={course}
+            idx={idx}
+            total={courses.length}
+            isMobile={isMobile}
+            parentScrollYProgress={scrollYProgress}
+          />
+        ))}
+      </div>
+
+      <div className={`max-w-[1360px] mx-auto px-6 relative ${activeTab === 'combo' ? '' : 'hidden'}`}>
+        <ComboBuilderSection hideHeader={true} />
+      </div>
     </section>
   );
 }

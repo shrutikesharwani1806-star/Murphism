@@ -42,7 +42,7 @@ const SPREAD_ROT = [-6,   -2,   2,   6  ]; // deg — gentle tilt
 
 export default function ForeignExposure() {
   const sectionRef = useRef(null);
-  const isInView   = useInView(sectionRef, { once: true, margin: '-120px' });
+  const isInView   = useInView(sectionRef, { once: true, margin: '-40px' });
   const [spread, setSpread] = useState(false);
 
   useEffect(() => {

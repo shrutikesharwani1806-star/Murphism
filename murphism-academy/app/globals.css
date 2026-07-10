@@ -508,4 +508,23 @@ iframe[src*="netlify"],
   visibility: hidden !important;
 }
 
+/* ─── Mobile Performance & Scroll Lag Fix ─── */
+@media (pointer: coarse) or (max-width: 1024px) {
+  /* Disable heavy backdrop blurs globally on all elements to prevent iOS Safari GPU rendering crashes & black sections */
+  *, *::before, *::after {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  /* Set fallback opaque background colors on sections where backdrop-filter was removed to keep contrast and aesthetics high */
+  section#courses, section#ai, section#comparison, section#faq, section#testimonials, section#stats {
+    background-color: #050505 !important;
+  }
+  
+  section#degree, section#why, section#foreign-exposure, section#certificate {
+    background-color: #0a0907 !important;
+  }
+}
+
+
 
