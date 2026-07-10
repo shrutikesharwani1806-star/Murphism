@@ -383,11 +383,9 @@ export default function CertificateSection() {
           transition={{ duration: 0.7, delay: 0.4 }}
           className="flex justify-center"
         >
-          <Link href="/#courses">
-            <button className="btn-gold">
-              <span>Enroll &amp; Get Certified</span>
-              <ArrowRight size={16} />
-            </button>
+          <Link href="/#courses" className="btn-gold">
+            <span>Enroll &amp; Get Certified</span>
+            <ArrowRight size={16} />
           </Link>
         </motion.div>
       </div>

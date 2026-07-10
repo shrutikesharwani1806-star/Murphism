@@ -178,10 +178,7 @@ function CourseCard({ course, idx, total, isMobile, parentScrollYProgress }) {
     return (
       <motion.div
         onClick={() => router.push(`/courses/${course.slug}#enroll`)}
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-5% 0px" }}
-        transition={{ duration: 0.5, ease: 'easeOut' }}
+        initial={{ opacity: 1, y: 0 }}
         className={`w-full rounded-3xl ${styles.border} p-6 flex flex-col gap-6 items-center relative overflow-hidden cursor-pointer`}
         style={{
           position: 'sticky',
@@ -272,12 +269,11 @@ function CourseCard({ course, idx, total, isMobile, parentScrollYProgress }) {
             </div>
 
             {/* View Course Button */}
-            <Link href={`/courses/${course.slug}#enroll`}>
-              <button
-                className={`px-5 py-2 rounded-full text-xs font-bold tracking-widest uppercase flex items-center gap-2 transition-all duration-300 ${styles.btnBg}`}
-              >
-                View Course <ArrowRight size={13} />
-              </button>
+            <Link 
+              href={`/courses/${course.slug}#enroll`}
+              className={`px-5 py-2 rounded-full text-xs font-bold tracking-widest uppercase flex items-center gap-2 transition-all duration-300 ${styles.btnBg}`}
+            >
+              View Course <ArrowRight size={13} />
             </Link>
           </div>
         </div>
@@ -416,12 +412,11 @@ function CourseCard({ course, idx, total, isMobile, parentScrollYProgress }) {
           </div>
 
           {/* View Course Button */}
-          <Link href={`/courses/${course.slug}#enroll`}>
-            <button
-              className={`px-6 py-2 rounded-full text-xs font-bold tracking-widest uppercase flex items-center gap-2 transition-all duration-300 ${styles.btnBg}`}
-            >
-              View Course <ArrowRight size={13} />
-            </button>
+          <Link 
+            href={`/courses/${course.slug}#enroll`}
+            className={`px-6 py-2 rounded-full text-xs font-bold tracking-widest uppercase flex items-center gap-2 transition-all duration-300 ${styles.btnBg}`}
+          >
+            View Course <ArrowRight size={13} />
           </Link>
         </div>
       </div>

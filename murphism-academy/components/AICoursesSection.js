@@ -55,7 +55,6 @@ export default function AICoursesSection() {
   const sectionRef = useRef(null);
   const scrollContainerRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
-  const [autoScrollPaused, setAutoScrollPaused] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -65,58 +64,6 @@ export default function AICoursesSection() {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-
-  // Auto scroll effect on mobile
-  useEffect(() => {
-    if (!isMobile || autoScrollPaused) return;
-
-    const container = scrollContainerRef.current;
-    if (!container) return;
-
-    let animationFrameId;
-    const speed = 0.55;
-
-    const step = () => {
-      if (container) {
-        container.scrollLeft += speed;
-        const singleSetWidth = container.scrollWidth / 2;
-        if (container.scrollLeft >= singleSetWidth) {
-          container.scrollLeft -= singleSetWidth;
-        }
-      }
-      animationFrameId = requestAnimationFrame(step);
-    };
-
-    animationFrameId = requestAnimationFrame(step);
-
-    return () => {
-      cancelAnimationFrame(animationFrameId);
-    };
-  }, [isMobile, autoScrollPaused]);
-
-  // Pause auto-scroll on click / touch interaction
-  useEffect(() => {
-    if (!isMobile) return;
-
-    const container = scrollContainerRef.current;
-    if (!container) return;
-
-    const handleInteraction = () => {
-      setAutoScrollPaused(true);
-    };
-
-    container.addEventListener('pointerdown', handleInteraction, { passive: true });
-    container.addEventListener('touchstart', handleInteraction, { passive: true });
-    container.addEventListener('mousedown', handleInteraction);
-
-    return () => {
-      if (container) {
-        container.removeEventListener('pointerdown', handleInteraction);
-        container.removeEventListener('touchstart', handleInteraction);
-        container.removeEventListener('mousedown', handleInteraction);
-      }
-    };
-  }, [isMobile]);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -176,12 +123,12 @@ export default function AICoursesSection() {
             className="w-full relative z-10 overflow-x-auto py-8 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white/10"
           >
             <div className="flex gap-8 w-max px-2">
-              {[...aiModules, ...aiModules].map((mod, idx) => (
+              {aiModules.map((mod, idx) => (
                 <div
                   key={`${mod.title}-${idx}`}
                   className="w-[280px] h-[390px] flex-shrink-0 rounded-2xl border border-white/10 flex flex-col justify-between shadow-2xl relative overflow-hidden group transition-all duration-500 hover:border-[#c9a227]/30"
                   style={{
-                    transform: idx % 2 === 0 ? 'translateY(-12px)' : 'translateY(12px)',
+                    transform: idx % 2 === 0 ? 'translateY(-6px)' : 'translateY(6px)',
                   }}
                 >
                   {/* Background Image */}
@@ -254,11 +201,9 @@ export default function AICoursesSection() {
 
           {/* Section Footer */}
           <div className="w-full flex justify-center relative z-10">
-            <Link href="/courses/ai-courses">
-              <button className="btn-gold">
-                <span>Explore AI Courses</span>
-                <ArrowRight size={16} />
-              </button>
+            <Link href="/courses/ai-courses" className="btn-gold">
+              <span>Explore AI Courses</span>
+              <ArrowRight size={16} />
             </Link>
           </div>
         </div>
@@ -379,11 +324,9 @@ export default function AICoursesSection() {
           {/* Section Footer */}
           <div className="w-full flex flex-col items-center px-6 gap-4 relative z-10">
             <div className="flex justify-center">
-              <Link href="/courses/ai-courses">
-                <button className="btn-gold">
-                  <span>Explore AI Courses</span>
-                  <ArrowRight size={16} />
-                </button>
+              <Link href="/courses/ai-courses" className="btn-gold">
+                <span>Explore AI Courses</span>
+                <ArrowRight size={16} />
               </Link>
             </div>
           </div>

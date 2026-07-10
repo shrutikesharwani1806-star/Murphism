@@ -117,10 +117,8 @@ export default function AIChatbot() {
             exit={{ opacity: 0, y: 100, scale: 0.95 }}
             transition={{ type: 'spring', stiffness: 260, damping: 25 }}
             className="fixed bottom-20 right-4 left-4 sm:left-auto sm:right-6 sm:bottom-24 z-50 w-auto sm:w-[400px] h-[70vh] sm:h-[550px] rounded-3xl flex flex-col overflow-hidden border border-[rgba(201,162,39,0.18)] shadow-[0_25px_70px_rgba(0,0,0,0.85)]"
-            style={{
+          style={{
               background: 'radial-gradient(circle at top right, #0d0c09 0%, #050507 100%)',
-              backdropFilter: 'blur(20px)',
-              WebkitBackdropFilter: 'blur(20px)',
             }}
           >
             {/* Header */}

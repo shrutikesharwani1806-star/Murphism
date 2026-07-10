@@ -70,6 +70,13 @@ export default function Navbar() {
 
   const displayLetter = user && (user.name ? user.name.charAt(0).toUpperCase() : (user.email ? user.email.charAt(0).toUpperCase() : 'U'));
 
+  const handleLogoClick = (e) => {
+    if (window.location.pathname === '/') {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${
@@ -92,7 +99,11 @@ export default function Navbar() {
 
           {/* ── LEFT: Logo ── */}
           <div className="flex-1 flex justify-start min-w-max">
-            <Link href="/" className="flex items-center gap-0.5 md:gap-1 group w-fit relative py-1 px-1">
+            <Link 
+              href="/" 
+              onClick={handleLogoClick}
+              className="flex items-center gap-0.5 md:gap-1 group w-fit relative py-1 px-1"
+            >
               <div
                 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] rounded-full opacity-20 blur-xl pointer-events-none transition-all duration-500 group-hover:opacity-40 group-hover:scale-105"
                 style={{

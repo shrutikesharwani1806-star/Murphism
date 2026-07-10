@@ -231,18 +231,16 @@ export default function CoursesPage() {
                         Details <BookOpen size={11} />
                       </Link>
 
-                      <Link href={`/courses/${course.slug}#enroll`}>
-                        <button
-                          disabled={!isActive}
-                          className={`px-3.5 py-1.5 rounded-lg text-[9px] font-bold tracking-widest uppercase flex items-center gap-1 transition-all duration-300 ${!isActive ? 'pointer-events-none opacity-60' : ''}`}
-                          style={{
-                            background: isActive ? '#c9a227' : 'rgba(201,162,39,0.15)',
-                            color: isActive ? '#050505' : '#b8b099',
-                            boxShadow: isActive ? '0 4px 12px rgba(201, 162, 39, 0.25)' : 'none',
-                          }}
-                        >
-                          Enroll Now <ArrowRight size={11} />
-                        </button>
+                      <Link 
+                        href={`/courses/${course.slug}#enroll`}
+                        className={`px-3.5 py-1.5 rounded-lg text-[9px] font-bold tracking-widest uppercase flex items-center gap-1 transition-all duration-300 ${!isActive ? 'pointer-events-none opacity-60' : ''}`}
+                        style={{
+                          background: isActive ? '#c9a227' : 'rgba(201,162,39,0.15)',
+                          color: isActive ? '#050505' : '#b8b099',
+                          boxShadow: isActive ? '0 4px 12px rgba(201, 162, 39, 0.25)' : 'none',
+                        }}
+                      >
+                        Enroll Now <ArrowRight size={11} />
                       </Link>
                     </div>
                   </div>

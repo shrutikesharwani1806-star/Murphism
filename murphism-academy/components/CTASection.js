@@ -175,14 +175,15 @@ export default function CTASection() {
 
         {/* Explore Button */}
         <div className="mt-10 sm:mt-12">
-          <Link href="/#courses">
-            <button className="relative group overflow-hidden px-8 py-3.5 rounded-lg font-bold text-xs md:text-sm tracking-widest uppercase transition-all duration-300 bg-[#c05621] hover:bg-[#dd6b20] text-white shadow-[0_4px_15px_rgba(192,86,33,0.35)] hover:shadow-[0_6px_22px_rgba(221,107,32,0.45)] hover:scale-105">
-              {/* Shimmer gradient overlay */}
-              <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" />
-              <span className="relative z-10 flex items-center gap-2">
-                Explore Courses <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
-              </span>
-            </button>
+          <Link 
+            href="/#courses"
+            className="relative group overflow-hidden px-8 py-3.5 rounded-lg font-bold text-xs md:text-sm tracking-widest uppercase transition-all duration-300 bg-[#c05621] hover:bg-[#dd6b20] text-white shadow-[0_4px_15px_rgba(192,86,33,0.35)] hover:shadow-[0_6px_22px_rgba(221,107,32,0.45)] hover:scale-105 inline-block"
+          >
+            {/* Shimmer gradient overlay */}
+            <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out" />
+            <span className="relative z-10 flex items-center gap-2">
+              Explore Courses <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+            </span>
           </Link>
         </div>
 

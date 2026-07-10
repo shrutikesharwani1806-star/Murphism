@@ -114,6 +114,8 @@ export default function FAQSection() {
               >
                 {/* Header/Question (Clickable) */}
                 <button
+                  type="button"
+                  suppressHydrationWarning
                   onClick={() => toggleFAQ(index)}
                   className="w-full flex items-center justify-between p-6 text-left transition-colors duration-300 hover:bg-white/[0.005] group"
                 >

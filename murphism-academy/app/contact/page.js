@@ -160,14 +160,36 @@ export default function ContactPage() {
                     </div>
 
                     <div>
-                      <label className="text-[#9999bb] text-[1.3vh] font-semibold mb-[0.6vh] block uppercase tracking-wider">Subject</label>
-                      <input
+                      <label className="text-[#9999bb] text-[1.3vh] font-semibold mb-[0.6vh] block uppercase tracking-wider">Subject / Course *</label>
+                      <select
                         name="subject"
                         value={form.subject}
                         onChange={handleChange}
-                        placeholder="Course enquiry, admission, etc."
-                        className="w-full px-[1.5vw] py-[1.2vh] rounded-[1.2vh] bg-white/5 border border-white/10 text-white placeholder:text-white/30 focus:outline-none focus:border-[rgba(201,162,39,0.4)] transition-colors text-[1.5vh]"
-                      />
+                        required
+                        className="w-full px-[1.5vw] py-[1.2vh] rounded-[1.2vh] bg-[#0f0e0b] border border-white/10 text-white focus:outline-none focus:border-[rgba(201,162,39,0.4)] transition-colors text-[1.5vh] appearance-none"
+                        style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23c9a227' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 1rem center' }}
+                      >
+                        <option value="" disabled>Select a course or enquiry type</option>
+                        <optgroup label="── Degree Program ──">
+                          <option value="B.Sc. in Animations &amp; Multimedia">B.Sc. in Animations &amp; Multimedia</option>
+                        </optgroup>
+                        <optgroup label="── Diploma ──">
+                          <option value="Diploma in Animations &amp; Multimedia">Diploma in Animations &amp; Multimedia</option>
+                        </optgroup>
+                        <optgroup label="── Short Courses ──">
+                          <option value="Graphic Design">Graphic Design</option>
+                          <option value="Website Development">Website Development</option>
+                          <option value="Video Editing &amp; VFX">Video Editing &amp; VFX</option>
+                          <option value="3D Design &amp; Animation">3D Design &amp; Animation</option>
+                          <option value="VFX">VFX</option>
+                          <option value="AI Courses">AI Courses</option>
+                        </optgroup>
+                        <optgroup label="── Other ──">
+                          <option value="General Enquiry">General Enquiry</option>
+                          <option value="Admission Process">Admission Process</option>
+                          <option value="Fees &amp; Scholarships">Fees &amp; Scholarships</option>
+                        </optgroup>
+                      </select>
                     </div>
 
                     <div>

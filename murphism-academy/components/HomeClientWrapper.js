@@ -5,31 +5,11 @@ import Preloader from './Preloader';
 export default function HomeClientWrapper({ children }) {
   const [loading, setLoading] = useState(true);
 
-  // Fallback to ensure loader closes even if state is delayed (reduced to 2000ms for fast unlocking)
+  // Fallback: 100ms + 8×50ms typing + 50ms hold + 150ms fade ≈ 700ms
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2000);
+    const timer = setTimeout(() => setLoading(false), 750);
     return () => clearTimeout(timer);
   }, []);
-
-  // Disable scrollbar / scrolling during preloading to prevent glitchy side borders (bypassed on mobile to prevent freezing)
-  useEffect(() => {
-    const isMobile = window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 1024;
-    if (isMobile) return;
-
-    if (loading) {
-      document.documentElement.classList.add('no-scroll');
-      document.body.classList.add('no-scroll');
-    } else {
-      document.documentElement.classList.remove('no-scroll');
-      document.body.classList.remove('no-scroll');
-    }
-    return () => {
-      document.documentElement.classList.remove('no-scroll');
-      document.body.classList.remove('no-scroll');
-    };
-  }, [loading]);
 
   const handleComplete = useCallback(() => {
     setLoading(false);
@@ -38,9 +18,8 @@ export default function HomeClientWrapper({ children }) {
   return (
     <>
       {loading && <Preloader onComplete={handleComplete} />}
-      <div className={loading ? "pointer-events-none select-none" : ""}>
-        {children}
-      </div>
+      {/* Page is always visible — preloader z-index covers it, no black flash */}
+      <div>{children}</div>
     </>
   );
 }

@@ -89,11 +89,9 @@ export default function DegreeSection() {
           </div>
 
           {/* Action Button */}
-          <Link href="/courses/bsc-animations-multimedia#enroll">
-            <button className="btn-gold">
-              <span>Apply for Degree Program</span>
-              <ArrowRight size={16} />
-            </button>
+          <Link href="/courses/bsc-animations-multimedia#enroll" className="btn-gold">
+            <span>Apply for Degree Program</span>
+            <ArrowRight size={16} />
           </Link>
         </motion.div>
       </div>

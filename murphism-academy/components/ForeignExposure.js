@@ -201,10 +201,7 @@ export default function ForeignExposure() {
             return (
               <motion.div
                 key={benefit.num}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
+                initial={{ opacity: 1, y: 0 }}
                 className="rounded-2xl p-5"
                 style={{
                   background: 'linear-gradient(145deg, #0f0e0b 0%, #181510 100%)',
@@ -244,11 +241,9 @@ export default function ForeignExposure() {
           transition={{ duration: 0.7, delay: 0.5 }}
           className="flex justify-center mt-10"
         >
-          <Link href="/#courses">
-            <button className="btn-gold">
-              <span>Start Your Journey</span>
-              <ArrowRight size={16} />
-            </button>
+          <Link href="/#courses" className="btn-gold">
+            <span>Start Your Journey</span>
+            <ArrowRight size={16} />
           </Link>
         </motion.div>
       </div>

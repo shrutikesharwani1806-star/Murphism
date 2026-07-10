@@ -391,17 +391,17 @@ html.lenis, html.lenis body {
 }
 
 /* Custom Cursor Hide */
-@media (pointer: fine) {
-  body.custom-cursor-active,
-  body.custom-cursor-active *,
-  body.custom-cursor-active *::before,
-  body.custom-cursor-active *::after,
-  body.custom-cursor-active [role="dialog"],
-  body.custom-cursor-active [role="dialog"] *,
-  body.custom-cursor-active [data-overlay],
-  body.custom-cursor-active [data-overlay] * {
-    cursor: none !important;
-  }
+body.custom-cursor-active,
+body.custom-cursor-active *,
+body.custom-cursor-active *::before,
+body.custom-cursor-active *::after,
+body.custom-cursor-active html,
+body.custom-cursor-active body,
+body.custom-cursor-active [role="dialog"],
+body.custom-cursor-active [role="dialog"] *,
+body.custom-cursor-active [data-overlay],
+body.custom-cursor-active [data-overlay] * {
+  cursor: none !important;
 }
 
 /* ─── Mobile Highlights & Balanced Headings Override ─── */
@@ -510,8 +510,13 @@ iframe[src*="netlify"],
 
 /* ─── Mobile Performance & Scroll Lag Fix ─── */
 @media (pointer: coarse) or (max-width: 1024px) {
-  /* Disable heavy backdrop blurs globally on all elements to prevent iOS Safari GPU rendering crashes & black sections */
-  *, *::before, *::after {
+  /* Set solid black background to prevent iOS transparency composition GPU freezing */
+  html, body {
+    background: #050505 !important;
+  }
+
+  /* Disable heavy backdrop blurs on specific glass elements to prevent Safari crashes */
+  .glass-warm, .backdrop-blur-xl, .backdrop-blur-lg, .backdrop-blur-md, .backdrop-blur-sm, [class*="backdrop-blur"] {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
   }
@@ -524,6 +529,17 @@ iframe[src*="netlify"],
   section#degree, section#why, section#foreign-exposure, section#certificate {
     background-color: #0a0907 !important;
   }
+}
+
+/* Native Preloader Scroll Locking */
+html:has(.global-preloader-overlay),
+body:has(.global-preloader-overlay) {
+  overflow: hidden !important;
+  scrollbar-width: none;
+}
+html:has(.global-preloader-overlay)::-webkit-scrollbar,
+body:has(.global-preloader-overlay)::-webkit-scrollbar {
+  display: none !important;
 }
 
 

@@ -321,20 +321,19 @@ export default function HeroSection() {
           transition={{ duration: 0.8, delay: 0.5 }}
           className="mb-4"
         >
-          <Link href="/#courses">
-            <button 
-              className="relative group overflow-hidden px-8 py-3 rounded-xl font-bold text-xs md:text-sm tracking-wide uppercase bg-[#be5232] text-white transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.4)] cursor-pointer"
-              onMouseEnter={(e) => {
-                e.currentTarget.style.boxShadow = '0 6px 28px rgba(190,82,50,0.4)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.4)';
-              }}
-            >
-              <span className="relative z-10 flex items-center gap-2">
-                Start Journey <ArrowRight size={15} className="transition-transform duration-300 group-hover:translate-x-1" />
-              </span>
-            </button>
+          <Link 
+            href="/#courses"
+            className="relative group overflow-hidden px-8 py-3 rounded-xl font-bold text-xs md:text-sm tracking-wide uppercase bg-[#be5232] text-white transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.4)] cursor-pointer inline-block"
+            onMouseEnter={(e) => {
+              e.currentTarget.style.boxShadow = '0 6px 28px rgba(190,82,50,0.4)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.4)';
+            }}
+          >
+            <span className="relative z-10 flex items-center gap-2">
+              Start Journey <ArrowRight size={15} className="transition-transform duration-300 group-hover:translate-x-1" />
+            </span>
           </Link>
         </motion.div>
       </div>
