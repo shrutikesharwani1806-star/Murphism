@@ -79,7 +79,7 @@ export default function RootLayout({ children }) {
         <link rel="shortcut icon" href="/new-logo.jpeg" type="image/jpeg" />
         <link rel="apple-touch-icon" href="/new-logo.jpeg" />
       </head>
-      <body className="antialiased overflow-x-hidden font-sans" suppressHydrationWarning>
+      <body className="antialiased overflow-x-clip font-sans" suppressHydrationWarning>
         <ClientWidgets />
         {children}
       </body>

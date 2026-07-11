@@ -38,7 +38,7 @@ body, #__next, [data-reactroot] {
   box-shadow: none !important;
   max-width: 100% !important;
   width: 100% !important;
-  overflow-x: hidden;
+  overflow-x: clip;
   background: transparent !important;
   scrollbar-width: thin;
   scrollbar-color: var(--gold-primary) #050505;
