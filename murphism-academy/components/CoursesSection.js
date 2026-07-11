@@ -178,23 +178,26 @@ function CourseCard({ course, idx, total, isMobile, parentScrollYProgress }) {
     return (
       <motion.div
         onClick={() => router.push(`/courses/${course.slug}#enroll`)}
-        initial={{ opacity: 0, y: 40 }}
+        initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-10% 0px" }}
+        viewport={{ once: true, margin: "-5% 0px" }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className={`w-full rounded-3xl ${styles.border} p-6 flex flex-col gap-6 items-stretch relative overflow-hidden cursor-pointer`}
+        className={`w-full rounded-3xl ${styles.border} p-4 flex flex-col gap-3.5 items-stretch relative overflow-hidden cursor-pointer`}
         style={{
-          position: 'relative',
+          position: 'sticky',
+          top: `calc(7vh + ${idx * 20}px)`,
           background: styles.bg,
           boxShadow: '0 15px 35px rgba(0, 0, 0, 0.7), inset 0 1px 2px rgba(255, 255, 255, 0.05)',
-          marginBottom: '24px',
+          marginBottom: '5vh',
           isolation: 'isolate',
+          transformOrigin: 'top center',
+          scale,
           backgroundClip: 'padding-box',
         }}
       >
         {/* Accent blur gradient glow */}
         <div 
-          className="absolute bottom-[-10%] right-[-10%] w-[200px] h-[200px] rounded-full blur-[60px] opacity-10 pointer-events-none"
+          className="absolute bottom-[-10%] right-[-10%] w-[180px] h-[180px] rounded-full blur-[50px] opacity-10 pointer-events-none"
           style={{
             background: `radial-gradient(circle, ${course.accentColor} 0%, transparent 80%)`,
           }}
@@ -203,50 +206,50 @@ function CourseCard({ course, idx, total, isMobile, parentScrollYProgress }) {
         {/* Left Column: Details */}
         <div className="flex-1 flex flex-col justify-between w-full relative z-10">
           <div>
-            <div className="flex flex-wrap items-center gap-2.5 mb-4">
-              <span className="text-2xl">{course.emoji}</span>
-              <span className={`text-[10px] font-black tracking-widest uppercase px-2.5 py-1 rounded border ${styles.durationBadge}`}>
+            <div className="flex flex-wrap items-center gap-1.5 mb-2">
+              <span className="text-lg">{course.emoji}</span>
+              <span className={`text-[8px] font-black tracking-widest uppercase px-1.5 py-0.5 rounded border ${styles.durationBadge}`}>
                 {course.duration}
               </span>
               {course.isNew && (
-                <span className="text-[10px] font-black tracking-widest uppercase px-2.5 py-1 rounded bg-red-950/40 text-red-400 border border-red-900/30">
+                <span className="text-[8px] font-black tracking-widest uppercase px-1.5 py-0.5 rounded bg-red-950/40 text-red-400 border border-red-900/30">
                   New
                 </span>
               )}
               {course.isCombo && (
-                <span className="text-[10px] font-black tracking-widest uppercase px-2.5 py-1 rounded bg-blue-950/40 text-blue-400 border border-blue-900/30">
+                <span className="text-[8px] font-black tracking-widest uppercase px-1.5 py-0.5 rounded bg-blue-950/40 text-blue-400 border border-blue-900/30">
                   Combo
                 </span>
               )}
               {course.isDegree && (
-                <span className="text-[10px] font-black tracking-widest uppercase px-2.5 py-1 rounded bg-purple-950/40 text-purple-400 border border-purple-900/30">
+                <span className="text-[8px] font-black tracking-widest uppercase px-1.5 py-0.5 rounded bg-purple-950/40 text-purple-400 border border-purple-900/30">
                   Degree
                 </span>
               )}
               {course.isDiploma && (
-                <span className="text-[10px] font-black tracking-widest uppercase px-2.5 py-1 rounded bg-amber-950/40 text-amber-400 border border-amber-900/30">
+                <span className="text-[8px] font-black tracking-widest uppercase px-1.5 py-0.5 rounded bg-amber-950/40 text-amber-400 border border-amber-900/30">
                   Diploma
                 </span>
               )}
             </div>
             
-            <h3 className={`text-2xl font-extrabold tracking-tight mb-2 ${styles.titleText}`}>
+            <h3 className={`text-lg font-black tracking-tight mb-1 ${styles.titleText}`}>
               {course.title}
             </h3>
             
-            <p className={`text-xs font-bold uppercase tracking-wider mb-4 ${styles.taglineText}`}>
+            <p className={`text-[9px] font-extrabold uppercase tracking-wider mb-2 ${styles.taglineText}`}>
               {course.tagline}
             </p>
             
-            <p className={`text-sm leading-relaxed mb-6 ${styles.descText}`}>
+            <p className={`text-xs leading-relaxed mb-3 ${styles.descText}`}>
               {course.description}
             </p>
 
             {/* Highlights Grid */}
-            <div className="grid grid-cols-2 gap-x-4 gap-y-2 mb-8">
-              {course.highlights.slice(0, 4).map((h) => (
-                <div key={h} className={`text-xs flex items-center gap-2 ${styles.highlightText}`}>
-                  <span className={`text-[10px] ${styles.highlightBullet}`}>✦</span>
+            <div className="grid grid-cols-2 gap-x-2 gap-y-1 mb-4">
+              {course.highlights.slice(0, 2).map((h) => (
+                <div key={h} className={`text-[9px] flex items-center gap-1 ${styles.highlightText}`}>
+                  <span className={`text-[7px] ${styles.highlightBullet}`}>✦</span>
                   {h}
                 </div>
               ))}
@@ -254,16 +257,16 @@ function CourseCard({ course, idx, total, isMobile, parentScrollYProgress }) {
           </div>
 
           {/* Bottom Row inside card */}
-          <div className="flex flex-wrap items-center justify-between gap-4 border-t border-white/5 pt-6 mt-auto">
+          <div className="flex flex-wrap items-center justify-between gap-2 border-t border-white/5 pt-3 mt-auto">
             {/* Badges */}
-            <div className="flex flex-wrap gap-3">
-              <div className={`flex items-center gap-1.5 text-xs ${styles.badgeText}`}>
+            <div className="flex flex-wrap gap-2">
+              <div className={`flex items-center gap-1 text-[9px] ${styles.badgeText}`}>
                 <svg className={`w-3.5 h-3.5 ${styles.badgeIcon}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
                 {course.duration}
               </div>
-              <div className={`flex items-center gap-1.5 text-xs ${styles.badgeText}`}>
+              <div className={`flex items-center gap-1 text-[9px] ${styles.badgeText}`}>
                 <svg className={`w-3.5 h-3.5 ${styles.badgeIcon}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
                 </svg>
@@ -274,9 +277,9 @@ function CourseCard({ course, idx, total, isMobile, parentScrollYProgress }) {
             {/* View Course Button */}
             <Link 
               href={`/courses/${course.slug}#enroll`}
-              className={`px-5 py-2 rounded-full text-xs font-bold tracking-widest uppercase flex items-center gap-2 transition-all duration-300 ${styles.btnBg}`}
+              className={`px-3 py-1 rounded-full text-[9px] font-black tracking-widest uppercase flex items-center gap-1 transition-all duration-300 ${styles.btnBg}`}
             >
-              View Course <ArrowRight size={13} />
+              View Course <ArrowRight size={10} />
             </Link>
           </div>
         </div>
@@ -284,10 +287,10 @@ function CourseCard({ course, idx, total, isMobile, parentScrollYProgress }) {
         {/* Right Column: Image */}
         <div className="w-full flex justify-center relative z-10">
           <div 
-            className="relative rounded-xl overflow-hidden border border-white/5 shadow-2xl w-full aspect-[4/3] group"
+            className="relative rounded-xl overflow-hidden border border-white/5 shadow-2xl w-full aspect-[21/9] group"
             style={{
               background: 'rgba(0,0,0,0.4)',
-              minHeight: '220px',
+              minHeight: '100px',
             }}
           >
             <img
