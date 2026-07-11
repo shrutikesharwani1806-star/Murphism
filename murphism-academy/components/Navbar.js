@@ -138,6 +138,7 @@ export default function Navbar() {
               {/* Home Dropdown Trigger */}
               <div className="relative">
                 <button
+                  suppressHydrationWarning={true}
                   onClick={() => setHomeDropdownOpen(!homeDropdownOpen)}
                   className="px-4 py-1.5 rounded text-xs font-semibold tracking-wide transition-all duration-300 whitespace-nowrap text-[#b8b099] hover:text-white flex items-center gap-1 cursor-pointer nav-link-bounce"
                   style={{ background: 'transparent', border: 'none' }}
@@ -258,6 +259,7 @@ export default function Navbar() {
                     </div>
                   )}
                   <button
+                    suppressHydrationWarning={true}
                     onClick={handleLogout}
                     className="flex items-center gap-1.5 text-xs font-semibold tracking-widest uppercase transition-all duration-300 px-3 py-1.5 rounded-lg"
                     style={{ color: '#9a6060', border: '1px solid rgba(180,60,60,0.2)', background: 'rgba(180,60,60,0.05)' }}
@@ -289,6 +291,7 @@ export default function Navbar() {
             {/* Mobile: hamburger */}
             <div className="md:hidden flex items-center">
               <button
+                suppressHydrationWarning={true}
                 onClick={() => setOpen(!open)}
                 aria-label="Toggle menu"
                 className="transition-colors duration-300"
@@ -319,6 +322,7 @@ export default function Navbar() {
               {/* Home collapsible menu */}
               <div>
                 <button
+                  suppressHydrationWarning={true}
                   onClick={() => setMobileHomeOpen(!mobileHomeOpen)}
                   className="w-full flex items-center justify-between py-1 text-xs font-semibold tracking-widest uppercase transition-colors duration-300 text-[#b8b099] hover:text-white"
                 >
@@ -413,7 +417,9 @@ export default function Navbar() {
                     <LayoutDashboard size={14} /> Admin Dashboard
                   </Link>
                 )}
-                <button onClick={() => { setOpen(false); handleLogout(); }}
+                <button
+                  suppressHydrationWarning={true}
+                  onClick={() => { setOpen(false); handleLogout(); }}
                   className="text-xs font-semibold tracking-widest uppercase text-left"
                   style={{ color: '#9a6060' }}>
                   Logout
