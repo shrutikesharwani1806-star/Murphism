@@ -4,20 +4,19 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, PartyPopper, Phone, Mail, CheckCircle2 } from 'lucide-react';
 
 export default function EnrollmentSuccessPopup({ isOpen, onClose, studentName, courseName }) {
-  const isMobile = useRef(false);
+  const [isMobile, setIsMobile] = useState(true);
 
   useEffect(() => {
-    isMobile.current = window.innerWidth < 768 ||
-      /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    setIsMobile(
+      window.innerWidth < 768 ||
+      /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+    );
   }, []);
-
-  // No scroll locking to ensure the website/smooth-scroll never freezes
-
 
   if (!isOpen) return null;
 
   // On mobile — skip backdropFilter and heavy animations
-  const overlayStyle = isMobile.current
+  const overlayStyle = isMobile
     ? { background: 'rgba(0,0,0,0.92)' }
     : { background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' };
 
@@ -34,10 +33,10 @@ export default function EnrollmentSuccessPopup({ isOpen, onClose, studentName, c
           onClick={onClose}
         >
           <motion.div
-            initial={{ opacity: 0, scale: isMobile.current ? 1 : 0.85, y: isMobile.current ? 20 : 40 }}
+            initial={{ opacity: 0, scale: isMobile ? 1 : 0.85, y: isMobile ? 20 : 40 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: isMobile.current ? 1 : 0.85, y: isMobile.current ? 20 : 40 }}
-            transition={isMobile.current
+            exit={{ opacity: 0, scale: isMobile ? 1 : 0.85, y: isMobile ? 20 : 40 }}
+            transition={isMobile
               ? { duration: 0.25, ease: 'easeOut' }
               : { type: 'spring', damping: 22, stiffness: 280 }
             }
@@ -56,7 +55,7 @@ export default function EnrollmentSuccessPopup({ isOpen, onClose, studentName, c
             />
 
             {/* Confetti — desktop only (12 pieces), mobile skipped */}
-            {!isMobile.current && (
+            {!isMobile && (
               <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 {[...Array(8)].map((_, i) => (
                   <motion.div

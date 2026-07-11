@@ -4,46 +4,44 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Preloader({ onComplete }) {
   const fullText = 'MURPHISM';
+  const [displayedText, setDisplayedText] = useState('');
   const [isFadingOut, setIsFadingOut] = useState(false);
-  const textRef = useRef(null);
 
   const onCompleteRef = useRef(onComplete);
   useEffect(() => {
     onCompleteRef.current = onComplete;
   }, [onComplete]);
 
-  // Type-in animation: empty → M → MU → MUR → ... → MURPHISM → hold → fade out
+  // Reveal letter by letter: M -> MU -> MUR ...
   useEffect(() => {
     let currentIndex = 0;
     let typeTimer;
-    let fadeTimer;
 
     const typeNext = () => {
       currentIndex += 1;
-      if (textRef.current) {
-        textRef.current.textContent = fullText.slice(0, currentIndex);
-      }
+      setDisplayedText(fullText.slice(0, currentIndex));
 
       if (currentIndex < fullText.length) {
-        // Type next letter — 50ms per letter (fast and snappy)
-        typeTimer = setTimeout(typeNext, 50);
+        // Fast, premium typing cadence
+        typeTimer = setTimeout(typeNext, 60);
       } else {
-        // Full word revealed — fade out quickly
-        fadeTimer = setTimeout(() => {
+        // Revealed! Trigger fade out and page load immediately
+        const fadeTimer = setTimeout(() => {
           setIsFadingOut(true);
-          setTimeout(() => {
+          const completeTimer = setTimeout(() => {
             if (onCompleteRef.current) onCompleteRef.current();
-          }, 200);
-        }, 50);
+          }, 150);
+          return () => clearTimeout(completeTimer);
+        }, 80);
+        return () => clearTimeout(fadeTimer);
       }
     };
 
-    // Start typing after a very brief initial pause
-    typeTimer = setTimeout(typeNext, 100);
+    // Start typing after a tiny delay
+    typeTimer = setTimeout(typeNext, 50);
 
     return () => {
       clearTimeout(typeTimer);
-      clearTimeout(fadeTimer);
     };
   }, []);
 
@@ -53,18 +51,9 @@ export default function Preloader({ onComplete }) {
         <motion.div
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.2, ease: 'easeInOut' }}
+          transition={{ duration: 0.15, ease: 'easeOut' }}
           className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-[#050505]"
         >
-          <style>{`
-            @keyframes blink {
-              50% { opacity: 0; }
-            }
-            .caret-blink {
-              animation: blink 0.75s step-end infinite;
-            }
-          `}</style>
-
           {/* Subtle gold background glow */}
           <div
             className="absolute w-[280px] h-[280px] rounded-full pointer-events-none"
@@ -77,8 +66,8 @@ export default function Preloader({ onComplete }) {
               className="text-4xl sm:text-6xl md:text-7xl font-extrabold text-center select-none uppercase flex items-center"
               style={{ color: '#c9a227', letterSpacing: '0.25em', fontFamily: 'inherit' }}
             >
-              <span ref={textRef}></span>
-              <span className="caret-blink font-light" style={{ color: '#c9a227', marginLeft: '2px' }}>|</span>
+              <span>{displayedText}</span>
+              <span className="animate-pulse font-light" style={{ color: '#c9a227', marginLeft: '2px' }}>|</span>
             </h1>
           </div>
         </motion.div>
@@ -86,3 +75,4 @@ export default function Preloader({ onComplete }) {
     </AnimatePresence>
   );
 }
+

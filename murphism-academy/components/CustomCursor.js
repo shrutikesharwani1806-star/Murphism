@@ -14,7 +14,7 @@ function drawDot(ctx, x, y, size, alpha, color) {
 
 
 export default function CustomCursor() {
-  const [mounted, setMounted] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
 
   const dotRef = useRef(null);
   const ringRef = useRef(null);
@@ -46,15 +46,12 @@ export default function CustomCursor() {
     if (ringRef.current) ringRef.current.style.opacity = '0';
   };
 
-  // ── 1. Mount ────────────────────────────────────────────────────────────
-  useEffect(() => { setMounted(true); }, []);
-
-  // ── 2. Canvas sparkle system ── only runs after mounted=true ─────────────
+  // ── 1. Mount & Check Device Capability ────────────────────────────────────
   useEffect(() => {
-    if (!mounted) return;
+    setIsDesktop(window.matchMedia('(pointer: fine)').matches);
+  }, []);
 
-    // Check if desktop (pointer: fine) — disable sparkle canvas entirely on mobile to prevent Safari/iPhone lag
-    const isDesktop = window.matchMedia('(pointer: fine)').matches;
+  useEffect(() => {
     if (!isDesktop) return;
 
     const canvas = canvasRef.current;
@@ -157,20 +154,15 @@ export default function CustomCursor() {
       window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('touchmove', onTouchMove);
       if (animFrameId.current) cancelAnimationFrame(animFrameId.current);
-      isAnimating.current = false;
-      particles.current = [];
     };
-  }, [mounted]);
+  }, [isDesktop]);
 
   // ── 3. Cursor position + CSS class ───────────────────────────────────────
   useEffect(() => {
-    if (!mounted) return;
+    if (!isDesktop) return;
 
-    const isDesktop = window.matchMedia('(pointer: fine)').matches;
-    if (isDesktop) {
-      document.body.classList.add('custom-cursor-active');
-      document.documentElement.classList.add('custom-cursor-active');
-    }
+    document.body.classList.add('custom-cursor-active');
+    document.documentElement.classList.add('custom-cursor-active');
 
     const tick = () => {
       dotPos.current.x = mousePos.current.x;
@@ -250,9 +242,9 @@ export default function CustomCursor() {
       document.body.classList.remove('custom-cursor-active');
       document.documentElement.classList.remove('custom-cursor-active');
     };
-  }, [mounted]);
+  }, [isDesktop]);
 
-  if (!mounted) return null;
+  if (!isDesktop) return null;
 
   return (
     <>

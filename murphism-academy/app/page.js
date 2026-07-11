@@ -1,17 +1,20 @@
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
 import StatsSection from '@/components/StatsSection';
-import CoursesSection from '@/components/CoursesSection';
-import DegreeSection from '@/components/DegreeSection';
-import AICoursesSection from '@/components/AICoursesSection';
-import ForeignExposure from '@/components/ForeignExposure';
-import CertificateSection from '@/components/CertificateSection';
-import ComparisonSection from '@/components/ComparisonSection';
-import WhyMurphism from '@/components/WhyMurphism';
-import FAQSection from '@/components/FAQSection';
-import Footer from '@/components/Footer';
-import CTASection from '@/components/CTASection';
 import HomeClientWrapper from '@/components/HomeClientWrapper';
+import dynamic from 'next/dynamic';
+
+const ForeignExposure = dynamic(() => import('@/components/ForeignExposure'), { ssr: true });
+const CoursesSection = dynamic(() => import('@/components/CoursesSection'), { ssr: true });
+const AICoursesSection = dynamic(() => import('@/components/AICoursesSection'), { ssr: true });
+const DegreeSection = dynamic(() => import('@/components/DegreeSection'), { ssr: true });
+const CertificateSection = dynamic(() => import('@/components/CertificateSection'), { ssr: true });
+const ComparisonSection = dynamic(() => import('@/components/ComparisonSection'), { ssr: true });
+const WhyMurphism = dynamic(() => import('@/components/WhyMurphism'), { ssr: true });
+const FAQSection = dynamic(() => import('@/components/FAQSection'), { ssr: true });
+const CTASection = dynamic(() => import('@/components/CTASection'), { ssr: true });
+const Footer = dynamic(() => import('@/components/Footer'), { ssr: true });
+
 
 
 

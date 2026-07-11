@@ -178,15 +178,18 @@ function CourseCard({ course, idx, total, isMobile, parentScrollYProgress }) {
     return (
       <motion.div
         onClick={() => router.push(`/courses/${course.slug}#enroll`)}
-        initial={{ opacity: 1, y: 0 }}
-        className={`w-full rounded-3xl ${styles.border} p-6 flex flex-col gap-6 items-center relative overflow-hidden cursor-pointer`}
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-10% 0px" }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className={`w-full rounded-3xl ${styles.border} p-6 flex flex-col gap-6 items-stretch relative overflow-hidden cursor-pointer`}
         style={{
-          position: 'sticky',
-          top: `calc(8vh + ${idx * 32}px)`,
+          position: 'relative',
           background: styles.bg,
           boxShadow: '0 15px 35px rgba(0, 0, 0, 0.7), inset 0 1px 2px rgba(255, 255, 255, 0.05)',
-          marginBottom: '3vh',
+          marginBottom: '24px',
           isolation: 'isolate',
+          backgroundClip: 'padding-box',
         }}
       >
         {/* Accent blur gradient glow */}
