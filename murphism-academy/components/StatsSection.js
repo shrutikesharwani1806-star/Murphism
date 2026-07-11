@@ -246,14 +246,29 @@ export default function StatsSection() {
                 background: 'rgba(12, 12, 14, 0.85)',
               }}
             >
-              <div className="flex flex-col gap-3">
+              {/* Background Video */}
+              <video
+                src="/images/murphism_1.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover pointer-events-none z-0 opacity-40 transition-opacity duration-300"
+              />
+              {/* Dark overlay for readability */}
+              <div className="absolute inset-0 bg-gradient-to-b from-[#0c0c0e]/30 via-transparent to-[#0c0c0e]/85 z-[1] pointer-events-none" />
+
+              <div className="flex flex-col gap-3 relative z-10">
                 <h2 className="text-white text-2.5xl md:text-3.5xl font-semibold tracking-tight leading-none" style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}>
                   Start<br />Learning
                 </h2>
               </div>
 
-              <div className="mt-auto">
-                <button className="flex items-center gap-2 px-6 py-3.5 rounded-xl border border-[#be5232]/45 text-[#be5232] text-sm font-bold tracking-wide uppercase bg-[#be5232]/5 hover:bg-[#be5232]/15 transition-all duration-300 cursor-pointer">
+              <div className="mt-auto relative z-10">
+                <button
+                  suppressHydrationWarning={true}
+                  className="flex items-center gap-2 px-6 py-3.5 rounded-xl border border-[#be5232]/45 text-[#be5232] text-sm font-bold tracking-wide uppercase bg-[#be5232]/5 hover:bg-[#be5232]/15 transition-all duration-300 cursor-pointer"
+                >
                   Get in touch
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>

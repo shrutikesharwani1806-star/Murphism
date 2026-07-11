@@ -554,6 +554,7 @@ export default function CoursesSection() {
           {/* Tabs Toggler */}
           <div className="flex gap-2 mt-8 bg-white/5 p-1 rounded-full border border-white/5">
             <button
+              suppressHydrationWarning={true}
               onClick={() => setActiveTab('individual')}
               className={`px-6 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase transition-all duration-300 ${
                 activeTab === 'individual'
@@ -564,6 +565,7 @@ export default function CoursesSection() {
               All Courses
             </button>
             <button
+              suppressHydrationWarning={true}
               onClick={() => setActiveTab('combo')}
               className={`px-6 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase transition-all duration-300 flex items-center gap-1.5 ${
                 activeTab === 'combo'
