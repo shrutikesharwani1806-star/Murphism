@@ -29,9 +29,9 @@ export const metadata = {
   description:
     'Join Murphism — the premium creative & tech academy offering Graphic Design, Website Development, Video Editing, 3D Modelling, AI Courses, and Diploma in Animations & Modelling. 100% Job Assistance. Foreign Work Exposures Provided.',
   icons: {
-    icon: '/new-logo.jpeg',
-    shortcut: '/new-logo.jpeg',
-    apple: '/new-logo.jpeg',
+    icon: '/logo.png',
+    shortcut: '/logo.png',
+    apple: '/logo.png',
   },
   keywords: [
     'Murphism Academy',
@@ -75,9 +75,9 @@ export default function RootLayout({ children }) {
       <head>
         <link rel="preconnect" href="https://api.fontshare.com" crossOrigin="anonymous" />
         <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&display=swap" rel="stylesheet" />
-        <link rel="icon" href="/new-logo.jpeg" type="image/jpeg" />
-        <link rel="shortcut icon" href="/new-logo.jpeg" type="image/jpeg" />
-        <link rel="apple-touch-icon" href="/new-logo.jpeg" />
+        <link rel="icon" href="/logo.png" type="image/png" />
+        <link rel="shortcut icon" href="/logo.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/logo.png" />
       </head>
       <body className="antialiased overflow-x-clip font-sans" suppressHydrationWarning>
         <ClientWidgets />
