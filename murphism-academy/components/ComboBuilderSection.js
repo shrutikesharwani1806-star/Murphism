@@ -10,6 +10,7 @@ const COMBO_COURSES = [
   { id: 've', name: 'Video Editing & VFX', emoji: '🎬', duration: '6 Months' },
   { id: 'td', name: '3D Design & Animation', emoji: '🧊', duration: '6 Months' },
   { id: 'vfx', name: 'VFX', emoji: '🌀', duration: '1 Month' },
+  { id: 'each-6999', name: 'Each Course on 6999', emoji: '✨', duration: '1.5 Months', price: 6999 },
   { id: 'ai', name: 'AI Courses', emoji: '🤖', duration: '2 Months' },
 ];
 
@@ -29,6 +30,7 @@ export default function ComboBuilderSection({ hideHeader = false }) {
   };
 
   const selectedCourses = COMBO_COURSES.filter(c => selectedIds.includes(c.id));
+  const totalPrice = selectedCourses.reduce((sum, c) => sum + (c.price || 0), 0);
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -51,8 +53,8 @@ export default function ComboBuilderSection({ hideHeader = false }) {
           name: form.name,
           email: form.email,
           mobile: form.mobile,
-          course: `Combo Path: ${comboCourseName}`,
-          message: `Selected Path Options: ${comboCourseName}.`,
+          course: totalPrice > 0 ? `Combo: ${comboCourseName} (Total: ₹${totalPrice})` : `Combo: ${comboCourseName}`,
+          message: `Selected Path Options: ${comboCourseName}.` + (totalPrice > 0 ? ` Total price: ₹${totalPrice}.` : '') + ` Selected course details: ${selectedCourses.map(c => `${c.name} (${c.duration})`).join(', ')}.`,
         }),
       });
 
@@ -78,183 +80,219 @@ export default function ComboBuilderSection({ hideHeader = false }) {
             Build Your Custom Career Bundle
           </h2>
           <p className="text-[#b8b099] text-sm md:text-base max-w-xl mx-auto mt-4 leading-relaxed">
-            Select two or more courses to unlock special bundle discounts and accelerate your creative trajectory.
+            Build your custom learning path, or select our special short-term course option for only <span className="text-[#c9a227] font-semibold">₹6,999</span>.
           </p>
           <div className="divider-gold" style={{ margin: '1.5rem auto', width: '48px' }} />
         </div>
       )}
 
+      {/* Promotion Announcement Banner */}
+      <div className="w-full mb-8 p-5 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 border"
+        style={{
+          background: 'linear-gradient(90deg, rgba(201,162,39,0.08) 0%, rgba(5,5,5,0.6) 100%)',
+          borderColor: 'rgba(201,162,39,0.25)',
+          boxShadow: '0 4px 20px rgba(0,0,0,0.4)',
+        }}
+      >
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-[#c9a227]/10 flex items-center justify-center text-lg text-[#c9a227]">⚡</div>
+          <div>
+            <h4 className="text-white text-sm font-bold tracking-wide" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>Special Short-Term Course Offer</h4>
+            <p className="text-[#b8b099] text-xs">Enroll in any course for a duration of 1.5 Months at just ₹6,999!</p>
+          </div>
+        </div>
+        <div className="px-4 py-2 rounded-xl bg-[#c9a227] text-black text-[10px] font-black uppercase tracking-wider">
+          New Feature
+        </div>
+      </div>
+
       {/* Builder Layout */}
       <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-          
-          {/* Left: Course Selection Grid */}
-          <div className="lg:col-span-7 grid sm:grid-cols-2 gap-4">
-            {COMBO_COURSES.map((course) => {
-              const isSelected = selectedIds.includes(course.id);
-              return (
-                <div
-                  key={course.id}
-                  onClick={() => toggleCourse(course.id)}
-                  className="rounded-2xl p-5 cursor-pointer transition-all duration-300 relative overflow-hidden select-none"
-                  style={{
-                    background: isSelected ? 'rgba(201,162,39,0.05)' : 'rgba(255,255,255,0.02)',
-                    border: isSelected ? '1px solid #c9a227' : '1px solid rgba(255,255,255,0.06)',
-                    boxShadow: isSelected ? '0 10px 25px rgba(201,162,39,0.1)' : 'none',
-                  }}
-                >
-                  <div className="flex justify-between items-start mb-3">
-                    <span className="text-3xl">{course.emoji}</span>
-                    <div 
-                      className="w-5 h-5 rounded-full flex items-center justify-center transition-all duration-300"
-                      style={{
-                        background: isSelected ? '#c9a227' : 'transparent',
-                        border: isSelected ? '1px solid #c9a227' : '1px solid rgba(255,255,255,0.2)',
-                      }}
-                    >
-                      {isSelected && <Check size={12} className="text-black stroke-[3]" />}
-                    </div>
-                  </div>
 
-                  <h4 className="text-white text-base font-bold mb-1 tracking-wide" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
-                    {course.name}
-                  </h4>
-                  <p className="text-[#6b6459] text-xs font-semibold uppercase tracking-wider mb-4">
+        {/* Left: Course Selection Grid */}
+        <div className="lg:col-span-7 grid sm:grid-cols-2 gap-4">
+          {COMBO_COURSES.map((course) => {
+            const isSelected = selectedIds.includes(course.id);
+            return (
+              <div
+                key={course.id}
+                onClick={() => toggleCourse(course.id)}
+                className="rounded-2xl p-5 cursor-pointer transition-all duration-300 relative overflow-hidden select-none"
+                style={{
+                  background: isSelected ? 'rgba(201,162,39,0.05)' : 'rgba(255,255,255,0.02)',
+                  border: isSelected ? '1px solid #c9a227' : '1px solid rgba(255,255,255,0.06)',
+                  boxShadow: isSelected ? '0 10px 25px rgba(201,162,39,0.1)' : 'none',
+                }}
+              >
+                <div className="flex justify-between items-start mb-3">
+                  <span className="text-3xl">{course.emoji}</span>
+                  <div
+                    className="w-5 h-5 rounded-full flex items-center justify-center transition-all duration-300"
+                    style={{
+                      background: isSelected ? '#c9a227' : 'transparent',
+                      border: isSelected ? '1px solid #c9a227' : '1px solid rgba(255,255,255,0.2)',
+                    }}
+                  >
+                    {isSelected && <Check size={12} className="text-black stroke-[3]" />}
+                  </div>
+                </div>
+
+                <h4 className="text-white text-base font-bold mb-1 tracking-wide" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+                  {course.name}
+                </h4>
+                <div className="flex justify-between items-center mt-2 pt-2 border-t border-white/5">
+                  <p className="text-[#6b6459] text-[10px] font-bold uppercase tracking-wider">
                     Duration: {course.duration}
                   </p>
-
-
+                  {course.price && (
+                    <p className="text-[#c9a227] text-xs font-black">
+                      ₹{course.price.toLocaleString('en-IN')}
+                    </p>
+                  )}
                 </div>
-              );
-            })}
-          </div>
 
-          {/* Right: Checkout Summary Form */}
-          <div className="lg:col-span-5">
-            <div
-              className="rounded-3xl p-6 md:p-8 sticky top-28"
-              style={{
-                background: 'linear-gradient(145deg, #0a0908 0%, #050505 100%)',
-                border: '1px solid rgba(201,162,39,0.12)',
-                boxShadow: '0 30px 60px rgba(0,0,0,0.5)',
-              }}
-            >
-              <div className="flex items-center gap-2 mb-6">
-                <ShoppingBag size={18} className="text-[#c9a227]" />
-                <h3 className="text-white text-xl font-bold tracking-wide" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
-                  Bundle Summary
-                </h3>
+
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Right: Checkout Summary Form */}
+        <div className="lg:col-span-5">
+          <div
+            className="rounded-3xl p-6 md:p-8 sticky top-28"
+            style={{
+              background: 'linear-gradient(145deg, #0a0908 0%, #050505 100%)',
+              border: '1px solid rgba(201,162,39,0.12)',
+              boxShadow: '0 30px 60px rgba(0,0,0,0.5)',
+            }}
+          >
+            <div className="flex items-center gap-2 mb-6">
+              <ShoppingBag size={18} className="text-[#c9a227]" />
+              <h3 className="text-white text-xl font-bold tracking-wide" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+                Bundle Summary
+              </h3>
+            </div>
+
+            {selectedCourses.length === 0 ? (
+              <div className="text-center py-12 border border-dashed border-white/5 rounded-2xl mb-6">
+                <p className="text-[#6b6459] text-sm mb-2">No courses selected yet</p>
+                <p className="text-[10px] text-[#6b6459]/70 uppercase tracking-widest">Select courses from the left to build your path</p>
+              </div>
+            ) : (
+              <div className="space-y-4 mb-6">
+                {/* Selected items list */}
+                <div className="max-h-[160px] overflow-y-auto pr-1 space-y-2.5 custom-scrollbar">
+                  {selectedCourses.map((c) => (
+                    <div key={c.id} className="flex justify-between items-center text-xs text-[#f0ece0] bg-white/3 py-2 px-3 rounded-lg">
+                      <span>{c.emoji} {c.name}</span>
+                      <div className="flex items-center gap-3">
+                        <span className="text-[#6b6459] font-medium">{c.duration}</span>
+                        {c.price && <span className="text-[#c9a227] font-semibold">₹{c.price.toLocaleString('en-IN')}</span>}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="border-t border-white/5 pt-4 flex flex-col gap-2">
+                  {totalPrice > 0 && (
+                    <div className="flex justify-between items-center text-sm font-bold text-white uppercase tracking-wider">
+                      <span>Total Price</span>
+                      <span className="text-[#c9a227] text-lg font-black">₹{totalPrice.toLocaleString('en-IN')}</span>
+                    </div>
+                  )}
+                  <p className="text-xs text-[#b8b099] leading-relaxed">
+                    You have selected <span className="text-white font-bold">{selectedCourses.length} programs</span>. Submit your contact details below to design your custom multidisciplinary creative career path.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {/* Form */}
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label className="block text-[10px] font-bold tracking-widest uppercase text-[#6b6459] mb-1.5">
+                  Your Name
+                </label>
+                <input
+                  name="name"
+                  type="text"
+                  value={form.name}
+                  onChange={handleChange}
+                  required
+                  placeholder="Enter your full name"
+                  className="w-full px-4 py-2.5 rounded-xl text-xs text-white placeholder:text-[#2e2c28] focus:outline-none transition-colors"
+                  style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(201,162,39,0.1)' }}
+                  onFocus={e => (e.target.style.borderColor = 'rgba(201,162,39,0.4)')}
+                  onBlur={e => (e.target.style.borderColor = 'rgba(201,162,39,0.1)')}
+                />
               </div>
 
-              {selectedCourses.length === 0 ? (
-                <div className="text-center py-12 border border-dashed border-white/5 rounded-2xl mb-6">
-                  <p className="text-[#6b6459] text-sm mb-2">No courses selected yet</p>
-                  <p className="text-[10px] text-[#6b6459]/70 uppercase tracking-widest">Select courses from the left to build your path</p>
-                </div>
-              ) : (
-                <div className="space-y-4 mb-6">
-                  {/* Selected items list */}
-                  <div className="max-h-[160px] overflow-y-auto pr-1 space-y-2.5 custom-scrollbar">
-                    {selectedCourses.map((c) => (
-                      <div key={c.id} className="flex justify-between items-center text-xs text-[#f0ece0] bg-white/3 py-2 px-3 rounded-lg">
-                        <span>{c.emoji} {c.name}</span>
-                        <span className="text-[#c9a227] font-semibold">{c.duration}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="border-t border-white/5 pt-4">
-                    <p className="text-xs text-[#b8b099] leading-relaxed">
-                      You have selected <span className="text-white font-bold">{selectedCourses.length} programs</span>. Submit your contact details below to design your custom multidisciplinary creative career path.
-                    </p>
-                  </div>
-                </div>
-              )}
-
-              {/* Form */}
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-[10px] font-bold tracking-widest uppercase text-[#6b6459] mb-1.5">
-                    Your Name
+                    Email Address
                   </label>
                   <input
-                    name="name"
-                    type="text"
-                    value={form.name}
+                    name="email"
+                    type="email"
+                    value={form.email}
                     onChange={handleChange}
                     required
-                    placeholder="Enter your full name"
+                    placeholder="your@email.com"
                     className="w-full px-4 py-2.5 rounded-xl text-xs text-white placeholder:text-[#2e2c28] focus:outline-none transition-colors"
                     style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(201,162,39,0.1)' }}
                     onFocus={e => (e.target.style.borderColor = 'rgba(201,162,39,0.4)')}
                     onBlur={e => (e.target.style.borderColor = 'rgba(201,162,39,0.1)')}
                   />
                 </div>
-
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-[10px] font-bold tracking-widest uppercase text-[#6b6459] mb-1.5">
-                      Email Address
-                    </label>
-                    <input
-                      name="email"
-                      type="email"
-                      value={form.email}
-                      onChange={handleChange}
-                      required
-                      placeholder="your@email.com"
-                      className="w-full px-4 py-2.5 rounded-xl text-xs text-white placeholder:text-[#2e2c28] focus:outline-none transition-colors"
-                      style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(201,162,39,0.1)' }}
-                      onFocus={e => (e.target.style.borderColor = 'rgba(201,162,39,0.4)')}
-                      onBlur={e => (e.target.style.borderColor = 'rgba(201,162,39,0.1)')}
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[10px] font-bold tracking-widest uppercase text-[#6b6459] mb-1.5">
-                      Mobile Number
-                    </label>
-                    <input
-                      name="mobile"
-                      type="tel"
-                      value={form.mobile}
-                      onChange={handleChange}
-                      required
-                      placeholder="XXXXX XXXXX"
-                      className="w-full px-4 py-2.5 rounded-xl text-xs text-white placeholder:text-[#2e2c28] focus:outline-none transition-colors"
-                      style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(201,162,39,0.1)' }}
-                      onFocus={e => (e.target.style.borderColor = 'rgba(201,162,39,0.4)')}
-                      onBlur={e => (e.target.style.borderColor = 'rgba(201,162,39,0.1)')}
-                    />
-                  </div>
+                <div>
+                  <label className="block text-[10px] font-bold tracking-widest uppercase text-[#6b6459] mb-1.5">
+                    Mobile Number
+                  </label>
+                  <input
+                    name="mobile"
+                    type="tel"
+                    value={form.mobile}
+                    onChange={handleChange}
+                    required
+                    placeholder="XXXXX XXXXX"
+                    className="w-full px-4 py-2.5 rounded-xl text-xs text-white placeholder:text-[#2e2c28] focus:outline-none transition-colors"
+                    style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(201,162,39,0.1)' }}
+                    onFocus={e => (e.target.style.borderColor = 'rgba(201,162,39,0.4)')}
+                    onBlur={e => (e.target.style.borderColor = 'rgba(201,162,39,0.1)')}
+                  />
                 </div>
+              </div>
 
-                {error && <p className="text-red-400 text-xs mt-2">{error}</p>}
+              {error && <p className="text-red-400 text-xs mt-2">{error}</p>}
 
-                <button
-                  type="submit"
-                  disabled={loading || selectedIds.length === 0}
-                  className="w-full py-3.5 rounded-xl font-bold text-xs tracking-wider uppercase flex items-center justify-center gap-2 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                  style={{
-                    background: 'linear-gradient(135deg, #c9a227 0%, #e8bf5a 100%)',
-                    color: '#050508',
-                    boxShadow: selectedIds.length > 0 ? '0 10px 25px rgba(201,162,39,0.2)' : 'none',
-                  }}
-                >
-                  {loading ? (
-                    <>
-                      <Loader size={14} className="animate-spin" />
-                      <span>Sending Request...</span>
-                    </>
-                  ) : (
-                    <>
-                      <span>Secure Bundle Seats</span>
-                      <ChevronRight size={14} />
-                    </>
-                  )}
-                </button>
-              </form>
-            </div>
+              <button
+                type="submit"
+                disabled={loading || selectedIds.length === 0}
+                className="w-full py-3.5 rounded-xl font-bold text-xs tracking-wider uppercase flex items-center justify-center gap-2 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                style={{
+                  background: 'linear-gradient(135deg, #c9a227 0%, #e8bf5a 100%)',
+                  color: '#050508',
+                  boxShadow: selectedIds.length > 0 ? '0 10px 25px rgba(201,162,39,0.2)' : 'none',
+                }}
+              >
+                {loading ? (
+                  <>
+                    <Loader size={14} className="animate-spin" />
+                    <span>Sending Request...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Secure Bundle Seats</span>
+                    <ChevronRight size={14} />
+                  </>
+                )}
+              </button>
+            </form>
           </div>
-
         </div>
+
+      </div>
     </>
   );
 

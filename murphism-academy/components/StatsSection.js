@@ -220,11 +220,11 @@ export default function StatsSection() {
                 {/* Styled Pill Button Container */}
                 <div className="flex flex-col items-start">
                   {/* Circular pill container with right-pointing arrow */}
-                  <div className="w-16 h-8 rounded-full border-2 border-[#be5232] flex items-center justify-center my-5 hover:bg-[#be5232]/10 transition-all duration-300">
+                  <a href="/contact" className="w-16 h-8 rounded-full border-2 border-[#be5232] flex items-center justify-center my-5 hover:bg-[#be5232]/10 transition-all duration-300">
                     <svg className="w-4.5 h-4.5 text-[#be5232]" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
                     </svg>
-                  </div>
+                  </a>
 
                   {/* Main Action Header */}
                   <div className="text-white text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight leading-tight uppercase" style={{ fontFamily: "'Clash Display', sans-serif" }}>
@@ -265,15 +265,15 @@ export default function StatsSection() {
               </div>
 
               <div className="mt-auto relative z-10">
-                <button
-                  suppressHydrationWarning={true}
+                <a
+                  href="/contact"
                   className="flex items-center gap-2 px-6 py-3.5 rounded-xl border border-[#be5232]/45 text-[#be5232] text-sm font-bold tracking-wide uppercase bg-[#be5232]/5 hover:bg-[#be5232]/15 transition-all duration-300 cursor-pointer"
                 >
                   Get in touch
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
                   </svg>
-                </button>
+                </a>
               </div>
             </motion.div>
 

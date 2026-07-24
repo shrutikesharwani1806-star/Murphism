@@ -18,6 +18,7 @@ const allCoursesList = [
   'VFX',
   'B.Sc. in Animations & Multimedia',
   'Diploma in Animations & Multimedia',
+  'Each Course on 6999',
 ];
 
 export default function CoursePage() {

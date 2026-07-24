@@ -241,7 +241,7 @@ export default function ForeignExposure() {
           transition={{ duration: 0.7, delay: 0.5 }}
           className="flex justify-center mt-10"
         >
-          <Link href="/#courses" className="btn-gold">
+          <Link href="/contact" className="btn-gold">
             <span>Start Your Journey</span>
             <ArrowRight size={16} />
           </Link>

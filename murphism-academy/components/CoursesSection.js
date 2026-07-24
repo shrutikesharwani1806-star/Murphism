@@ -109,6 +109,18 @@ export const courses = [
     description: 'Intensive VFX crash course. Master compositing, motion tracking, and CGI integration — fast-track your way into the VFX industry.',
     image: '/courses/vfx.png',
   },
+  {
+    slug: 'each-course-6999',
+    emoji: '✨',
+    title: 'Each Course on 6999',
+    tagline: 'Special Short-Term Promotional Offer',
+    accentColor: '#c9a227',
+    duration: '1.5 Months',
+    level: 'All Levels',
+    highlights: ['Flexible Learning', 'Industry Mentorship', 'Real-world Projects', 'Certificate of Completion', 'Comprehensive Curriculum', 'Placement Assistance'],
+    description: 'Special short-term offer. Enroll in any course for a duration of 1.5 Months at just ₹6,999!',
+    image: '/courses/vfx.png',
+  },
 ];
 
 // Helper to get distinct luxury styles for each card to prevent visual merging

@@ -13,6 +13,15 @@ export default function ClientWidgets() {
   const [isLargeScreen, setIsLargeScreen] = useState(false);
 
   useEffect(() => {
+    // Unregister legacy service workers from previous localhost projects (e.g. Firebase Messaging)
+    if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then((registrations) => {
+        for (let registration of registrations) {
+          registration.unregister();
+        }
+      }).catch((err) => console.warn('Service worker unregistration failed:', err));
+    }
+
     const checkScreenSize = () => {
       setIsLargeScreen(window.innerWidth >= 1024);
     };

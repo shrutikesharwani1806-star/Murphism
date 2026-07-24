@@ -258,8 +258,7 @@ export default function HeroSection() {
             fontFamily: "var(--font-space-grotesk), sans-serif",
           }}
         >
-          Join The Growing Community Of Students <br className="hidden sm:inline" />
-          Building Real-World <span className="text-[#e8bf5a] font-bold">Creative &amp; Tech Careers</span> With{' '}
+          Be the creator that <span className="text-[#e8bf5a] font-bold">companies want to hire</span> with{' '}
           <span className="relative inline-flex items-center justify-center px-4 py-0.5 mx-2 align-middle">
             <span className="absolute inset-0 border border-[rgba(201,162,39,0.2)] bg-[rgba(201,162,39,0.05)] rounded-md" />
             <span className="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-[#e8bf5a]" />
@@ -322,7 +321,7 @@ export default function HeroSection() {
           className="mb-4"
         >
           <Link 
-            href="/#courses"
+            href="/contact"
             className="relative group overflow-hidden px-8 py-3 rounded-xl font-bold text-xs md:text-sm tracking-wide uppercase bg-[#be5232] text-white transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.4)] cursor-pointer inline-block"
             onMouseEnter={(e) => {
               e.currentTarget.style.boxShadow = '0 6px 28px rgba(190,82,50,0.4)';

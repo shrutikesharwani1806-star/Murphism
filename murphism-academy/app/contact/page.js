@@ -183,6 +183,7 @@ export default function ContactPage() {
                           <option value="3D Design &amp; Animation">3D Design &amp; Animation</option>
                           <option value="VFX">VFX</option>
                           <option value="AI Courses">AI Courses</option>
+                          <option value="Each Course on 6999">Each Course on 6999</option>
                         </optgroup>
                         <optgroup label="── Other ──">
                           <option value="General Enquiry">General Enquiry</option>
