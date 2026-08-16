@@ -193,7 +193,12 @@ export default function CustomCursor() {
         dotPos.current = { x: e.clientX, y: e.clientY };
         ringPos.current = { x: e.clientX, y: e.clientY };
       }
-      show();
+      const insidePopup = !!e.target?.closest?.('[data-enable-cursor]');
+      if (insidePopup) {
+        hide();
+      } else {
+        show();
+      }
       if (!isLooping.current) {
         isLooping.current = true;
         tickId.current = requestAnimationFrame(tick);
@@ -215,6 +220,12 @@ export default function CustomCursor() {
       show();
     };
     const onMouseOver = (e) => {
+      const insidePopup = !!e.target?.closest?.('[data-enable-cursor]');
+      if (insidePopup) {
+        hide();
+        return;
+      }
+      show();
       const interactive = !!e.target?.closest(
         'a,button,input,select,textarea,label,[role="button"],.cursor-pointer'
       );
@@ -253,6 +264,16 @@ export default function CustomCursor() {
           .custom-cursor-active,
           .custom-cursor-active * {
             cursor: none !important;
+          }
+          .custom-cursor-active [data-enable-cursor],
+          .custom-cursor-active [data-enable-cursor] * {
+            cursor: default !important;
+          }
+          .custom-cursor-active [data-enable-cursor] button,
+          .custom-cursor-active [data-enable-cursor] a,
+          .custom-cursor-active [data-enable-cursor] [role="button"],
+          .custom-cursor-active [data-enable-cursor] .cursor-pointer {
+            cursor: pointer !important;
           }
         }
         .cursor-svg {

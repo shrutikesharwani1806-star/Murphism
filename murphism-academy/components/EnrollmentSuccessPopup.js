@@ -31,6 +31,7 @@ export default function EnrollmentSuccessPopup({ isOpen, onClose, studentName, c
           className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
           style={overlayStyle}
           onClick={onClose}
+          data-enable-cursor="true"
         >
           <motion.div
             initial={{ opacity: 0, scale: isMobile ? 1 : 0.85, y: isMobile ? 20 : 40 }}
