@@ -2,10 +2,12 @@ import { NextResponse } from 'next/server';
 import { verifyToken } from '@/lib/auth';
 import connectDB from '@/lib/mongodb';
 import User from '@/models/User';
+import { cookies } from 'next/headers';
 
 // GET /api/auth/me — returns current user from database verifying token
 export async function GET(req) {
-  const token = req.cookies.get('murphism_token')?.value;
+  const cookieStore = await cookies();
+  const token = cookieStore.get('murphism_token')?.value;
   if (!token) {
     return NextResponse.json({ success: false, user: null });
   }

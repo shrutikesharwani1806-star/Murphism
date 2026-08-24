@@ -21,10 +21,10 @@ export async function verifyToken(token) {
   }
 }
 
-export function getCookieOptions() {
+export function getCookieOptions(isSecure = false) {
   return {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
+    secure: isSecure,
     sameSite: 'lax',
     maxAge: 60 * 60 * 24 * 7, // 7 days
     path: '/',

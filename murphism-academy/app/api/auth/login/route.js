@@ -27,7 +27,8 @@ export async function POST(req) {
       success: true,
       user: { id: user._id, name: user.name, email: user.email, isAdmin: user.isAdmin },
     });
-    res.cookies.set('murphism_token', token, getCookieOptions());
+    const isSecure = req.url.startsWith('https://') || req.headers.get('x-forwarded-proto') === 'https';
+    res.cookies.set('murphism_token', token, getCookieOptions(isSecure));
     return res;
   } catch (err) {
     console.error('Login error:', err);

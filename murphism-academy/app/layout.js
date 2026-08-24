@@ -1,6 +1,7 @@
 import './globals.css';
 import { Outfit, Space_Grotesk, Playfair_Display } from 'next/font/google';
 import ClientWidgets from '@/components/ClientWidgets';
+import Script from 'next/script';
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -82,6 +83,19 @@ export default function RootLayout({ children }) {
       <body className="antialiased overflow-x-clip font-sans" suppressHydrationWarning>
         <ClientWidgets />
         {children}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-Y9FP6F5J1X"
+          strategy="afterInteractive"
+        />
+        <Script id="google-tag" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-Y9FP6F5J1X');
+          `}
+        </Script>
       </body>
     </html>
   );
