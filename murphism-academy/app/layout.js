@@ -26,9 +26,9 @@ const playfairDisplay = Playfair_Display({
 });
 
 export const metadata = {
-  title: 'MURPHISM Academy | We Morph You Into Industry-Ready Creators',
+  title: "Animation & Video Editing Institute in Indore | Murphism",
   description:
-    'Join Murphism — the premium creative & tech academy offering Graphic Design, Website Development, Video Editing, 3D Modelling, AI Courses, and Diploma in Animations & Modelling. 100% Job Assistance. Foreign Work Exposures Provided.',
+    "Learn Video Editing, Graphic Design, AI Content Creation, VFX, 3D Animation and B.Sc. Animation & Multimedia at Murphism in Indore.",
   icons: {
     icon: '/logo.png',
     shortcut: '/logo.png',
@@ -37,7 +37,6 @@ export const metadata = {
   keywords: [
     'Murphism Academy',
     'Graphic Design Course',
-
     'Website Development',
     'Video Editing',
     '3D Modelling',
@@ -47,17 +46,17 @@ export const metadata = {
     'Job Assistance',
   ],
   openGraph: {
-    title: 'MURPHISM Academy | Industry-Ready Creators & Innovators',
+    title: "Animation & Video Editing Institute in Indore | Murphism",
     description:
-      'We Morph You to Become Industry Ready Creators/Innovators. 100% Job Assistance. Foreign Work Exposures Provided.',
+      "Learn Video Editing, Graphic Design, AI Content Creation, VFX, 3D Animation and B.Sc. Animation & Multimedia at Murphism in Indore.",
     type: 'website',
     locale: 'en_IN',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'MURPHISM Academy',
+    title: "Animation & Video Editing Institute in Indore | Murphism",
     description:
-      'Premium creative & tech academy. 100% job assistance. Foreign work exposures provided.',
+      "Learn Video Editing, Graphic Design, AI Content Creation, VFX, 3D Animation and B.Sc. Animation & Multimedia at Murphism in Indore.",
   },
   robots: { index: true, follow: true },
 };

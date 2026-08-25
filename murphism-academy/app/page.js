@@ -19,13 +19,14 @@ const Footer = dynamic(() => import('@/components/Footer'), { ssr: true });
 
 
 export const metadata = {
-  title: 'MURPHISM Academy | We Morph You Into Industry-Ready Creators',
+  title: "Animation & Video Editing Institute in Indore | Murphism",
   description:
-    'Join Murphism — the premium creative & tech academy. Graphic Design, Web Dev, Video Editing, 3D Modelling, AI Courses & Diploma in Animations. 100% Job Assistance.',
+    "Learn Video Editing, Graphic Design, AI Content Creation, VFX, 3D Animation and B.Sc. Animation & Multimedia at Murphism in Indore.",
   keywords: ['Murphism Academy', 'Graphic Design Course', 'Website Development', 'Video Editing', '3D Modelling', 'Diploma Animation', 'AI Courses'],
   openGraph: {
-    title: 'MURPHISM Academy | Industry-Ready Creators & Innovators',
-    description: 'We Morph You to Become Industry Ready Creators/Innovators. 100% Job Assistance.',
+    title: "Animation & Video Editing Institute in Indore | Murphism",
+    description:
+      "Learn Video Editing, Graphic Design, AI Content Creation, VFX, 3D Animation and B.Sc. Animation & Multimedia at Murphism in Indore.",
     type: 'website',
   },
 };
@@ -37,6 +38,7 @@ export const viewport = {
 export default function Home() {
   return (
     <main>
+      <h1 className="sr-only">Animation & Multimedia Institute in Indore</h1>
       <HomeClientWrapper>
         <Navbar />
         <HeroSection />
