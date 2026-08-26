@@ -4,10 +4,20 @@ import { motion } from 'framer-motion';
 
 export default function AcademyNameSection() {
   const textRef = useRef(null);
+  const rectRef = useRef(null);
+
+  const handleMouseEnter = () => {
+    if (textRef.current) {
+      rectRef.current = textRef.current.getBoundingClientRect();
+    }
+  };
 
   const handleMouseMove = (e) => {
     if (!textRef.current) return;
-    const rect = textRef.current.getBoundingClientRect();
+    if (!rectRef.current) {
+      rectRef.current = textRef.current.getBoundingClientRect();
+    }
+    const rect = rectRef.current;
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     
@@ -17,6 +27,7 @@ export default function AcademyNameSection() {
 
   const handleMouseLeave = () => {
     if (!textRef.current) return;
+    rectRef.current = null;
     // Move glow off-screen when cursor leaves
     textRef.current.style.setProperty('--mouse-x', '-1000px');
     textRef.current.style.setProperty('--mouse-y', '-1000px');
@@ -24,6 +35,7 @@ export default function AcademyNameSection() {
 
   return (
     <section 
+      onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className="relative w-full overflow-hidden py-14 md:py-24 select-none border-t border-[rgba(201,162,39,0.06)]"

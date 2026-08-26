@@ -222,15 +222,15 @@ body {
 
   /* Editorial heading */
   .heading-display {
-    font-family: 'Clash Display', sans-serif;
-    font-weight: 800;
+    font-family: var(--font-clash-display), sans-serif;
+    font-weight: 700;
     font-size: clamp(2.5rem, 6vw, 5rem);
     line-height: 1.0;
     letter-spacing: -0.03em;
   }
 
   .heading-xl {
-    font-family: 'Clash Display', sans-serif;
+    font-family: var(--font-clash-display), sans-serif;
     font-weight: 700;
     font-size: clamp(2rem, 4.5vw, 3.75rem);
     line-height: 1.05;
@@ -339,9 +339,6 @@ body {
     transform: translateY(-1px);
   }
 
-  /* Legacy aliases (keep components working) */
-  .btn-primary { /* redirect to gold */ }
-  .btn-outline  { /* redirect to ghost */ }
 
   /* ── Grain overlay ── */
   .grain-overlay {

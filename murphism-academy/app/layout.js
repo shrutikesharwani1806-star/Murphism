@@ -1,5 +1,6 @@
 import './globals.css';
 import { Outfit, Space_Grotesk, Playfair_Display } from 'next/font/google';
+import localFont from 'next/font/local';
 import ClientWidgets from '@/components/ClientWidgets';
 import Script from 'next/script';
 
@@ -22,6 +23,28 @@ const playfairDisplay = Playfair_Display({
   weight: ['700', '900'],
   style: ['normal', 'italic'],
   variable: '--font-playfair-display',
+  display: 'swap',
+});
+
+const clashDisplay = localFont({
+  src: [
+    {
+      path: '../public/fonts/clash-display/clash-display-medium.woff2',
+      weight: '500',
+      style: 'normal',
+    },
+    {
+      path: '../public/fonts/clash-display/clash-display-semibold.woff2',
+      weight: '600',
+      style: 'normal',
+    },
+    {
+      path: '../public/fonts/clash-display/clash-display-bold.woff2',
+      weight: '700',
+      style: 'normal',
+    },
+  ],
+  variable: '--font-clash-display',
   display: 'swap',
 });
 
@@ -71,10 +94,9 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`scroll-smooth ${outfit.variable} ${spaceGrotesk.variable} ${playfairDisplay.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`scroll-smooth ${outfit.variable} ${spaceGrotesk.variable} ${playfairDisplay.variable} ${clashDisplay.variable}`} suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://api.fontshare.com" crossOrigin="anonymous" />
-        <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&display=swap" rel="stylesheet" />
+        <link rel="preload" href="/3d-computer.webp" as="image" type="image/webp" fetchPriority="high" />
         <link rel="icon" href="/logo.png" type="image/png" />
         <link rel="shortcut icon" href="/logo.png" type="image/png" />
         <link rel="apple-touch-icon" href="/logo.png" />

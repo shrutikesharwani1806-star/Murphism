@@ -51,7 +51,7 @@ export default function Footer() {
           <span 
             className="text-[17vw] font-bold tracking-tighter text-center leading-[1.05] select-none text-transparent block cursor-default whitespace-nowrap gold-outlined-text pb-4"
             style={{
-              fontFamily: "'Clash Display', var(--font-space-grotesk), sans-serif",
+              fontFamily: "var(--font-clash-display), var(--font-space-grotesk), sans-serif",
               letterSpacing: "-0.04em",
             }}
           >
@@ -119,6 +119,11 @@ export default function Footer() {
               <li>
                 <Link href="/about" className="text-[#8c8c8c] hover:text-white transition-colors duration-300 text-[13px] font-normal">
                   About Us
+                </Link>
+              </li>
+              <li>
+                <Link href="/blog" className="text-[#8c8c8c] hover:text-white transition-colors duration-300 text-[13px] font-normal">
+                  Journal / Blog
                 </Link>
               </li>
               <li>

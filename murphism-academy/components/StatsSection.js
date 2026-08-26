@@ -167,7 +167,7 @@ export default function StatsSection() {
                           <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
                         </svg>
                       </div>
-                      <span className="text-4xl md:text-5xl font-bold text-[#be5232] tracking-tight" style={{ fontFamily: "'Clash Display', sans-serif" }}>
+                      <span className="text-4xl md:text-5xl font-bold text-[#be5232] tracking-tight" style={{ fontFamily: "var(--font-clash-display), sans-serif" }}>
                         20k
                       </span>
                     </div>
@@ -195,7 +195,7 @@ export default function StatsSection() {
               >
                 {/* Top Row: UNLOCK [avatars] YOUR */}
                 <div className="flex flex-wrap items-center gap-3">
-                  <span className="text-white text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight uppercase" style={{ fontFamily: "'Clash Display', sans-serif" }}>
+                  <span className="text-white text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight uppercase" style={{ fontFamily: "var(--font-clash-display), sans-serif" }}>
                     UNLOCK
                   </span>
                   
@@ -212,7 +212,7 @@ export default function StatsSection() {
                     ))}
                   </div>
 
-                  <span className="text-white text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight uppercase" style={{ fontFamily: "'Clash Display', sans-serif" }}>
+                  <span className="text-white text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight uppercase" style={{ fontFamily: "var(--font-clash-display), sans-serif" }}>
                     YOUR
                   </span>
                 </div>
@@ -227,7 +227,7 @@ export default function StatsSection() {
                   </a>
 
                   {/* Main Action Header */}
-                  <div className="text-white text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight leading-tight uppercase" style={{ fontFamily: "'Clash Display', sans-serif" }}>
+                  <div className="text-white text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight leading-tight uppercase" style={{ fontFamily: "var(--font-clash-display), sans-serif" }}>
                     FIRST JOB AND INTERNSHIP WITH US!
                   </div>
                 </div>

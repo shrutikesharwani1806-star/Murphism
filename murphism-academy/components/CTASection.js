@@ -1,4 +1,5 @@
 'use client';
+import { useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
@@ -6,6 +7,7 @@ import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 export default function CTASection() {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
+  const rectRef = useRef(null);
 
   // Smooth springs to eliminate lag and provide momentum
   const springConfig = { damping: 45, stiffness: 100, mass: 0.5 };
@@ -25,8 +27,15 @@ export default function CTASection() {
   const x4 = useTransform(springX, (val) => val * 0.012);
   const y4 = useTransform(springY, (val) => val * 0.012);
 
+  const handleMouseEnter = (e) => {
+    rectRef.current = e.currentTarget.getBoundingClientRect();
+  };
+
   const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
+    if (!rectRef.current) {
+      rectRef.current = e.currentTarget.getBoundingClientRect();
+    }
+    const rect = rectRef.current;
     // Coordinates relative to the center of the CTA section
     const x = e.clientX - rect.left - rect.width / 2;
     const y = e.clientY - rect.top - rect.height / 2;
@@ -35,12 +44,14 @@ export default function CTASection() {
   };
 
   const handleMouseLeave = () => {
+    rectRef.current = null;
     mouseX.set(0);
     mouseY.set(0);
   };
 
   return (
     <section 
+      onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className="relative w-full overflow-hidden py-14 md:py-20 border-t border-[rgba(201,162,39,0.08)]" 
@@ -53,7 +64,7 @@ export default function CTASection() {
         <div className="absolute left-[4%] top-[10%] w-[110px] md:w-[170px] aspect-[4/3] rotate-[-8deg] filter blur-[1px]">
           <motion.div style={{ x: x1, y: y1 }} className="w-full h-full relative">
             <Image
-              src="/courses/graphic-design.png"
+              src="/courses/graphic-design.webp"
               alt="Graphic Design Card"
               fill
               sizes="170px"
@@ -64,7 +75,7 @@ export default function CTASection() {
         <div className="absolute left-[16%] bottom-[12%] w-[120px] md:w-[180px] aspect-[4/3] rotate-[6deg] filter blur-[2px]">
           <motion.div style={{ x: x2, y: y2 }} className="w-full h-full relative">
             <Image
-              src="/courses/web-development.png"
+              src="/courses/web-development.webp"
               alt="Web Development Card"
               fill
               sizes="180px"
@@ -75,7 +86,7 @@ export default function CTASection() {
         <div className="absolute left-[2%] bottom-[35%] w-[90px] md:w-[140px] aspect-[4/3] rotate-[-12deg] filter blur-[3px]">
           <motion.div style={{ x: x3, y: y3 }} className="w-full h-full relative">
             <Image
-              src="/courses/video-editing.png"
+              src="/courses/video-editing.webp"
               alt="Video Editing Card"
               fill
               sizes="140px"
@@ -86,7 +97,7 @@ export default function CTASection() {
         <div className="absolute left-[30%] top-[15%] w-[80px] md:w-[130px] aspect-[4/3] rotate-[4deg] filter blur-[3px] opacity-60">
           <motion.div style={{ x: x4, y: y4 }} className="w-full h-full relative">
             <Image
-              src="/courses/bsc-animation.png"
+              src="/courses/bsc-animation.webp"
               alt="BSc Animation Card"
               fill
               sizes="130px"
@@ -99,7 +110,7 @@ export default function CTASection() {
         <div className="absolute right-[4%] top-[12%] w-[110px] md:w-[170px] aspect-[4/3] rotate-[8deg] filter blur-[1px]">
           <motion.div style={{ x: x1, y: y1 }} className="w-full h-full relative">
             <Image
-              src="/courses/3d-modelling.png"
+              src="/courses/3d-modelling.webp"
               alt="3D Modelling Card"
               fill
               sizes="170px"
@@ -110,7 +121,7 @@ export default function CTASection() {
         <div className="absolute right-[15%] bottom-[15%] w-[120px] md:w-[180px] aspect-[4/3] rotate-[-6deg] filter blur-[2px]">
           <motion.div style={{ x: x2, y: y2 }} className="w-full h-full relative">
             <Image
-              src="/courses/ai-courses.png"
+              src="/courses/ai-courses.webp"
               alt="AI Courses Card"
               fill
               sizes="180px"
@@ -121,7 +132,7 @@ export default function CTASection() {
         <div className="absolute right-[2%] bottom-[38%] w-[95px] md:w-[140px] aspect-[4/3] rotate-[10deg] filter blur-[3px]">
           <motion.div style={{ x: x3, y: y3 }} className="w-full h-full relative">
             <Image
-              src="/courses/vfx.png"
+              src="/courses/vfx.webp"
               alt="VFX Card"
               fill
               sizes="140px"
@@ -132,7 +143,7 @@ export default function CTASection() {
         <div className="absolute right-[28%] bottom-[8%] w-[80px] md:w-[130px] aspect-[4/3] rotate-[-10deg] filter blur-[3px] opacity-60">
           <motion.div style={{ x: x4, y: y4 }} className="w-full h-full relative">
             <Image
-              src="/courses/specialization.png"
+              src="/courses/specialization.webp"
               alt="Specialization Card"
               fill
               sizes="130px"

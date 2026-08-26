@@ -10,7 +10,7 @@ const reasons = [
     desc: "We don't just teach — we place. Our dedicated career cell connects you with top companies, designs your portfolio, and assists in landing your placement.",
     stat: '500+ Placed',
     icon: Award,
-    image: '/reasons/job-assistance.png',
+    image: '/reasons/job-assistance.webp',
   },
   {
     num: '02',
@@ -18,7 +18,7 @@ const reasons = [
     desc: 'Cutting-edge artificial intelligence tools integrated across all creative and technical programs to multiply your design and coding output by 10x.',
     stat: 'AI-First Approach',
     icon: Terminal,
-    image: '/reasons/ai-curriculum.png',
+    image: '/reasons/ai-curriculum.webp',
   },
   {
     num: '03',
@@ -26,7 +26,7 @@ const reasons = [
     desc: 'Gain real international client project experience. Master global creative standards and build a resume that commands premium global value.',
     stat: 'Global Network',
     icon: Globe,
-    image: '/reasons/foreign-exposure.png',
+    image: '/reasons/foreign-exposure.webp',
   },
   {
     num: '04',
@@ -34,7 +34,7 @@ const reasons = [
     desc: 'Earn certificates, professional diplomas, and degrees recognized by top global employers. Our Diploma program sets the academic standard.',
     stat: 'Govt. Recognized',
     icon: Shield,
-    image: '/reasons/certifications.png',
+    image: '/reasons/certifications.webp',
   },
   {
     num: '05',
@@ -42,7 +42,7 @@ const reasons = [
     desc: 'Every single course module is built around live projects, actual client briefs, and production-grade portfolios to ensure real-world readiness.',
     stat: '50+ Projects',
     icon: Compass,
-    image: '/reasons/project-training.png',
+    image: '/reasons/project-training.webp',
   },
   {
     num: '06',
@@ -50,7 +50,7 @@ const reasons = [
     desc: 'Learn directly from active working professionals, senior developers, creators, and animators who live and breathe their craft every day.',
     stat: '20+ Mentors',
     icon: Users,
-    image: '/reasons/expert-mentorship.png',
+    image: '/reasons/expert-mentorship.webp',
   },
 ];
 

@@ -18,7 +18,7 @@ export const courses = [
     highlights: ['Animation Principles', '3D Modelling & Rigging', 'VFX & Compositing', 'Game Design', 'AI in Animation', 'Industry Internships'],
     description: 'Earn a recognized B.Sc. Degree in Animations & Multimedia. A comprehensive 3-year degree combining theory, practice, and real-world industry exposure.',
     isDegree: true,
-    image: '/courses/bsc-animation.png',
+    image: '/courses/bsc-animation.webp',
   },
   {
     slug: 'diploma-animations-multimedia',
@@ -32,7 +32,7 @@ export const courses = [
     description: 'Earn a recognized Diploma in Animations & Multimedia. A comprehensive 3-year diploma combining theory, practice, and real-world industry exposure.',
     isDegree: false,
     isDiploma: true,
-    image: '/courses/bsc-animation.png',
+    image: '/courses/bsc-animation.webp',
   },
   {
     slug: 'graphic-design',
@@ -44,7 +44,7 @@ export const courses = [
     level: 'Beginner → Pro',
     highlights: ['Adobe Photoshop & Illustrator', 'Brand Identity Design', 'UI/UX Fundamentals', 'Social Media Graphics', 'Print & Digital Media', 'Portfolio Building'],
     description: 'Master visual communication from scratch. Learn industry tools, design theory, and build a portfolio that gets you hired.',
-    image: '/courses/graphic-design.png',
+    image: '/courses/graphic-design.webp',
   },
   {
     slug: 'website-development',
@@ -56,7 +56,7 @@ export const courses = [
     level: 'Beginner → Full Stack',
     highlights: ['HTML, CSS & JavaScript', 'React & Next.js', 'Node.js & Express', 'MongoDB & SQL', 'REST APIs', 'Deployment & DevOps'],
     description: 'Go from zero to full-stack developer. Build real projects, learn modern frameworks, and land your first dev job.',
-    image: '/courses/web-development.png',
+    image: '/courses/web-development.webp',
   },
   {
     slug: 'video-editing-vfx',
@@ -69,7 +69,7 @@ export const courses = [
     isCombo: true,
     highlights: ['Adobe Premiere Pro', 'After Effects & Nuke', 'Motion Graphics & VFX', 'Color Grading', 'Compositing & Keying', 'Film & Ad Production'],
     description: 'The ultimate production bundle — master video editing, motion graphics, and visual effects. From raw footage to cinematic masterpieces with VFX integration.',
-    image: '/courses/video-editing.png',
+    image: '/courses/video-editing.webp',
   },
   {
     slug: '3d-modelling',
@@ -81,7 +81,7 @@ export const courses = [
     level: 'Beginner → Advanced',
     highlights: ['3ds Max & Maya', 'ZBrush Sculpting', 'Substance Painter', 'CMD & Workflow', '3D Animation', 'Character Creator (CC)'],
     description: 'Master 3D design and animation from scratch. Learn 3ds Max, Maya, ZBrush, Substance Painter, CMD, animation, and Character Creator (CC) to build stunning 3D visual assets.',
-    image: '/courses/3d-modelling.png',
+    image: '/courses/3d-modelling.webp',
   },
 
   {
@@ -95,7 +95,7 @@ export const courses = [
     highlights: ['Generative AI Tools', 'Prompt Engineering', 'AI for Design & Video', 'AI for Marketing', 'ChatGPT & Midjourney', 'Future-Ready Workflow'],
     description: 'Stay ahead of the curve. Learn how AI is transforming every creative industry and how to leverage it for your career.',
     isNew: true,
-    image: '/courses/ai-courses.png',
+    image: '/courses/ai-courses.webp',
   },
   {
     slug: 'vfx',
@@ -107,7 +107,7 @@ export const courses = [
     level: 'Intermediate → Pro',
     highlights: ['After Effects & Nuke', 'Compositing & Keying', 'Motion Tracking', 'Particle Systems', 'CGI Integration', 'Film & Ad Production'],
     description: 'Intensive VFX crash course. Master compositing, motion tracking, and CGI integration — fast-track your way into the VFX industry.',
-    image: '/courses/vfx.png',
+    image: '/courses/vfx.webp',
   },
   {
     slug: 'each-course-6999',
@@ -119,7 +119,7 @@ export const courses = [
     level: 'All Levels',
     highlights: ['Flexible Learning', 'Industry Mentorship', 'Real-world Projects', 'Certificate of Completion', 'Comprehensive Curriculum', 'Placement Assistance'],
     description: 'Special short-term offer. Enroll in any course for a duration of 1.5 Months at just ₹6,999!',
-    image: '/courses/vfx.png',
+    image: '/courses/vfx.webp',
   },
 ];
 

@@ -121,7 +121,7 @@ export default function Navbar() {
               />
               <div className="h-9 md:h-11 w-px bg-gradient-to-b from-[#be5232]/20 via-[#be5232]/75 to-[#be5232]/20 self-center relative z-10 mx-0.5 md:mx-1" />
               <Image
-                src="/name.png"
+                src="/name.webp"
                 alt="MURPHISM"
                 width={220}
                 height={60}
@@ -200,6 +200,15 @@ export default function Navbar() {
                 onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
               >
                 <span className="word-bounce">About</span>
+              </Link>
+
+              <Link
+                href="/blog"
+                className="inline-block px-4 py-1.5 rounded text-xs font-semibold tracking-wide transition-all duration-300 whitespace-nowrap text-[#b8b099] hover:text-white nav-link-bounce"
+                onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.03)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
+              >
+                <span className="word-bounce">Blog</span>
               </Link>
 
               <Link
@@ -370,6 +379,13 @@ export default function Navbar() {
                 className="py-1 text-xs font-semibold tracking-widest uppercase transition-colors duration-300 text-[#b8b099] hover:text-white"
               >
                 About
+              </Link>
+              <Link
+                href="/blog"
+                onClick={() => setOpen(false)}
+                className="py-1 text-xs font-semibold tracking-widest uppercase transition-colors duration-300 text-[#b8b099] hover:text-white"
+              >
+                Blog
               </Link>
               <Link
                 href="/contact"
