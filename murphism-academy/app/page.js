@@ -4,8 +4,10 @@ import StatsSection from '@/components/StatsSection';
 import HomeClientWrapper from '@/components/HomeClientWrapper';
 import dynamic from 'next/dynamic';
 
+const PortfolioVideoSection = dynamic(() => import('@/components/PortfolioVideoSection'), { ssr: true });
 const ForeignExposure = dynamic(() => import('@/components/ForeignExposure'), { ssr: true });
 const CoursesSection = dynamic(() => import('@/components/CoursesSection'), { ssr: true });
+const StudentTestimonialsSection = dynamic(() => import('@/components/StudentTestimonialsSection'), { ssr: true });
 const AICoursesSection = dynamic(() => import('@/components/AICoursesSection'), { ssr: true });
 const DegreeSection = dynamic(() => import('@/components/DegreeSection'), { ssr: true });
 const CertificateSection = dynamic(() => import('@/components/CertificateSection'), { ssr: true });
@@ -43,8 +45,10 @@ export default function Home() {
         <Navbar />
         <HeroSection />
         <StatsSection />
+        <PortfolioVideoSection />
         <ForeignExposure />
         <CoursesSection />
+        <StudentTestimonialsSection />
         <AICoursesSection />
         <DegreeSection />
         <CertificateSection />
