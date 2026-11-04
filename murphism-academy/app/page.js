@@ -2,23 +2,7 @@ import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
 import StatsSection from '@/components/StatsSection';
 import HomeClientWrapper from '@/components/HomeClientWrapper';
-import dynamic from 'next/dynamic';
-
-const PortfolioVideoSection = dynamic(() => import('@/components/PortfolioVideoSection'), { ssr: true });
-const ForeignExposure = dynamic(() => import('@/components/ForeignExposure'), { ssr: true });
-const CoursesSection = dynamic(() => import('@/components/CoursesSection'), { ssr: true });
-const StudentTestimonialsSection = dynamic(() => import('@/components/StudentTestimonialsSection'), { ssr: true });
-const AICoursesSection = dynamic(() => import('@/components/AICoursesSection'), { ssr: true });
-const DegreeSection = dynamic(() => import('@/components/DegreeSection'), { ssr: true });
-const CertificateSection = dynamic(() => import('@/components/CertificateSection'), { ssr: true });
-const ComparisonSection = dynamic(() => import('@/components/ComparisonSection'), { ssr: true });
-const WhyMurphism = dynamic(() => import('@/components/WhyMurphism'), { ssr: true });
-const FAQSection = dynamic(() => import('@/components/FAQSection'), { ssr: true });
-const CTASection = dynamic(() => import('@/components/CTASection'), { ssr: true });
-const Footer = dynamic(() => import('@/components/Footer'), { ssr: true });
-
-
-
+import BelowFoldSections from '@/components/BelowFoldSections';
 
 export const metadata = {
   title: "Animation & Video Editing Institute in Indore | Murphism",
@@ -40,23 +24,15 @@ export const viewport = {
 export default function Home() {
   return (
     <main>
-      <h1 className="sr-only">Animation & Multimedia Institute in Indore</h1>
+      <h1 className="sr-only">Animation &amp; Multimedia Institute in Indore</h1>
       <HomeClientWrapper>
+        {/* Above fold — statically imported, renders on first paint */}
         <Navbar />
         <HeroSection />
         <StatsSection />
-        <PortfolioVideoSection />
-        <ForeignExposure />
-        <CoursesSection />
-        <StudentTestimonialsSection />
-        <AICoursesSection />
-        <DegreeSection />
-        <CertificateSection />
-        <ComparisonSection />
-        <WhyMurphism />
-        <FAQSection />
-        <CTASection />
-        <Footer />
+
+        {/* Below fold — client-side lazy loaded in BelowFoldSections */}
+        <BelowFoldSections />
       </HomeClientWrapper>
     </main>
   );

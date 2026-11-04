@@ -1,7 +1,6 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 
-// Draw a small round glitter dot
 function drawDot(ctx, x, y, size, alpha, color) {
   ctx.save();
   ctx.globalAlpha = alpha;
@@ -12,126 +11,144 @@ function drawDot(ctx, x, y, size, alpha, color) {
   ctx.restore();
 }
 
-
 export default function CustomCursor() {
   const [isDesktop, setIsDesktop] = useState(false);
 
-  const dotRef = useRef(null);
-  const ringRef = useRef(null);
+  const dotRef    = useRef(null);
+  const ringRef   = useRef(null);
   const canvasRef = useRef(null);
 
-  const mousePos = useRef({ x: -200, y: -200 });
-  const dotPos = useRef({ x: -200, y: -200 });
-  const ringPos = useRef({ x: -200, y: -200 });
-  const isLooping = useRef(false);
-  const firstMove = useRef(true);
-  const isVisible = useRef(false);
+  const mousePos   = useRef({ x: -200, y: -200 });
+  const dotPos     = useRef({ x: -200, y: -200 });
+  const ringPos    = useRef({ x: -200, y: -200 });
+  const firstMove  = useRef(true);
+  const isVisible  = useRef(false);
+  const particles  = useRef([]);
+  const lastSpawn  = useRef({ x: -999, y: -999 });
+  const rafId      = useRef(null);
 
-  const particles = useRef([]);
-  const animFrameId = useRef(null);
-  const isAnimating = useRef(false);
-  const lastSpawn = useRef({ x: -999, y: -999 });
-  const tickId = useRef(null);
-
-  const show = () => {
-    if (isVisible.current) return;
-    isVisible.current = true;
-    if (dotRef.current) dotRef.current.style.opacity = '1';
-    if (ringRef.current) ringRef.current.style.opacity = '1';
-  };
-  const hide = () => {
-    if (!isVisible.current) return;
-    isVisible.current = false;
-    if (dotRef.current) dotRef.current.style.opacity = '0';
-    if (ringRef.current) ringRef.current.style.opacity = '0';
-  };
-
-  // ── 1. Mount & Check Device Capability ────────────────────────────────────
+  // ── 1. Detect desktop pointer ─────────────────────────────────────────────
   useEffect(() => {
     setIsDesktop(window.matchMedia('(pointer: fine)').matches);
   }, []);
 
+  // ── 2. Single unified effect — canvas + cursor + events ───────────────────
   useEffect(() => {
     if (!isDesktop) return;
 
+    // ── Show / hide helpers ──
+    const show = () => {
+      if (isVisible.current) return;
+      isVisible.current = true;
+      if (dotRef.current)  dotRef.current.style.opacity  = '1';
+      if (ringRef.current) ringRef.current.style.opacity = '1';
+    };
+    const hide = () => {
+      if (!isVisible.current) return;
+      isVisible.current = false;
+      if (dotRef.current)  dotRef.current.style.opacity  = '0';
+      if (ringRef.current) ringRef.current.style.opacity = '0';
+    };
+
+    // ── Canvas setup ──
     const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
+    const ctx    = canvas ? canvas.getContext('2d') : null;
 
     const resize = () => {
-      canvas.width = window.innerWidth;
+      if (!canvas) return;
+      canvas.width  = window.innerWidth;
       canvas.height = window.innerHeight;
     };
     resize();
-    window.addEventListener('resize', resize);
+    window.addEventListener('resize', resize, { passive: true });
 
     const GOLD = ['#e8bf5a', '#f5d97a', '#ffd700', '#ffdd77', '#fff9c4', '#ffffff'];
 
     const spawnParticles = (x, y) => {
-      const count = 1; // spawn exactly 1 dot at a time for minimalism
-      for (let i = 0; i < count; i++) {
-        const angle = Math.random() * Math.PI * 2;
-        const radius = 2 + Math.random() * 10;
-        particles.current.push({
-          x: x + Math.cos(angle) * radius,
-          y: y + Math.sin(angle) * radius,
-          vx: (Math.random() - 0.5) * 1.0,
-          vy: (Math.random() - 0.5) * 1.0 - 0.4,
-          gravity: 0.02 + Math.random() * 0.02,
-          size: 1.0 + Math.random() * 1.5,   // small dot size
-          color: GOLD[Math.floor(Math.random() * GOLD.length)],
-          alpha: 1,
-          decay: 0.06 + Math.random() * 0.04, // fade out faster
-          rot: Math.random() * Math.PI,
-          rotSpeed: (Math.random() - 0.5) * 0.1,
-        });
-      }
-      // Hard cap the maximum active particles in the trail to 5-6 dots
+      const angle  = Math.random() * Math.PI * 2;
+      const radius = 2 + Math.random() * 10;
+      particles.current.push({
+        x: x + Math.cos(angle) * radius,
+        y: y + Math.sin(angle) * radius,
+        vx:       (Math.random() - 0.5) * 1.0,
+        vy:       (Math.random() - 0.5) * 1.0 - 0.4,
+        gravity:  0.02 + Math.random() * 0.02,
+        size:     1.0  + Math.random() * 1.5,
+        color:    GOLD[Math.floor(Math.random() * GOLD.length)],
+        alpha:    1,
+        decay:    0.06 + Math.random() * 0.04,
+        rot:      Math.random() * Math.PI,
+        rotSpeed: (Math.random() - 0.5) * 0.1,
+      });
+      // Keep max 6 trail dots
       if (particles.current.length > 6) {
         particles.current.splice(0, particles.current.length - 6);
       }
     };
 
+    // ── Single RAF loop: cursor + particles ──
     const loop = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // 1. Cursor position
+      dotPos.current.x  = mousePos.current.x;
+      dotPos.current.y  = mousePos.current.y;
+      ringPos.current.x += (mousePos.current.x - ringPos.current.x) * 0.18;
+      ringPos.current.y += (mousePos.current.y - ringPos.current.y) * 0.18;
 
-      for (let i = particles.current.length - 1; i >= 0; i--) {
-        const p = particles.current[i];
-        p.x += p.vx;
-        p.y += p.vy;
-        p.vy += p.gravity;
-        p.alpha -= p.decay;
-        p.rot += p.rotSpeed;
-
-        if (p.alpha <= 0) {
-          particles.current.splice(i, 1);
-          continue;
-        }
-
-        drawDot(ctx, p.x, p.y, p.size, p.alpha, p.color);
+      if (dotRef.current) {
+        dotRef.current.style.transform =
+          `translate3d(${dotPos.current.x}px,${dotPos.current.y}px,0) translate(-50%,-50%)`;
+      }
+      if (ringRef.current) {
+        ringRef.current.style.transform =
+          `translate3d(${ringPos.current.x}px,${ringPos.current.y}px,0) translate(-50%,-50%)`;
       }
 
-      if (particles.current.length > 0) {
-        animFrameId.current = requestAnimationFrame(loop);
-      } else {
-        isAnimating.current = false;
+      // 2. Particle canvas
+      if (ctx && canvas) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let i = particles.current.length - 1; i >= 0; i--) {
+          const p = particles.current[i];
+          p.x  += p.vx;
+          p.y  += p.vy;
+          p.vy += p.gravity;
+          p.alpha -= p.decay;
+          p.rot   += p.rotSpeed;
+          if (p.alpha <= 0) { particles.current.splice(i, 1); continue; }
+          drawDot(ctx, p.x, p.y, p.size, p.alpha, p.color);
+        }
       }
+
+      rafId.current = requestAnimationFrame(loop);
     };
 
-    const startLoop = () => {
-      if (!isAnimating.current) {
-        isAnimating.current = true;
-        animFrameId.current = requestAnimationFrame(loop);
-      }
-    };
+    rafId.current = requestAnimationFrame(loop);
+
+    // ── Event handlers ──
+    document.body.classList.add('custom-cursor-active');
+    document.documentElement.classList.add('custom-cursor-active');
 
     const onMouseMove = (e) => {
+      mousePos.current = { x: e.clientX, y: e.clientY };
+
+      if (firstMove.current) {
+        firstMove.current   = false;
+        dotPos.current      = { x: e.clientX, y: e.clientY };
+        ringPos.current     = { x: e.clientX, y: e.clientY };
+      }
+
+      const insidePopup = !!e.target?.closest?.('[data-enable-cursor]');
+      if (insidePopup) { hide(); } else { show(); }
+
+      if (!document.body.classList.contains('custom-cursor-active')) {
+        document.body.classList.add('custom-cursor-active');
+        document.documentElement.classList.add('custom-cursor-active');
+      }
+
+      // Spawn trail particle
       const d = Math.hypot(e.clientX - lastSpawn.current.x, e.clientY - lastSpawn.current.y);
       if (d > 12) {
         lastSpawn.current = { x: e.clientX, y: e.clientY };
         spawnParticles(e.clientX, e.clientY);
-        startLoop();
       }
     };
 
@@ -142,70 +159,6 @@ export default function CustomCursor() {
       if (d > 12) {
         lastSpawn.current = { x: t.clientX, y: t.clientY };
         spawnParticles(t.clientX, t.clientY);
-        startLoop();
-      }
-    };
-
-    window.addEventListener('mousemove', onMouseMove, { passive: true });
-    window.addEventListener('touchmove', onTouchMove, { passive: true });
-
-    return () => {
-      window.removeEventListener('resize', resize);
-      window.removeEventListener('mousemove', onMouseMove);
-      window.removeEventListener('touchmove', onTouchMove);
-      if (animFrameId.current) cancelAnimationFrame(animFrameId.current);
-    };
-  }, [isDesktop]);
-
-  // ── 3. Cursor position + CSS class ───────────────────────────────────────
-  useEffect(() => {
-    if (!isDesktop) return;
-
-    document.body.classList.add('custom-cursor-active');
-    document.documentElement.classList.add('custom-cursor-active');
-
-    const tick = () => {
-      dotPos.current.x = mousePos.current.x;
-      dotPos.current.y = mousePos.current.y;
-      ringPos.current.x += (mousePos.current.x - ringPos.current.x) * 0.28;
-      ringPos.current.y += (mousePos.current.y - ringPos.current.y) * 0.28;
-
-      if (dotRef.current) {
-        dotRef.current.style.transform = `translate3d(${dotPos.current.x}px,${dotPos.current.y}px,0) translate(-50%,-50%)`;
-      }
-      if (ringRef.current) {
-        ringRef.current.style.transform = `translate3d(${ringPos.current.x}px,${ringPos.current.y}px,0) translate(-50%,-50%)`;
-      }
-
-      const dx = mousePos.current.x - ringPos.current.x;
-      const dy = mousePos.current.y - ringPos.current.y;
-      if (dx * dx + dy * dy < 0.05) {
-        isLooping.current = false;
-      } else {
-        tickId.current = requestAnimationFrame(tick);
-      }
-    };
-
-    const onMouseMove = (e) => {
-      mousePos.current = { x: e.clientX, y: e.clientY };
-      if (firstMove.current) {
-        firstMove.current = false;
-        dotPos.current = { x: e.clientX, y: e.clientY };
-        ringPos.current = { x: e.clientX, y: e.clientY };
-      }
-      const insidePopup = !!e.target?.closest?.('[data-enable-cursor]');
-      if (insidePopup) {
-        hide();
-      } else {
-        show();
-      }
-      if (!isLooping.current) {
-        isLooping.current = true;
-        tickId.current = requestAnimationFrame(tick);
-      }
-      if (!document.body.classList.contains('custom-cursor-active')) {
-        document.body.classList.add('custom-cursor-active');
-        document.documentElement.classList.add('custom-cursor-active');
       }
     };
 
@@ -221,10 +174,7 @@ export default function CustomCursor() {
     };
     const onMouseOver = (e) => {
       const insidePopup = !!e.target?.closest?.('[data-enable-cursor]');
-      if (insidePopup) {
-        hide();
-        return;
-      }
+      if (insidePopup) { hide(); return; }
       show();
       const interactive = !!e.target?.closest(
         'a,button,input,select,textarea,label,[role="button"],.cursor-pointer'
@@ -234,22 +184,24 @@ export default function CustomCursor() {
     };
     const onTouchEnd = () => hide();
 
-    window.addEventListener('mousemove', onMouseMove, { passive: true });
+    window.addEventListener('mousemove',   onMouseMove, { passive: true });
+    window.addEventListener('touchmove',   onTouchMove, { passive: true });
     document.addEventListener('mouseleave', onMouseLeave);
     document.addEventListener('mouseenter', onMouseEnter);
-    window.addEventListener('mouseover', onMouseOver, { passive: true });
-    window.addEventListener('touchend', onTouchEnd, { passive: true });
-    window.addEventListener('touchcancel', onTouchEnd, { passive: true });
+    window.addEventListener('mouseover',   onMouseOver, { passive: true });
+    window.addEventListener('touchend',    onTouchEnd,  { passive: true });
+    window.addEventListener('touchcancel', onTouchEnd,  { passive: true });
 
     return () => {
-      window.removeEventListener('mousemove', onMouseMove);
+      cancelAnimationFrame(rafId.current);
+      window.removeEventListener('resize',      resize);
+      window.removeEventListener('mousemove',   onMouseMove);
+      window.removeEventListener('touchmove',   onTouchMove);
       document.removeEventListener('mouseleave', onMouseLeave);
       document.removeEventListener('mouseenter', onMouseEnter);
-      window.removeEventListener('mouseover', onMouseOver);
-      window.removeEventListener('touchend', onTouchEnd);
+      window.removeEventListener('mouseover',   onMouseOver);
+      window.removeEventListener('touchend',    onTouchEnd);
       window.removeEventListener('touchcancel', onTouchEnd);
-      if (tickId.current) cancelAnimationFrame(tickId.current);
-      isLooping.current = false;
       document.body.classList.remove('custom-cursor-active');
       document.documentElement.classList.remove('custom-cursor-active');
     };
@@ -292,7 +244,7 @@ export default function CustomCursor() {
         }
       `}</style>
 
-      {/* Sparkle canvas — always full-screen, always on top of content */}
+      {/* Sparkle canvas */}
       <canvas
         ref={canvasRef}
         style={{

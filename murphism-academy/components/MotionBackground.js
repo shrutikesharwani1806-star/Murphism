@@ -91,7 +91,7 @@ export default function MotionBackground() {
       }
     }
 
-    const particleCount = window.innerWidth < 768 ? 35 : (window.innerWidth < 1200 ? 55 : 70);
+    const particleCount = window.innerWidth < 768 ? 18 : (window.innerWidth < 1200 ? 28 : 35);
     const particles = Array.from({ length: particleCount }, () => new Particle());
 
     // 3D rotation function
@@ -125,15 +125,15 @@ export default function MotionBackground() {
       ctx.fillStyle = '#050505';
       ctx.fillRect(0, 0, width, height);
 
-      // Lerp mouse coordinates for inertia
-      mouseX += (targetMouseX - mouseX) * 0.05;
-      mouseY += (targetMouseY - mouseY) * 0.05;
-      mousePxX += (targetMousePxX - mousePxX) * 0.05;
-      mousePxY += (targetMousePxY - mousePxY) * 0.05;
+      // Lerp mouse coordinates for inertia (lighter factor = less per-frame work)
+      mouseX += (targetMouseX - mouseX) * 0.03;
+      mouseY += (targetMouseY - mouseY) * 0.03;
+      mousePxX += (targetMousePxX - mousePxX) * 0.03;
+      mousePxY += (targetMousePxY - mousePxY) * 0.03;
 
-      // Slow idle rotation + mouse influence
-      angleX += 0.02;
-      angleY += 0.03;
+      // Idle rotation — slowed down to reduce per-frame matrix work
+      angleX += 0.012;
+      angleY += 0.018;
 
       const currentAngleX = angleX + mouseY * 15;
       const currentAngleY = angleY + mouseX * 15;
@@ -170,34 +170,9 @@ export default function MotionBackground() {
         }
       }
 
-      // Sort by depth (back to front) for correct rendering
-      projectedParticles.sort((a, b) => b.z - a.z);
+      // Skip depth sort — not needed with reduced particle count, saves O(n log n) per frame
 
-      // Draw connections
-      const maxDistance = 110;
-      const maxDistanceSq = maxDistance * maxDistance;
-      ctx.lineWidth = 0.5;
-
-      for (let i = 0; i < projectedParticles.length; i++) {
-        const p1 = projectedParticles[i];
-        for (let j = i + 1; j < projectedParticles.length; j++) {
-          const p2 = projectedParticles[j];
-          const dx = p1.x - p2.x;
-          const dy = p1.y - p2.y;
-          const distSq = dx * dx + dy * dy;
-
-          if (distSq < maxDistanceSq) {
-            const dist = Math.sqrt(distSq);
-            // Opacity is higher for closer connections, and lower for deep/faded particles
-            const connectionAlpha = (1 - dist / maxDistance) * 0.12 * Math.min(p1.alpha, p2.alpha);
-            ctx.strokeStyle = `rgba(201, 162, 39, ${connectionAlpha})`;
-            ctx.beginPath();
-            ctx.moveTo(p1.x, p1.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.stroke();
-          }
-        }
-      }
+      // Connection lines removed — was O(n²) and caused frame drops
 
       // Draw particles
       for (let i = 0; i < projectedParticles.length; i++) {

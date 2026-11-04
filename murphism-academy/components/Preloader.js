@@ -1,78 +1,95 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 
+// Pure CSS preloader — zero framer-motion dependency on critical path
+// Total visible time: ~550ms (fast enough to feel instant, branded enough to feel premium)
 export default function Preloader({ onComplete }) {
   const fullText = 'MURPHISM';
   const [displayedText, setDisplayedText] = useState('');
-  const [isFadingOut, setIsFadingOut] = useState(false);
-
+  const [fading, setFading]               = useState(false);
   const onCompleteRef = useRef(onComplete);
-  useEffect(() => {
-    onCompleteRef.current = onComplete;
-  }, [onComplete]);
 
-  // Reveal letter by letter: M -> MU -> MUR ...
+  useEffect(() => { onCompleteRef.current = onComplete; }, [onComplete]);
+
   useEffect(() => {
-    let currentIndex = 0;
-    let typeTimer;
+    let idx = 0;
+    let timer;
 
     const typeNext = () => {
-      currentIndex += 1;
-      setDisplayedText(fullText.slice(0, currentIndex));
-
-      if (currentIndex < fullText.length) {
-        // Fast, premium typing cadence
-        typeTimer = setTimeout(typeNext, 60);
+      idx++;
+      setDisplayedText(fullText.slice(0, idx));
+      if (idx < fullText.length) {
+        // 45ms per letter × 8 letters = 360ms typing
+        timer = setTimeout(typeNext, 45);
       } else {
-        // Revealed! Trigger fade out and page load immediately
-        const fadeTimer = setTimeout(() => {
-          setIsFadingOut(true);
-          const completeTimer = setTimeout(() => {
-            if (onCompleteRef.current) onCompleteRef.current();
-          }, 150);
-          return () => clearTimeout(completeTimer);
-        }, 80);
-        return () => clearTimeout(fadeTimer);
+        // Hold 60ms, then fade out in 120ms CSS transition
+        timer = setTimeout(() => {
+          setFading(true);
+          timer = setTimeout(() => onCompleteRef.current?.(), 130);
+        }, 60);
       }
     };
 
-    // Start typing after a tiny delay
-    typeTimer = setTimeout(typeNext, 50);
-
-    return () => {
-      clearTimeout(typeTimer);
-    };
+    // Start immediately — no extra delay
+    timer = setTimeout(typeNext, 10);
+    return () => clearTimeout(timer);
   }, []);
 
   return (
-    <AnimatePresence>
-      {!isFadingOut && (
-        <motion.div
-          initial={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.15, ease: 'easeOut' }}
-          className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-[#050505]"
-        >
-          {/* Subtle gold background glow */}
-          <div
-            className="absolute w-[280px] h-[280px] rounded-full pointer-events-none"
-            style={{ background: 'rgba(201,162,39,0.06)', filter: 'blur(80px)' }}
-          />
+    <div
+      className="global-preloader-overlay"
+      style={{
+        position:        'fixed',
+        inset:           0,
+        zIndex:          99999,
+        display:         'flex',
+        alignItems:      'center',
+        justifyContent:  'center',
+        background:      '#050505',
+        // CSS transition — no framer-motion bundle cost
+        opacity:         fading ? 0 : 1,
+        transition:      'opacity 0.13s ease-out',
+        pointerEvents:   fading ? 'none' : 'all',
+      }}
+    >
+      {/* Subtle glow */}
+      <div style={{
+        position:   'absolute',
+        width:      '240px',
+        height:     '240px',
+        borderRadius: '50%',
+        background: 'rgba(201,162,39,0.07)',
+        filter:     'blur(70px)',
+        pointerEvents: 'none',
+      }} />
 
-          {/* Typewriter text */}
-          <div className="relative flex items-center justify-center">
-            <h1
-              className="text-4xl sm:text-6xl md:text-7xl font-extrabold text-center select-none uppercase flex items-center"
-              style={{ color: '#c9a227', letterSpacing: '0.25em', fontFamily: 'inherit' }}
-            >
-              <span>{displayedText}</span>
-              <span className="animate-pulse font-light" style={{ color: '#c9a227', marginLeft: '2px' }}>|</span>
-            </h1>
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+      {/* Text */}
+      <h2 style={{
+        color:          '#c9a227',
+        fontSize:       'clamp(2rem, 8vw, 4.5rem)',
+        fontWeight:     800,
+        letterSpacing:  '0.25em',
+        fontFamily:     'inherit',
+        userSelect:     'none',
+        position:       'relative',
+        display:        'flex',
+        alignItems:     'center',
+      }}>
+        <span>{displayedText}</span>
+        <span style={{
+          marginLeft:   '3px',
+          color:        '#c9a227',
+          fontWeight:   300,
+          animation:    'preloaderBlink 0.9s step-end infinite',
+        }}>|</span>
+      </h2>
+
+      <style>{`
+        @keyframes preloaderBlink {
+          0%, 100% { opacity: 1; }
+          50%       { opacity: 0; }
+        }
+      `}</style>
+    </div>
   );
 }
-

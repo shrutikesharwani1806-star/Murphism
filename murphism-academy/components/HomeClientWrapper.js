@@ -5,20 +5,19 @@ import Preloader from './Preloader';
 export default function HomeClientWrapper({ children }) {
   const [loading, setLoading] = useState(true);
 
-  // Fallback: 100ms + 8×50ms typing + 50ms hold + 150ms fade ≈ 700ms
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 750);
+    // Sync with new preloader: 10ms start + 45ms×8 letters + 60ms hold + 130ms fade ≈ 560ms
+    // Add a small safety buffer → 600ms hard cutoff
+    const timer = setTimeout(() => setLoading(false), 600);
     return () => clearTimeout(timer);
   }, []);
 
-  const handleComplete = useCallback(() => {
-    setLoading(false);
-  }, []);
+  const handleComplete = useCallback(() => setLoading(false), []);
 
   return (
     <>
       {loading && <Preloader onComplete={handleComplete} />}
-      {/* Page is always visible — preloader z-index covers it, no black flash */}
+      {/* Children always rendered — preloader z-index covers, no layout flash */}
       <div>{children}</div>
     </>
   );

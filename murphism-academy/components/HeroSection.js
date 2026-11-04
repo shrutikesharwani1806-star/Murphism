@@ -16,6 +16,8 @@ export default function HeroSection() {
   const containerRef = useRef(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isMobile, setIsMobile] = useState(false);
+  const rafPending = useRef(false);
+  const rawMouse   = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     const checkMobile = () => {
@@ -30,11 +32,17 @@ export default function HeroSection() {
 
   const handleMouseMove = (e) => {
     if (isMobile || !containerRef.current) return;
-    const { clientWidth, clientHeight } = containerRef.current;
-    // Calculate normalized offset from center (-0.5 to 0.5)
-    const x = (e.clientX / clientWidth) - 0.5;
-    const y = (e.clientY / clientHeight) - 0.5;
-    setMousePos({ x, y });
+    rawMouse.current = {
+      x: (e.clientX / containerRef.current.clientWidth) - 0.5,
+      y: (e.clientY / containerRef.current.clientHeight) - 0.5,
+    };
+    if (!rafPending.current) {
+      rafPending.current = true;
+      requestAnimationFrame(() => {
+        setMousePos({ ...rawMouse.current });
+        rafPending.current = false;
+      });
+    }
   };
 
   return (
@@ -50,10 +58,10 @@ export default function HeroSection() {
         <motion.div 
           className="absolute inset-0 flex items-center justify-center z-0"
           animate={isMobile ? { x: 0, y: 0 } : {
-            x: `${mousePos.x * 2.5}vw`,
-            y: `${mousePos.y * 2.5}vh`,
+            x: mousePos.x * 25,
+            y: mousePos.y * 25,
           }}
-          transition={{ type: 'spring', damping: 30, stiffness: 60 }}
+          transition={{ type: 'spring', damping: 35, stiffness: 55, mass: 0.8 }}
         >
           <Image
             src="/3d-computer.webp"

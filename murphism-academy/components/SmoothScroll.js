@@ -9,12 +9,16 @@ export default function SmoothScroll() {
     if (isMobile) return;
 
     const lenis = new Lenis({
-      lerp: 0.07,
+      lerp: 0.12,
+      duration: 1.1,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      wheelMultiplier: 1.0,
+      wheelMultiplier: 1.2,
+      touchMultiplier: 1.5,
       syncTouch: false,
+      infinite: false,
     });
 
     let rafId;
